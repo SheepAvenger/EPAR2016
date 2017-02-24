@@ -1,5 +1,7 @@
 package com.softwarei.epar2016;
 
+import java.lang.String;
+
 
 /**
  * Created by Rob on 2/23/2017.
@@ -7,6 +9,6 @@ package com.softwarei.epar2016;
 
 public class highScore
 {
-    protected int score;
-    protected String name;
+    public int score;
+    public String name;
 }

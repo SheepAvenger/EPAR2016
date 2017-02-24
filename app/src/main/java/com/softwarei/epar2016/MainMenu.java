@@ -12,15 +12,8 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try
-        {
-            Scores s = new Scores(this);
-        }catch (IOException e)
-        {
-
-        }
-
-
+        Level level = new Level(this);
+        Scores s = new Scores(this);
         setContentView(R.layout.activity_main_menu);
     }
 }
