@@ -14,6 +14,7 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Level level = new Level(this);
         Scores s = new Scores(this);
+        Character c = new Character(this);
         setContentView(R.layout.activity_main_menu);
     }
 }

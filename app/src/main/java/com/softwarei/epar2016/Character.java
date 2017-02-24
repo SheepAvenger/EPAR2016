@@ -12,13 +12,11 @@ public class Character extends AppCompatActivity
 {
     private int index;
     private Bitmap character[];
-    private Context ctx;
 
-    public Character(Context current)
+    public Character(Context ctx)
     {
         index = 0;
         character = new Bitmap[15];
-        this.ctx = current;
         int  x = R.drawable.ctrumpstand;
         for(int i = 0; i < 15; i++)
         {

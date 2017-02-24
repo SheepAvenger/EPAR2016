@@ -13,13 +13,12 @@ public class Level extends AppCompatActivity
 {
     private int level;
     private Bitmap Background[];
-    private Context ctx;
 
-    public Level(Context current)
+    public Level(Context ctx)
     {
         level = 0;
         Background = new Bitmap[10];
-        this.ctx = current;
+        //Context ctx = current;
         int  x = R.drawable.level0;
         for(int i = 0; i < 10; i++)
         {
