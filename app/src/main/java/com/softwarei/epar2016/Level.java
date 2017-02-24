@@ -20,7 +20,7 @@ public class Level extends AppCompatActivity
         level = 0;
         Background = new Bitmap[10];
         this.ctx = current;
-        int  x = R.drawable.l_0;
+        int  x = R.drawable.level0;
         for(int i = 0; i < 10; i++)
         {
             x +=i;
