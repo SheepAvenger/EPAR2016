@@ -1,13 +1,11 @@
 package com.softwarei.epar2016;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.String;
@@ -18,19 +16,18 @@ import java.lang.String;
 
 public class Scores extends AppCompatActivity
 {
-    private highScore scores[];
+    private HighScore scores[];
     private String scoreString[];
-    private Context ctx;
     String FILE;
 
-    public Scores(Context current)
+    public Scores(){};
+
+    public Scores(Context ctx)
     {
         int i = 0;
         FILE = "scores.txt";
-        this.ctx = current;
-        scores = new highScore[11];
+        scores = new HighScore[11];
         scoreString = new String[10];
-        //InputStream is = ctx.getResources().openRawResource(R.raw.scores);
           try
             {
                 FileInputStream is = ctx.openFileInput(FILE);
@@ -40,7 +37,7 @@ public class Scores extends AppCompatActivity
                     while (i != 10)
                     {
                         scoreString[i] = reader.readLine();
-                        highScore s = new highScore();
+                        HighScore s = new HighScore();
                         String parse[] = scoreString[i].split(" ");
                         s.name = parse[0];
                         s.score = Integer.parseInt(parse[1]);
@@ -57,7 +54,7 @@ public class Scores extends AppCompatActivity
 
     }
 
-    public void addScore(int score, String name)
+    public void addScore(int score, String name, Context ctx)
     {
         String newString = "";
         boolean newHighScore = false;

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EPAR2016</string>
+    <string name="title_activity_module">Module</string>
 </resources>
