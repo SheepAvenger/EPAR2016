@@ -5,9 +5,9 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+    >
         <activity 
             android:screenOrientation="landscape"
             android:name=".MainMenu">
@@ -19,8 +19,11 @@
         </activity>
         <activity
             android:name=".HighScores"
-            android:label="EPAR2016"
-            android:theme="@style/AppTheme">
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name=".MainGame"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 

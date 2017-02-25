@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ScrollingTabContainerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,6 +35,7 @@ public class HighScores extends AppCompatActivity
     private TextView textView9;
     private ScrollView scroll;
     private LinearLayout linear;
+    private Button mainMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,16 @@ public class HighScores extends AppCompatActivity
         TextView[] texts = {textView0, textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8, textView9};
         ctx = getApplicationContext();
         HighScores h = new HighScores(scroll, linear, ctx, texts);
+        mainMenu=(Button)findViewById(R.id.highscoreMainMenu);
+        mainMenu.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent Menu = new Intent(HighScores.this, MainMenu.class);
+                startActivity(Menu);
+
+            }
+        });
     }
     public HighScores()
     {
