@@ -16,7 +16,7 @@ import java.lang.String;
 
 public class Scores extends AppCompatActivity
 {
-    private highScore scores[];
+    private HighScore scores[];
     private String scoreString[];
     private static Context ctx;
     String FILE;
@@ -34,7 +34,7 @@ public class Scores extends AppCompatActivity
     {
         int i = 0;
         FILE = "scores.txt";
-        scores = new highScore[11];
+        scores = new HighScore[11];
         scoreString = new String[10];
         //InputStream is = ctx.getResources().openRawResource(R.raw.scores);
           try
@@ -46,7 +46,7 @@ public class Scores extends AppCompatActivity
                     while (i != 10)
                     {
                         scoreString[i] = reader.readLine();
-                        highScore s = new highScore();
+                        HighScore s = new HighScore();
                         String parse[] = scoreString[i].split(" ");
                         s.name = parse[0];
                         s.score = Integer.parseInt(parse[1]);
