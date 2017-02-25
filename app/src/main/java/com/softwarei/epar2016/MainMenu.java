@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 
 public class MainMenu extends AppCompatActivity {
@@ -19,8 +20,8 @@ public class MainMenu extends AppCompatActivity {
         Level level = new Level(getApplicationContext());
         Character c = new Character(getApplicationContext());
 
-        Button button;
-        button=(Button)findViewById(R.id.button1);
+        ImageButton button;
+        button=(ImageButton)findViewById(R.id.HighScoresMenu);
         button.setOnClickListener(new View.OnClickListener()
         {
 
@@ -29,8 +30,6 @@ public class MainMenu extends AppCompatActivity {
             {
                 Intent hs = new Intent(MainMenu.this, HighScores.class);
                 startActivity(hs);
-                //HighScores h = new HighScores(0);
-                //here
 
              }
 

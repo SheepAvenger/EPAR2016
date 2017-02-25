@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,7 +22,8 @@
                 android:background="?attr/colorButtonNormal"
                 android:theme="?attr/actionBarTheme"
                 android:minHeight="?attr/actionBarSize"
-                android:id="@+id/toolbar">
+                android:id="@+id/toolbar"
+                android:weightSum="1">
                 <Button
                     android:text="Main Menu"
                     android:background="?attr/colorButtonNormal"
