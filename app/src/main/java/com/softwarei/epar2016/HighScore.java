@@ -7,7 +7,7 @@ import java.lang.String;
  * Created by Rob on 2/23/2017.
  */
 
-public class highScore
+public class HighScore
 {
     public int score;
     public String name;
