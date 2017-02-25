@@ -29,7 +29,8 @@ public class MainMenu extends AppCompatActivity {
             {
                 Intent hs = new Intent(MainMenu.this, HighScores.class);
                 startActivity(hs);
-                finish();
+                //HighScores h = new HighScores(0);
+                //here
 
              }
 

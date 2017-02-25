@@ -21,16 +21,16 @@ public class Scores extends AppCompatActivity
     private static Context ctx;
     String FILE;
 
-    public static Context getContext() {
-        return ctx;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Scores s = new Scores(0);
         //ctx = ((Module) this.getApplication()).getContext();
     }
 
-    public Scores()
+    public Scores(){};
+
+    public Scores(Context ctx)
     {
         int i = 0;
         FILE = "scores.txt";
@@ -69,7 +69,7 @@ public class Scores extends AppCompatActivity
         boolean newHighScore = false;
         try
         {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput(FILE, ctx.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput(FILE, ctx.MODE_PRIVATE));
             for(int i = 0; i < 10; i++)
             {
                 if(score > scores[i].score)
