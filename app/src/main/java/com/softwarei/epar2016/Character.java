@@ -17,7 +17,7 @@ public class Character extends AppCompatActivity
     {
         index = 0;
         character = new Bitmap[15];
-        int  x = R.drawable.ctrumpstand;
+        int  x = R.drawable.c_trump_stand;
         for(int i = 0; i < 15; i++)
         {
             x -=i;
