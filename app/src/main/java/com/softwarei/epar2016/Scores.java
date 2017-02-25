@@ -1,13 +1,11 @@
 package com.softwarei.epar2016;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.String;
@@ -20,14 +18,22 @@ public class Scores extends AppCompatActivity
 {
     private highScore scores[];
     private String scoreString[];
-    private Context ctx;
+    private static Context ctx;
     String FILE;
 
-    public Scores(Context current)
+    public static Context getContext() {
+        return ctx;
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //ctx = ((Module) this.getApplication()).getContext();
+    }
+
+    public Scores()
     {
         int i = 0;
         FILE = "scores.txt";
-        this.ctx = current;
         scores = new highScore[11];
         scoreString = new String[10];
         //InputStream is = ctx.getResources().openRawResource(R.raw.scores);

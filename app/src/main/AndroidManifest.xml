@@ -15,6 +15,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".HighScores"
+            android:label="EPAR2016"
+            android:parentActivityName=".MainMenu"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".Scores"
+            android:label="EPAR2016"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
