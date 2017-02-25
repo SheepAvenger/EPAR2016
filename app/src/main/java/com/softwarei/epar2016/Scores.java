@@ -18,15 +18,7 @@ public class Scores extends AppCompatActivity
 {
     private HighScore scores[];
     private String scoreString[];
-    private static Context ctx;
     String FILE;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //Scores s = new Scores(0);
-        //ctx = ((Module) this.getApplication()).getContext();
-    }
 
     public Scores(){};
 
@@ -36,7 +28,6 @@ public class Scores extends AppCompatActivity
         FILE = "scores.txt";
         scores = new HighScore[11];
         scoreString = new String[10];
-        //InputStream is = ctx.getResources().openRawResource(R.raw.scores);
           try
             {
                 FileInputStream is = ctx.openFileInput(FILE);
@@ -63,13 +54,13 @@ public class Scores extends AppCompatActivity
 
     }
 
-    public void addScore(int score, String name)
+    public void addScore(int score, String name, Context ctx)
     {
         String newString = "";
         boolean newHighScore = false;
         try
         {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput(FILE, ctx.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput(FILE, ctx.MODE_PRIVATE));
             for(int i = 0; i < 10; i++)
             {
                 if(score > scores[i].score)
