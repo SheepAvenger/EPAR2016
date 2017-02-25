@@ -1,6 +1,7 @@
 package com.softwarei.epar2016;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -10,7 +11,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 public class MainGame extends Activity implements View.OnTouchListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,5 +37,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
         }
         return true;
     }
+
+    public MainGame(){};
 }
 

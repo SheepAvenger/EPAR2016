@@ -17,9 +17,6 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        Level level = new Level(getApplicationContext());
-        Character c = new Character(getApplicationContext());
-
         ImageButton button;
         button=(ImageButton)findViewById(R.id.HighScoresMenu);
         button.setOnClickListener(new View.OnClickListener()
@@ -31,7 +28,22 @@ public class MainMenu extends AppCompatActivity {
                 Intent hs = new Intent(MainMenu.this, HighScores.class);
                 startActivity(hs);
 
-             }
+            }
+
+        });
+
+        Button play;
+        play=(Button)findViewById(R.id.play);
+        play.setOnClickListener(new View.OnClickListener()
+        {
+
+
+            public void onClick(View v)
+            {
+                Intent mainGame = new Intent(MainMenu.this, MainGame.class);
+                startActivity(mainGame);
+
+            }
 
         });
 }
