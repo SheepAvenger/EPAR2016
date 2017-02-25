@@ -26,7 +26,7 @@ public class Scores extends AppCompatActivity
     {
         int i = 0;
         FILE = "scores.txt";
-        scores = new HighScore[11];
+        scores = new HighScore[10];
         scoreString = new String[10];
           try
             {
@@ -65,7 +65,7 @@ public class Scores extends AppCompatActivity
             {
                 if(score > scores[i].score)
                 {
-                    for(int j = 9; j > i; j--)
+                    for(int j = 8; j > i; j--)
                     {
                         scores[j].score = scores[j-1].score;
                         scores[j].name = scores[j-1].name;
