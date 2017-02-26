@@ -11,15 +11,22 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 public class MainGame extends Activity implements View.OnTouchListener {
+
+    GameView gameView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main_game);
         FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
+        Button duckButton = (Button)findViewById(R.id.Duck);
+        duckButton.setOnTouchListener(this);
         Button jumpButton = (Button)findViewById(R.id.Jump);
         jumpButton.setOnTouchListener(this);
-        GameView gameView = new GameView(this);
+        Button pauseButton = (Button)findViewById(R.id.Pause);
+        pauseButton.setOnTouchListener(this);
+        gameView = new GameView(this);
         frameLayout.addView(gameView);
     }
 
@@ -27,10 +34,26 @@ public class MainGame extends Activity implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         switch(v.getId()) {
             case R.id.Jump:
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    gameView.jumpButtonDown();
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    gameView.jumpButtonUp();
+                }
                 break;
             case R.id.Duck:
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    gameView.duckButtonDown();
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    gameView.duckButtonUp();
+                }
                 break;
             case R.id.Pause:
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    //Intent intent = new Intent(this, .class);
+                    //startActivity(intent);
+                }
                 break;
             default:
                 break;
