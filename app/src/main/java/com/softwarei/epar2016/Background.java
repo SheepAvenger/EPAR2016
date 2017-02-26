@@ -15,15 +15,15 @@ public class Background {
     }
     public void update()
     {
-        x+=dx;
-        if(x<-GameView.WIDTH){
-            x=0;
+        x += dx;
+        if(x < -GameView.WIDTH){
+            x = 0;
         }
     }
     public void draw(Canvas canvas)
     {
         canvas.drawBitmap(image, x, y,null);
-        if(x<0)
+        if(x < 0)
         {
             canvas.drawBitmap(image, x + GameView.WIDTH, y, null);
         }
