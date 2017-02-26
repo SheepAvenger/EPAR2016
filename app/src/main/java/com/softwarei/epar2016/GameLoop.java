@@ -41,7 +41,7 @@ public class GameLoop extends Thread
             } catch (Exception e) {
             }
             finally{
-                if(canvas!=null)
+                if(canvas != null)
                 {
                     try {
                         surfaceHolder.unlockCanvasAndPost(canvas);
@@ -52,17 +52,17 @@ public class GameLoop extends Thread
 
 
             timeMillis = (System.nanoTime() - startTime) / 1000000;
-            waitTime = targetTime-timeMillis;
+            waitTime = targetTime - timeMillis;
 
             try{
                 this.sleep(waitTime);
             }catch(Exception e){}
 
-            totalTime += System.nanoTime()-startTime;
+            totalTime += System.nanoTime() - startTime;
             frameCount++;
             if(frameCount == FPS)
             {
-                averageFPS = 1000/((totalTime/frameCount)/1000000);
+                averageFPS = 1000 / ((totalTime/frameCount) / 1000000);
                 frameCount = 0;
                 totalTime = 0;
                 System.out.println(averageFPS);
