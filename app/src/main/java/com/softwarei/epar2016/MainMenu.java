@@ -23,6 +23,7 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         Intent music = new Intent(MainMenu.this, MusicPlayer.class);
+        music.putExtra("MainMenu", 1);
         startService(music);
 
        /*mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
