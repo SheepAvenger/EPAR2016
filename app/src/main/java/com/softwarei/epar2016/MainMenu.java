@@ -57,8 +57,8 @@ public class MainMenu extends AppCompatActivity {
 
             public void onClick(View v)
             {
-                Intent mainGame = new Intent(MainMenu.this, MainGame.class);
-                startActivity(mainGame);
+                Intent characterSelection = new Intent(MainMenu.this, CharacterSelection.class);
+                startActivity(characterSelection);
 
             }
 

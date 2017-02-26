@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/character_menu"
+    android:background="@drawable/b_flag"
+    >
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/_abe_stand"
+        android:id="@+id/Abe"
+        android:layout_alignTop="@+id/Clinton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/_clinton_stand"
+        android:id="@+id/Clinton"
+        android:layout_alignTop="@+id/FDR"
+        android:layout_toRightOf="@+id/Abe"
+        android:layout_toEndOf="@+id/Abe"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/_obama_stand"
+        android:id="@+id/Obama"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
+        android:layout_alignTop="@+id/FDR"
+        android:layout_toRightOf="@+id/FDR"
+        android:layout_toEndOf="@+id/FDR" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/_trump_stand"
+        android:id="@+id/Trump"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:layout_alignTop="@+id/Obama"
+        android:layout_toRightOf="@+id/Obama"
+        android:layout_toEndOf="@+id/Obama" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_delete"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:id="@+id/Sanders"
+        android:layout_toRightOf="@+id/Trump"
+        android:layout_toEndOf="@+id/Trump"
+        android:layout_alignTop="@+id/Trump"
+        android:layout_alignBottom="@+id/Trump" />
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_delete"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:id="@+id/Washington"
+        android:layout_toRightOf="@+id/Sanders"
+        android:layout_toEndOf="@+id/Sanders"
+        android:layout_alignTop="@+id/Sanders"
+        android:layout_alignBottom="@+id/Sanders" />
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_delete"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:id="@+id/Kennedy"
+        android:layout_toRightOf="@+id/Washington"
+        android:layout_toEndOf="@+id/Washington"
+        android:layout_alignTop="@+id/Washington"
+        android:layout_alignBottom="@+id/Washington" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/_fdr_stand"
+        android:id="@+id/FDR"
+        android:layout_marginBottom="43dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/Clinton"
+        android:layout_toEndOf="@+id/Clinton" />
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorButtonNormal"
+        android:theme="?attr/actionBarTheme"
+        android:minHeight="?attr/actionBarSize"
+        android:id="@+id/toolbar"></android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:text="Character Selection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="36sp"
+        android:id="@+id/textView"
+        android:textColor="@android:color/background_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/FDR"
+        android:layout_alignStart="@+id/FDR" />
+
+</RelativeLayout>
