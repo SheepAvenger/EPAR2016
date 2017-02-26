@@ -34,4 +34,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder){
 
     }
+
+    public void jumpButtonDown() {
+        jumpButtonTime = System.nanoTime();
+        if(!sprite.getPlaying()) {
+            sprite.setPlaying(true);
+        }
+    }
+
+    public void jumpButtonUp() {
+        if(!sprite.getJumping() && !sprite.getFalling()) {
+            sprite.setJumping(System.nanoTime()-jumpButtonTime);
+        }
+    }
+
+    public void duckButtonDown() {
+        if(!sprite.getPlaying())
+        {
+            sprite.setPlaying(true);
+        }
+        if(!sprite.getJumping() && !sprite.getFalling()) {
+            sprite.setDucking(true);
+        }
+    }
+
+    public void duckButtonUp() {
+        sprite.setDucking(false);
+    }
 }
