@@ -12,23 +12,31 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import static android.app.Service.START_STICKY;
+import static com.softwarei.epar2016.R.raw.music_main_menu;
+
 
 public class MainMenu extends AppCompatActivity {
-
+    private MediaPlayer mp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.music_main_menu);
-        mp.start();
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        mp = MediaPlayer.create(this, music_main_menu);
+        if(!mp.isPlaying())
+        {
+            mp.setLooping(true);
+            mp.start();
+        }
+
+       /* mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
             public void onCompletion(MediaPlayer mp) {
 
                 mp.start();
             }
-        });
+        });*/
 
         ImageButton button;
         button=(ImageButton)findViewById(R.id.HighScoresMenu);
@@ -60,4 +68,5 @@ public class MainMenu extends AppCompatActivity {
 
         });
 }
+
 }
