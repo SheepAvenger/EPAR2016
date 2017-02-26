@@ -8,94 +8,6 @@
 
     >
 
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/_abe_stand"
-        android:id="@+id/Abe"
-        android:layout_alignTop="@+id/Clinton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/_clinton_stand"
-        android:id="@+id/Clinton"
-        android:layout_alignTop="@+id/FDR"
-        android:layout_toRightOf="@+id/Abe"
-        android:layout_toEndOf="@+id/Abe"
-        android:layout_marginLeft="19dp"
-        android:layout_marginStart="19dp" />
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/_obama_stand"
-        android:id="@+id/Obama"
-        android:layout_marginLeft="23dp"
-        android:layout_marginStart="23dp"
-        android:layout_alignTop="@+id/FDR"
-        android:layout_toRightOf="@+id/FDR"
-        android:layout_toEndOf="@+id/FDR" />
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/_trump_stand"
-        android:id="@+id/Trump"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp"
-        android:layout_alignTop="@+id/Obama"
-        android:layout_toRightOf="@+id/Obama"
-        android:layout_toEndOf="@+id/Obama" />
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_delete"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp"
-        android:id="@+id/Sanders"
-        android:layout_toRightOf="@+id/Trump"
-        android:layout_toEndOf="@+id/Trump"
-        android:layout_alignTop="@+id/Trump"
-        android:layout_alignBottom="@+id/Trump" />
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_delete"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp"
-        android:id="@+id/Washington"
-        android:layout_toRightOf="@+id/Sanders"
-        android:layout_toEndOf="@+id/Sanders"
-        android:layout_alignTop="@+id/Sanders"
-        android:layout_alignBottom="@+id/Sanders" />
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_delete"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp"
-        android:id="@+id/Kennedy"
-        android:layout_toRightOf="@+id/Washington"
-        android:layout_toEndOf="@+id/Washington"
-        android:layout_alignTop="@+id/Washington"
-        android:layout_alignBottom="@+id/Washington" />
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/_fdr_stand"
-        android:id="@+id/FDR"
-        android:layout_marginBottom="43dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/Clinton"
-        android:layout_toEndOf="@+id/Clinton" />
-
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -105,14 +17,114 @@
         android:id="@+id/toolbar"></android.support.v7.widget.Toolbar>
 
     <TextView
-        android:text="Character Selection"
+        android:text="Pick a Character"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="36sp"
-        android:id="@+id/textView"
+        android:id="@+id/title"
         android:textColor="@android:color/background_light"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/FDR"
-        android:layout_alignStart="@+id/FDR" />
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        app:srcCompat="@drawable/_abe_stand"
+        android:id="@+id/Abe"
+        android:scaleType="centerCrop"
+        android:backgroundTint="@android:drawable/screen_background_light_transparent"
+        android:layout_alignTop="@+id/Clinton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="150dp"
+        android:layout_width="45dp" />
+
+    <ImageButton
+        app:srcCompat="@drawable/_fdr_stand"
+        android:id="@+id/FDR"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:backgroundTint="@android:drawable/screen_background_light_transparent"
+        android:scaleType="centerCrop"
+        android:layout_height="150dp"
+        android:layout_width="84dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_toRightOf="@+id/Clinton"
+        android:layout_toEndOf="@+id/Clinton"
+        android:layout_marginTop="72dp" />
+
+    <ImageButton
+        app:srcCompat="@drawable/_clinton_stand"
+        android:id="@+id/Clinton"
+        android:scaleType="centerCrop"
+        android:backgroundTint="@android:drawable/screen_background_light_transparent"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_height="150dp"
+        android:layout_width="75dp"
+        android:layout_alignTop="@+id/FDR"
+        android:layout_toRightOf="@+id/Abe"
+        android:layout_toEndOf="@+id/Abe" />
+
+    <ImageButton
+        app:srcCompat="@drawable/_obama_stand"
+        android:id="@+id/Obama"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:backgroundTint="@android:drawable/screen_background_light_transparent"
+        android:scaleType="centerCrop"
+        android:layout_height="150dp"
+        android:layout_width="54dp"
+        android:layout_alignTop="@+id/FDR"
+        android:layout_toRightOf="@+id/FDR"
+        android:layout_toEndOf="@+id/FDR" />
+
+    <ImageButton
+        app:srcCompat="@drawable/_trump_stand"
+        android:id="@+id/Trump"
+        android:backgroundTint="@android:drawable/screen_background_light_transparent"
+        android:scaleType="centerCrop"
+        android:layout_height="150dp"
+        android:layout_width="72dp"
+        android:layout_alignTop="@+id/Obama"
+        android:layout_toRightOf="@+id/Obama"
+        android:layout_toEndOf="@+id/Obama"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        app:srcCompat="@android:drawable/ic_delete"
+        android:id="@+id/Kennedy"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_alignTop="@+id/Washington"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/Washington" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        app:srcCompat="@android:drawable/ic_delete"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:id="@+id/Sanders"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_height="125dp"
+        android:layout_alignTop="@+id/Trump"
+        android:layout_toRightOf="@+id/Trump"
+        android:layout_toEndOf="@+id/Trump"
+        android:layout_alignBottom="@+id/Trump" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        app:srcCompat="@android:drawable/ic_delete"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
+        android:id="@+id/Washington"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_alignTop="@+id/Sanders"
+        android:layout_toRightOf="@+id/Sanders"
+        android:layout_toEndOf="@+id/Sanders"
+        android:layout_alignBottom="@+id/Sanders" />
 
 </RelativeLayout>
