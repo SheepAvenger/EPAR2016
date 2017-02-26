@@ -22,9 +22,10 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        startService(new Intent(MusicPlayer.ACTIVITY_SERVICE));
+        Intent music = new Intent(MainMenu.this, MusicPlayer.class);
+        startService(music);
 
-       /* mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+       /*mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
             public void onCompletion(MediaPlayer mp) {
 

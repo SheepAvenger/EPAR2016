@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
+import static android.support.v4.media.session.PlaybackStateCompat.ACTION_PLAY;
 import static com.softwarei.epar2016.R.raw.music_main_menu;
 
 /**
@@ -13,21 +14,41 @@ import static com.softwarei.epar2016.R.raw.music_main_menu;
 
 public class MusicPlayer extends Service {
 
-    public static MediaPlayer mp;
+    private static final String TAG = null;
+    MediaPlayer player;
+    public IBinder onBind(Intent arg0) {
 
+        return null;
+    }
     @Override
-    public IBinder onBind(Intent intent) {
-        // TODO Auto-generated method stub
+    public void onCreate() {
+        super.onCreate();
+        player = MediaPlayer.create(this, R.raw.music_main_menu);
+        player.setLooping(true); // Set looping
+
+    }
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        player.start();
+        return START_NOT_STICKY;
+    }
+
+    public void onStart(Intent intent, int startId) {
+        // TO DO
+    }
+    public IBinder onUnBind(Intent arg0) {
+        // TO DO Auto-generated method
         return null;
     }
 
-    @Override
-    public void onCreate() {
-        mp = MediaPlayer.create(this, music_main_menu);
-    }
+    public void onStop() {
 
+    }
+    public void onPause() {
+
+    }
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
+    public void onDestroy() {
+        player.stop();
+        player.release();
     }
 }

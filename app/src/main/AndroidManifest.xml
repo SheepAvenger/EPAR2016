@@ -25,6 +25,10 @@
             android:name=".MainGame"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <service android:name=".MusicPlayer"
+            android:theme="@style/AppTheme.NoActionBar">
+        </service>
+
     </application>
 
 </manifest>
