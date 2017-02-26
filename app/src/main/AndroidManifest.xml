@@ -33,6 +33,9 @@
             android:theme="@style/AppTheme.NoActionBar">
         </service>
 
+        <activity android:name=".DealWithVlad"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
