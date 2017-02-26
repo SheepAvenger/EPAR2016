@@ -25,7 +25,7 @@ public class GameLoop extends Thread
         long timeMillis;
         long waitTime;
         long totalTime = 0;
-        int frameCount =0;
+        int frameCount = 0;
         long targetTime = 1000/FPS;
 
         while(running) {
