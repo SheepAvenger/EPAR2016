@@ -17,18 +17,12 @@ import static com.softwarei.epar2016.R.raw.music_main_menu;
 
 
 public class MainMenu extends AppCompatActivity {
-    private MediaPlayer mp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        mp = MediaPlayer.create(this, music_main_menu);
-        if(!mp.isPlaying())
-        {
-            mp.setLooping(true);
-            mp.start();
-        }
+        startService(new Intent(MusicPlayer.ACTIVITY_SERVICE));
 
        /* mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
