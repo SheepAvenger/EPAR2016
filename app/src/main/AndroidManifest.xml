@@ -23,10 +23,12 @@
         </activity>
         <activity
             android:name=".MainGame"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".CharacterSelection"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <service android:name=".MusicPlayer"
