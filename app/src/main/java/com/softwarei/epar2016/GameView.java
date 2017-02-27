@@ -2,6 +2,7 @@ package com.softwarei.epar2016;
 
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -60,5 +61,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void duckButtonUp() {
         sprite.setDucking(false);
+    }
+
+    public void update() {
+
+    }
+
+    public void draw(Canvas canvas) {
+
     }
 }
