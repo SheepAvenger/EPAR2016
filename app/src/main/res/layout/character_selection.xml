@@ -70,17 +70,6 @@
         android:layout_height="150dp" />
 
     <ImageButton
-        app:srcCompat="@drawable/_abe_stand"
-        android:id="@+id/Abe"
-        android:scaleType="centerCrop"
-        android:backgroundTint="@android:color/transparent"
-        android:layout_height="150dp"
-        android:layout_width="45dp"
-        android:layout_alignTop="@+id/Clinton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageButton
         app:srcCompat="@drawable/_fdr_stand"
         android:id="@+id/FDR"
         android:layout_marginLeft="12dp"
@@ -119,5 +108,16 @@
         android:layout_toStartOf="@+id/Kennedy"
         android:layout_marginRight="12dp"
         android:layout_marginEnd="12dp" />
+
+    <ImageButton
+        app:srcCompat="@drawable/_abe_stand"
+        android:id="@+id/Abe"
+        android:scaleType="centerCrop"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_width="45dp"
+        android:layout_height="200dp"
+        android:layout_alignBottom="@+id/Clinton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
