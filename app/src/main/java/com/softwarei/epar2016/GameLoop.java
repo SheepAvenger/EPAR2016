@@ -5,7 +5,7 @@ import android.view.SurfaceHolder;
 
 public class GameLoop extends Thread
 {
-    private int FPS = 60;
+    private int FPS = 30;
     private double averageFPS;
     private SurfaceHolder surfaceHolder;
     private GameView gameView;
@@ -65,7 +65,7 @@ public class GameLoop extends Thread
                 averageFPS = 1000 / ((totalTime/frameCount) / 1000000);
                 frameCount = 0;
                 totalTime = 0;
-                System.out.println(averageFPS);
+                //System.out.println(averageFPS);
             }
         }
     }

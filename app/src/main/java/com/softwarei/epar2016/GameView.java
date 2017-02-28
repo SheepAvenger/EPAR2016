@@ -2,6 +2,7 @@ package com.softwarei.epar2016;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.BitmapFactory;
@@ -14,8 +15,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private long jumpButtonTime;
     private GameLoop gameLoop;
-    private Background backGround;
+    private Background background;
     private Sprite sprite;
+    private int scandalCount;
 
     public GameView(Context context) {
         super(context);
@@ -35,7 +37,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder){
-        backGround = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level0));
+        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level0));
         sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_run), 2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_duck2), 2);
         gameLoop = new GameLoop(getHolder(), this);
@@ -71,19 +73,32 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         sprite.setDucking(false);
     }
 
+    public boolean collision(Obstacle o, Sprite s) {
+        if(Rect.intersects(o.getRectangle(), s.getRectangle())) {
+            return true;
+        }
+        return false;
+    }
+
     public void update() {
         if (sprite.getPlaying()){
-            backGround.update();
+            background.update();
             sprite.update();
         }
     }
 
+    @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-
-        if (canvas != null){
-            backGround.draw(canvas);
+        final float scaleFactorX = getWidth()/(WIDTH*1.f);
+        final float scaleFactorY = getHeight()/(HEIGHT*1.f);
+        if (canvas != null) {
+            final int savedState = canvas.save();
+            canvas.scale(scaleFactorX, scaleFactorY);
+            background.draw(canvas);
             sprite.draw(canvas);
+
+            canvas.restoreToCount(savedState);
         }
     }
 }
