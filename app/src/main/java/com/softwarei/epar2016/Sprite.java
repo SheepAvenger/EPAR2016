@@ -7,12 +7,12 @@ import android.graphics.Rect;
 
 public class Sprite {
     private int score;
-    private boolean jumping, falling, ducking, playing, collision;
+    private boolean jumping, falling, ducking, playing, collision, recovery;
     private Animation animation = new Animation();
     private Animation animation2 = new Animation();
 
     private long startTime;
-    private int xInitial, xNext, xCurrent, y, width, height, xInitial2, xNext2, xCurrent2, y2, width2, height2;
+    private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height, xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
 
     public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2) {
 
@@ -23,7 +23,8 @@ public class Sprite {
         this.width = image.getWidth()/numberOfFrames;
         xInitial = 300;
         xCurrent = xInitial;
-        y = GameView.HEIGHT - height + ground;
+        yInitial = GameView.HEIGHT - height + ground;
+        yCurrent = yInitial;
         Bitmap[] playerImage = new Bitmap[numberOfFrames];
         for(int i = 0; i < playerImage.length; i++) {
             playerImage[i] = Bitmap.createBitmap(image, i*width, 0, width, height);
@@ -35,7 +36,8 @@ public class Sprite {
         this.width2 = image2.getWidth();
         xInitial2 = xCurrent + width - width2;
         xCurrent2 = xInitial2;
-        y2 = GameView.HEIGHT - height2 + ground;
+        yInitial2 = GameView.HEIGHT - height2 + ground;
+        yCurrent2 = yInitial2;
         Bitmap[] playerImage2 = new Bitmap[numberOfFrames2];
         for(int i = 0; i < playerImage2.length; i++) {
             playerImage2[i] = Bitmap.createBitmap(image2, 0, i*height2, width2, height2);
@@ -75,6 +77,10 @@ public class Sprite {
         return collision;
     }
 
+    public void setRecovery() {
+        recovery = true;
+    }
+
     public void update() {
         long elapsed = (System.nanoTime() - startTime) / 1000000;
         if(elapsed > 100) {
@@ -90,16 +96,16 @@ public class Sprite {
         }
 
         if(jumping) {
-            y -= 10;
+            yCurrent -= 10;
         }
-        else if(y < 250) {
-            y += 10;
+        else if(yCurrent < yInitial) {
+            yCurrent += 10;
         }
         else {
             falling = false;
         }
 
-        if(y < 100) {
+        if(yCurrent < 100) {
             jumping = false;
             falling = true;
         }
@@ -109,7 +115,6 @@ public class Sprite {
             xCurrent2 += GameView.MOVESPEED;
             if(xCurrent <= xNext) {
                 xNext -= 50;
-                //collision = false;
             }
             if(xCurrent2 <= xNext2) {
                 xNext2 -= 50;
@@ -117,11 +122,18 @@ public class Sprite {
             }
         }
 
+        if(recovery) {
+            xCurrent -= GameView.MOVESPEED;
+            xCurrent2 -= GameView.MOVESPEED;
+            if(xCurrent >= xInitial) {
+                recovery = false;
+            }
+        }
     }
 
     public void draw(Canvas canvas) {
         if(ducking){
-            canvas.drawBitmap(animation2.getImage(), xCurrent2, y2, null);
+            canvas.drawBitmap(animation2.getImage(), xCurrent2, yCurrent2, null);
         }
         else {
             canvas.drawBitmap(animation.getImage(), xCurrent, y, null);
@@ -154,10 +166,10 @@ public class Sprite {
 
     public Rect getRectangle() {
         if(ducking){
-            return new Rect(xCurrent2, y2, xCurrent2+width2, y2+height2);
+            return new Rect(xCurrent2, yCurrent2, xCurrent2+width2, yCurrent2+height2);
         }
         else {
-            return new Rect(xCurrent, y, xCurrent+width, y+height);
+            return new Rect(xCurrent, yCurrent, xCurrent+width, yCurrent+height);
         }
 
     }
