@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/character_menu"
-    android:background="@drawable/new_character_background">
+    android:background="@drawable/new_character_background"
+    >
 
     <TextView
         android:text="Pick a Character"
@@ -55,30 +56,17 @@
         android:layout_alignBottom="@+id/Washington" />
 
     <ImageButton
-        android:layout_width="50dp"
-        app:srcCompat="@android:drawable/ic_delete"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
+        app:srcCompat="@drawable/_bernie_stand"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
         android:id="@+id/Sanders"
         android:backgroundTint="@color/colorAccent"
-        android:layout_height="125dp"
+        android:layout_height="150dp"
+        android:layout_width="45dp"
         android:layout_alignTop="@+id/Trump"
         android:layout_toRightOf="@+id/Trump"
         android:layout_toEndOf="@+id/Trump"
         android:layout_alignBottom="@+id/Trump" />
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="100dp"
-        app:srcCompat="@android:drawable/ic_delete"
-        android:layout_marginLeft="19dp"
-        android:layout_marginStart="19dp"
-        android:id="@+id/Washington"
-        android:backgroundTint="@color/colorAccent"
-        android:layout_alignTop="@+id/Sanders"
-        android:layout_toRightOf="@+id/Sanders"
-        android:layout_toEndOf="@+id/Sanders"
-        android:layout_alignBottom="@+id/Sanders" />
 
     <ImageButton
         app:srcCompat="@drawable/_abe_stand"
@@ -117,5 +105,17 @@
         android:layout_toEndOf="@+id/Abe"
         android:layout_marginLeft="12dp"
         android:layout_marginStart="12dp" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="150dp"
+        app:srcCompat="@android:drawable/ic_delete"
+        android:id="@+id/Washington"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_alignTop="@+id/Sanders"
+        android:layout_toLeftOf="@+id/Kennedy"
+        android:layout_toStartOf="@+id/Kennedy"
+        android:layout_marginRight="22dp"
+        android:layout_marginEnd="22dp" />
 
 </RelativeLayout>

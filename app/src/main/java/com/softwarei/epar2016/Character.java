@@ -18,7 +18,7 @@ public class Character extends AppCompatActivity
         index = 0;
         character = new Bitmap[15];
         int  x = R.drawable._trump_stand;
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 14; i++)
         {
             x -=i;
             character[i] = BitmapFactory.decodeResource(ctx.getResources(), x);

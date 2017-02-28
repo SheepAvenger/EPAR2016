@@ -29,7 +29,6 @@ public class CharacterSelection extends AppCompatActivity
         ImageButton Sanders = (ImageButton)findViewById(R.id.Sanders);
         ImageButton Washington = (ImageButton)findViewById(R.id.Washington);
         ImageButton Kennedy = (ImageButton)findViewById(R.id.Kennedy);
-        Sanders.setEnabled(false);
         Washington.setEnabled(false);
         Kennedy.setEnabled(false);
         final Context ctx = getApplicationContext();
@@ -40,7 +39,7 @@ public class CharacterSelection extends AppCompatActivity
         {
             public void onClick(View v)
             {
-                sprite.pickCharacter(ctx, 14);
+                sprite.pickCharacter(ctx, 12);
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 startActivity(Menu);
             }
@@ -50,7 +49,7 @@ public class CharacterSelection extends AppCompatActivity
         {
             public void onClick(View v)
             {
-                sprite.pickCharacter(ctx, 12);
+                sprite.pickCharacter(ctx, 2);
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 startActivity(Menu);
             }
@@ -60,7 +59,7 @@ public class CharacterSelection extends AppCompatActivity
         {
             public void onClick(View v)
             {
-                sprite.pickCharacter(ctx, 10);
+                sprite.pickCharacter(ctx, 8);
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 startActivity(Menu);
             }
@@ -70,7 +69,7 @@ public class CharacterSelection extends AppCompatActivity
         {
             public void onClick(View v)
             {
-                sprite.pickCharacter(ctx, 6);
+                sprite.pickCharacter(ctx, 4);
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 startActivity(Menu);
             }
@@ -89,7 +88,7 @@ public class CharacterSelection extends AppCompatActivity
         {
             public void onClick(View v)
             {
-                sprite.pickCharacter(ctx, 4);
+                sprite.pickCharacter(ctx, 10);
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 startActivity(Menu);
             }
@@ -107,6 +106,7 @@ public class CharacterSelection extends AppCompatActivity
         {
             public void onClick(View v)
             {
+                sprite.pickCharacter(ctx, 6);
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 startActivity(Menu);
             }
