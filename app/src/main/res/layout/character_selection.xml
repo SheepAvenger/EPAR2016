@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/character_menu"
-    android:background="@drawable/flag">
+    android:background="@drawable/b_flag">
 
     <TextView
         android:text="Pick a Character"
