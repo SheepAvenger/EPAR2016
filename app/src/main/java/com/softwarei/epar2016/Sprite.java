@@ -136,7 +136,7 @@ public class Sprite {
             canvas.drawBitmap(animation2.getImage(), xCurrent2, yCurrent2, null);
         }
         else {
-            canvas.drawBitmap(animation.getImage(), xCurrent, y, null);
+            canvas.drawBitmap(animation.getImage(), xCurrent, yCurrent, null);
         }
     }
 
