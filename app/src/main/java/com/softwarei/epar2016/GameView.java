@@ -35,7 +35,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder){
-        backGround = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.b_flag));
+        backGround = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level0));
         sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_run), 2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_duck2), 2);
         gameLoop = new GameLoop(getHolder(), this);
