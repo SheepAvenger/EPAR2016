@@ -56,19 +56,6 @@
         android:layout_alignBottom="@+id/Washington" />
 
     <ImageButton
-        app:srcCompat="@drawable/_bernie_stand"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp"
-        android:id="@+id/Sanders"
-        android:backgroundTint="@color/colorAccent"
-        android:layout_height="150dp"
-        android:layout_width="45dp"
-        android:layout_alignTop="@+id/Trump"
-        android:layout_toRightOf="@+id/Trump"
-        android:layout_toEndOf="@+id/Trump"
-        android:layout_alignBottom="@+id/Trump" />
-
-    <ImageButton
         app:srcCompat="@drawable/_abe_stand"
         android:id="@+id/Abe"
         android:scaleType="centerCrop"
@@ -117,5 +104,17 @@
         android:layout_toStartOf="@+id/Kennedy"
         android:layout_marginRight="22dp"
         android:layout_marginEnd="22dp" />
+
+    <ImageButton
+        app:srcCompat="@drawable/_bernie_stand"
+        android:id="@+id/Sanders"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_height="150dp"
+        android:layout_width="45dp"
+        android:layout_alignTop="@+id/Trump"
+        android:layout_toRightOf="@+id/Trump"
+        android:layout_toEndOf="@+id/Trump"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp" />
 
 </RelativeLayout>

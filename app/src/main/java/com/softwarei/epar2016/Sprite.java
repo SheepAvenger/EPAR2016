@@ -14,16 +14,18 @@ public class Sprite {
     private long startTime;
     private int xInitial, xNext, xCurrent, y, width, height, xInitial2, xNext2, xCurrent2, y2, width2, height2;
 
-    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2) {
+    private int screenWidth, screenHeight;
 
-        int ground = -30;
+    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2, int screenWidth, int screenHeight) {
         score = 0;
 
         this.height = image.getHeight();
         this.width = image.getWidth()/numberOfFrames;
-        xInitial = 300;
+        this.screenWidth = screenWidth;
+        xInitial = screenWidth/2 - width;
         xCurrent = xInitial;
-        y = GameView.HEIGHT - height + ground;
+        this.screenHeight = screenHeight;
+        y = screenHeight * 3 / 4 - height;
         Bitmap[] playerImage = new Bitmap[numberOfFrames];
         for(int i = 0; i < playerImage.length; i++) {
             playerImage[i] = Bitmap.createBitmap(image, i*width, 0, width, height);
@@ -33,9 +35,9 @@ public class Sprite {
 
         this.height2 = image2.getHeight()/numberOfFrames2;
         this.width2 = image2.getWidth();
-        xInitial2 = xCurrent + width - width2;
+        xInitial2 = screenWidth/2 - width2;
         xCurrent2 = xInitial2;
-        y2 = GameView.HEIGHT - height2 + ground;
+        y2 = screenHeight * 3 / 4 - height2;
         Bitmap[] playerImage2 = new Bitmap[numberOfFrames2];
         for(int i = 0; i < playerImage2.length; i++) {
             playerImage2[i] = Bitmap.createBitmap(image2, 0, i*height2, width2, height2);
@@ -92,14 +94,14 @@ public class Sprite {
         if(jumping) {
             y -= 10;
         }
-        else if(y < 250) {
+        else if(y < (screenHeight * 3 / 4 - height)) {
             y += 10;
         }
         else {
             falling = false;
         }
 
-        if(y < 100) {
+        if(y < (height)) {
             jumping = false;
             falling = true;
         }
