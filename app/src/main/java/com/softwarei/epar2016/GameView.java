@@ -38,8 +38,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder){
         background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level0));
-        sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_run), 2,
-                BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_duck2), 2);
+        sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_washington_run), 2,
+                BitmapFactory.decodeResource(getResources(), R.drawable.c_washington_duck), 2);
         gameLoop = new GameLoop(getHolder(), this);
 
         gameLoop.setRunning(true);

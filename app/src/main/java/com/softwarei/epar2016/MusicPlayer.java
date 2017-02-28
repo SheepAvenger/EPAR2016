@@ -26,14 +26,25 @@ public class MusicPlayer extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        player = MediaPlayer.create(this, R.raw.music_main_menu);
+        int[] songs = {R.raw.music_main_menu};
+        player = MediaPlayer.create(this,songs[0]);
         player.setLooping(true); // Set looping
+
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            public void onCompletion(MediaPlayer mp) {
+                mp.reset();
+                mp.start();
+            }
+        });
 
     }
     public int onStartCommand(Intent intent, int flags, int startId) {
         player.start();
         return START_NOT_STICKY;
     }
+
+
 
     public void onStart(Intent intent, int startId) {
         // TO DO
