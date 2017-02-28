@@ -6,26 +6,23 @@ import android.graphics.Canvas;
 public class Background {
 
     private Bitmap image;
-    private int x, y, dx;
+    private int x;
 
-    public Background(Bitmap res)
-    {
-        image = res;
-        dx = GameView.MOVESPEED;
+    public Background(Bitmap image) {
+        this.image = image;
     }
-    public void update()
-    {
-        x += dx;
+
+    public void update() {
+        x += GameView.MOVESPEED;
         if(x < -GameView.WIDTH){
             x = 0;
         }
     }
-    public void draw(Canvas canvas)
-    {
-        canvas.drawBitmap(image, x, y,null);
-        if(x < 0)
-        {
-            canvas.drawBitmap(image, x + GameView.WIDTH, y, null);
+
+    public void draw(Canvas canvas) {
+        canvas.drawBitmap(image, x, 0, null);
+        if(x < 0) {
+            canvas.drawBitmap(image, x + GameView.WIDTH, 0, null);
         }
     }
 }
