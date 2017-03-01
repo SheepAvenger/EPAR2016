@@ -1,6 +1,5 @@
 package com.softwarei.epar2016;
 
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -14,16 +13,19 @@ public class Sprite {
     private long startTime;
     private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height, xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
 
-    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2) {
+    private int screenWidth, screenHeight;
+    
+    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2 int screenWidth, int screenHeight) {
 
-        int ground = -30;
         score = 0;
 
         this.height = image.getHeight();
         this.width = image.getWidth()/numberOfFrames;
-        xInitial = 300;
+        this.screenWidth = screenWidth;
+        xInitial = screenWidth/2 - width;
         xCurrent = xInitial;
-        yInitial = GameView.HEIGHT - height + ground;
+        this.screenHeight = screenHeight;
+        yInitial = screenHeight * 3 / 4 - height;
         yCurrent = yInitial;
         Bitmap[] playerImage = new Bitmap[numberOfFrames];
         for(int i = 0; i < playerImage.length; i++) {
@@ -34,9 +36,9 @@ public class Sprite {
 
         this.height2 = image2.getHeight()/numberOfFrames2;
         this.width2 = image2.getWidth();
-        xInitial2 = xCurrent + width - width2;
+        xInitial2 = screenWidth/2 - width2;
         xCurrent2 = xInitial2;
-        yInitial2 = GameView.HEIGHT - height2 + ground;
+        yInitial2 = screenHeight * 3 / 4 - height2;
         yCurrent2 = yInitial2;
         Bitmap[] playerImage2 = new Bitmap[numberOfFrames2];
         for(int i = 0; i < playerImage2.length; i++) {
@@ -105,7 +107,7 @@ public class Sprite {
             falling = false;
         }
 
-        if(yCurrent < 100) {
+        if(yCurrent < height) {
             jumping = false;
             falling = true;
         }
