@@ -18,6 +18,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public static final int HEIGHT = 480;
     public static int MOVESPEED = -5;
     private int level;
+    private String levelString;
     private long gameStartTime;
     private long jumpButtonTime;
     private GameLoop gameLoop;
@@ -105,7 +106,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(30);
         canvas.drawText("Scandal: " + scandalCount, 10, 30, paint);
         canvas.drawText("Score: " + sprite.getScore(), 300, 30, paint);
-        //canvas.drawText("Best: " + best, 600, 10, paint);
+        canvas.drawText("Year: " + levelString, 300, 475, paint);
+        //canvas.drawText("Best: " + best, 600, 30, paint);
         if(!sprite.getPlaying()) {
             Paint paint1 = new Paint();
             paint1.setColor(Color.WHITE);

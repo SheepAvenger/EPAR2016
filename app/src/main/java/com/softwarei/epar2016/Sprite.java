@@ -12,7 +12,7 @@ public class Sprite {
     private Animation animation2 = new Animation();
 
     private long startTime;
-    private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height, xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
+    private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height, xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2, jumpHeight;
 
     public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2) {
 
@@ -50,7 +50,9 @@ public class Sprite {
 
     public void setJumping(long jumpButtonTime) {
         if(!ducking) {
-            System.out.println("jumpButtonTime: " + jumpButtonTime / 1000000);
+            int jumpHeightAddition = (int)(jumpButtonTime / 100000000) * 5;
+            System.out.println("jumpHeightAddition: " + jumpHeightAddition);
+            jumpHeight = 50 - jumpHeightAddition;
             jumping = true;
         }
     }
@@ -105,7 +107,7 @@ public class Sprite {
             falling = false;
         }
 
-        if(yCurrent < 100) {
+        if(yCurrent < jumpHeight) {
             jumping = false;
             falling = true;
         }
@@ -153,9 +155,9 @@ public class Sprite {
     }
 
     public void setPlaying(boolean playing) {
-        xCurrent = xInitial;
+        //xCurrent = xInitial;
         xNext = xInitial - 50;
-        xCurrent2 = xInitial2;
+        //xCurrent2 = xInitial2;
         xNext2 = xInitial2 - 50;
         this.playing = playing;
     }
