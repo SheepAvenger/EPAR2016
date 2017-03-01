@@ -22,17 +22,11 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+
         Intent music = new Intent(MainMenu.this, MusicPlayer.class);
         music.putExtra("MainMenu", 1);
         startService(music);
 
-       /*mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-            public void onCompletion(MediaPlayer mp) {
-
-                mp.start();
-            }
-        });*/
 
         ImageButton button;
         button=(ImageButton)findViewById(R.id.HighScoresMenu);

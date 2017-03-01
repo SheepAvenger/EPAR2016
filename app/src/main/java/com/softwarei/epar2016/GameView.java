@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
-
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
     public static final int MOVESPEED = -5;
@@ -20,16 +19,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Sprite sprite;
     private int scandalCount;
 
-    private int screenWidth;
-    private int screenHeight;
-
-    public GameView(Context context, int screenWidth, int screenHeight) {
+    public GameView(Context context) {
         super(context);
         getHolder().addCallback(this);
         setFocusable(true);
-
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
     }
 
     @Override
@@ -44,10 +37,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder){
-        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level0), screenWidth, screenHeight);
-        sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_run), 2,
-                BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_duck2), 2,
-                screenWidth, screenHeight);
+        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level0));
+        sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_washington_run), 2,
+                BitmapFactory.decodeResource(getResources(), R.drawable.c_washington_duck), 2);
         gameLoop = new GameLoop(getHolder(), this);
 
         gameLoop.setRunning(true);
@@ -98,8 +90,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        final float scaleFactorX = getWidth()/(WIDTH*1.f);
+        final float scaleFactorY = getHeight()/(HEIGHT*1.f);
         if (canvas != null) {
             final int savedState = canvas.save();
+            canvas.scale(scaleFactorX, scaleFactorY);
             background.draw(canvas);
             sprite.draw(canvas);
 
