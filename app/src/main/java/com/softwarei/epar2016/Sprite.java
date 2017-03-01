@@ -23,11 +23,9 @@ public class Sprite {
 
         this.height = image.getHeight();
         this.width = image.getWidth()/numberOfFrames;
-        this.screenWidth = screenWidth;
-        xInitial = screenWidth/2 - width;
+        xInitial = 300;
         xCurrent = xInitial;
-        this.screenHeight = screenHeight;
-        yInitial = screenHeight * 3 / 4 - height;
+        yInitial = GameView.HEIGHT - height + ground;
         yCurrent = yInitial;
         Bitmap[] playerImage = new Bitmap[numberOfFrames];
         for(int i = 0; i < playerImage.length; i++) {
@@ -39,9 +37,9 @@ public class Sprite {
 
         this.height2 = image2.getHeight()/numberOfFrames2;
         this.width2 = image2.getWidth();
-        xInitial2 = screenWidth/2 - width2;
+        xInitial2 = xCurrent + width - width2;
         xCurrent2 = xInitial2;
-        yInitial2 = screenHeight * 3 / 4 - height2;
+        yInitial2 = GameView.HEIGHT - height2 + ground;
         yCurrent2 = yInitial2;
         Bitmap[] playerImage2 = new Bitmap[numberOfFrames2];
         for(int i = 0; i < playerImage2.length; i++) {
