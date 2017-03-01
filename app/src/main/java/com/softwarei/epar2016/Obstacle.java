@@ -29,6 +29,6 @@ public class Obstacle {
     }
 
     public Rect getRectangle(){
-        return new Rect(x, y, x + width, y + height);
+        return new Rect(x + 30, y, x + width, y + height);
     }
 }

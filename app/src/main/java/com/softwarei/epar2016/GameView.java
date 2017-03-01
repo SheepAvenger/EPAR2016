@@ -2,7 +2,10 @@ package com.softwarei.epar2016;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.BitmapFactory;
@@ -10,11 +13,11 @@ import android.graphics.BitmapFactory;
 import java.util.ArrayList;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
-    // branch_test
+
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
     public static int MOVESPEED = -5;
-    int level;
+    private int level;
     private long gameStartTime;
     private long jumpButtonTime;
     private GameLoop gameLoop;
@@ -53,8 +56,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder){
         background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level0));
-        sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_washington_run), 2,
-                BitmapFactory.decodeResource(getResources(), R.drawable.c_washington_duck), 2);
+        sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_run), 2,
+                BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_duck2), 2);
+        obstacles = new ArrayList<Obstacle>();
         gameLoop = new GameLoop(getHolder(), this);
 
         gameLoop.setRunning(true);
@@ -95,25 +99,37 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         return false;
     }
 
+    public void drawText(Canvas canvas) {
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(30);
+        canvas.drawText("Scandal: " + scandalCount, 10, 30, paint);
+        canvas.drawText("Score: " + sprite.getScore(), 300, 30, paint);
+        //canvas.drawText("Best: " + best, 600, 10, paint);
+        if(!sprite.getPlaying()) {
+            Paint paint1 = new Paint();
+            paint1.setColor(Color.WHITE);
+            paint1.setTextSize(40);
+            canvas.drawText("Tap JUMP or DUCK to start", WIDTH / 3, HEIGHT / 2, paint1);
+
+        }
+    }
+
     public void update() {
         if (sprite.getPlaying()){
             background.update();
             sprite.update();
 
             long timeElapsed = (System.nanoTime()-gameStartTime)/1000000;
-            if(timeElapsed >(2000 - sprite.getScore()/4)){
-                obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(),R.drawable.o_donkey),WIDTH + 10, HEIGHT/2));
+            if(timeElapsed >(5000 - sprite.getScore()/4)){
+                obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(),R.drawable.o_donkey),WIDTH + 10, HEIGHT - HEIGHT/4));
                 gameStartTime = System.nanoTime();
             }
 
-            //loop through every missile and check collision and remove
-            for(int i = 0; i< obstacles.size(); i++)
-            {
-                //update missile
+            for(int i = 0; i< obstacles.size(); i++) {
                 obstacles.get(i).update();
 
-                if(collision(obstacles.get(i),sprite))
-                {
+                if(collision(obstacles.get(i),sprite)) {
                     sprite.setCollision();
 
                     obstacles.remove(i);
@@ -121,16 +137,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 
 
-//                    break;
                 }
                 if(scandalCount >= 3 && !sprite.getCollision()) {
                     sprite.setPlaying(false);
                     scandalCount = 0;
                     sprite.setRecovery();
                 }
-                //remove missile if it is way off the screen
-                if(obstacles.get(i).getX()<-100)
-                {
+
+                if(obstacles.get(i).getX()<-100) {
                     obstacles.remove(i);
                     break;
                 }
@@ -148,7 +162,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             canvas.scale(scaleFactorX, scaleFactorY);
             background.draw(canvas);
             sprite.draw(canvas);
-
+            for(Obstacle o: obstacles) {
+                o.draw(canvas);
+            }
+            drawText(canvas);
             canvas.restoreToCount(savedState);
         }
     }

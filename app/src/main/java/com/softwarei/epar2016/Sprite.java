@@ -30,7 +30,7 @@ public class Sprite {
             playerImage[i] = Bitmap.createBitmap(image, i*width, 0, width, height);
         }
         animation.setFrames(playerImage);
-        animation.setDelay(10);
+        animation.setDelay(100);
 
         this.height2 = image2.getHeight()/numberOfFrames2;
         this.width2 = image2.getWidth();
@@ -43,7 +43,7 @@ public class Sprite {
             playerImage2[i] = Bitmap.createBitmap(image2, 0, i*height2, width2, height2);
         }
         animation2.setFrames(playerImage2);
-        animation2.setDelay(10);
+        animation2.setDelay(100);
 
         startTime = System.nanoTime();
     }
