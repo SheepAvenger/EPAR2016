@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 public class CharacterSelection extends AppCompatActivity
 {
     private Bitmap character[];
+    private MusicPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 sprite.pickCharacter(ctx, 12);
+                mp = new MusicPlayer();
+                mp.play(ctx);
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 startActivity(Menu);
             }

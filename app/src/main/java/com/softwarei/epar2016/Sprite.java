@@ -1,22 +1,22 @@
 package com.softwarei.epar2016;
 
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
 public class Sprite {
     private int score;
-    private boolean jumping, falling, ducking, playing, collision;
+    private boolean jumping, falling, ducking, playing, collision, recovery;
     private Animation animation = new Animation();
     private Animation animation2 = new Animation();
 
     private long startTime;
-    private int xInitial, xNext, xCurrent, y, width, height, xInitial2, xNext2, xCurrent2, y2, width2, height2;
+    private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height, xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
 
     private int screenWidth, screenHeight;
+    
+    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2 int screenWidth, int screenHeight) {
 
-    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2, int screenWidth, int screenHeight) {
         score = 0;
 
         this.height = image.getHeight();
@@ -25,7 +25,8 @@ public class Sprite {
         xInitial = screenWidth/2 - width;
         xCurrent = xInitial;
         this.screenHeight = screenHeight;
-        y = screenHeight * 3 / 4 - height;
+        yInitial = screenHeight * 3 / 4 - height;
+        yCurrent = yInitial;
         Bitmap[] playerImage = new Bitmap[numberOfFrames];
         for(int i = 0; i < playerImage.length; i++) {
             playerImage[i] = Bitmap.createBitmap(image, i*width, 0, width, height);
@@ -37,7 +38,8 @@ public class Sprite {
         this.width2 = image2.getWidth();
         xInitial2 = screenWidth/2 - width2;
         xCurrent2 = xInitial2;
-        y2 = screenHeight * 3 / 4 - height2;
+        yInitial2 = screenHeight * 3 / 4 - height2;
+        yCurrent2 = yInitial2;
         Bitmap[] playerImage2 = new Bitmap[numberOfFrames2];
         for(int i = 0; i < playerImage2.length; i++) {
             playerImage2[i] = Bitmap.createBitmap(image2, 0, i*height2, width2, height2);
@@ -77,6 +79,10 @@ public class Sprite {
         return collision;
     }
 
+    public void setRecovery() {
+        recovery = true;
+    }
+
     public void update() {
         long elapsed = (System.nanoTime() - startTime) / 1000000;
         if(elapsed > 100) {
@@ -92,16 +98,16 @@ public class Sprite {
         }
 
         if(jumping) {
-            y -= 10;
+            yCurrent -= 10;
         }
-        else if(y < (screenHeight * 3 / 4 - height)) {
-            y += 10;
+        else if(yCurrent < yInitial) {
+            yCurrent += 10;
         }
         else {
             falling = false;
         }
 
-        if(y < (height)) {
+        if(yCurrent < height) {
             jumping = false;
             falling = true;
         }
@@ -111,7 +117,6 @@ public class Sprite {
             xCurrent2 += GameView.MOVESPEED;
             if(xCurrent <= xNext) {
                 xNext -= 50;
-                //collision = false;
             }
             if(xCurrent2 <= xNext2) {
                 xNext2 -= 50;
@@ -119,14 +124,21 @@ public class Sprite {
             }
         }
 
+        if(recovery) {
+            xCurrent -= GameView.MOVESPEED;
+            xCurrent2 -= GameView.MOVESPEED;
+            if(xCurrent >= xInitial) {
+                recovery = false;
+            }
+        }
     }
 
     public void draw(Canvas canvas) {
         if(ducking){
-            canvas.drawBitmap(animation2.getImage(), xCurrent2, y2, null);
+            canvas.drawBitmap(animation2.getImage(), xCurrent2, yCurrent2, null);
         }
         else {
-            canvas.drawBitmap(animation.getImage(), xCurrent, y, null);
+            canvas.drawBitmap(animation.getImage(), xCurrent, yCurrent, null);
         }
     }
 
@@ -156,10 +168,10 @@ public class Sprite {
 
     public Rect getRectangle() {
         if(ducking){
-            return new Rect(xCurrent2, y2, xCurrent2+width2, y2+height2);
+            return new Rect(xCurrent2, yCurrent2, xCurrent2+width2, yCurrent2+height2);
         }
         else {
-            return new Rect(xCurrent, y, xCurrent+width, y+height);
+            return new Rect(xCurrent, yCurrent, xCurrent+width, yCurrent+height);
         }
 
     }
