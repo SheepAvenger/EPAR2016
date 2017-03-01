@@ -10,6 +10,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.view.WindowManager;
+import android.view.Display;
+import android.graphics.Point;
 
 public class MainGame extends Activity implements View.OnTouchListener {
 
@@ -28,7 +30,10 @@ public class MainGame extends Activity implements View.OnTouchListener {
         jumpButton.setOnTouchListener(this);
         Button pauseButton = (Button)findViewById(R.id.Pause);
         pauseButton.setOnTouchListener(this);
-        gameView = new GameView(this);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point resolution = new Point();
+        display.getSize(resolution);
+        gameView = new GameView(this, resolution.x, resolution.y);
         frameLayout.addView(gameView);
     }
 
