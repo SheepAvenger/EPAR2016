@@ -28,29 +28,29 @@ public class Scores extends AppCompatActivity
         FILE = "scores.txt";
         scores = new HighScore[10];
         scoreString = new String[10];
-          try
+        try
+        {
+            FileInputStream is = ctx.openFileInput(FILE);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            if(is != null)
             {
-                FileInputStream is = ctx.openFileInput(FILE);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                if(is != null)
+                while (i != 10)
                 {
-                    while (i != 10)
-                    {
-                        scoreString[i] = reader.readLine();
-                        HighScore s = new HighScore();
-                        String parse[] = scoreString[i].split(" ");
-                        s.name = parse[0];
-                        s.score = Integer.parseInt(parse[1]);
-                        scores[i] = s;
-                        i++;
-                    }
+                    scoreString[i] = reader.readLine();
+                    HighScore s = new HighScore();
+                    String parse[] = scoreString[i].split(" ");
+                    s.name = parse[0];
+                    s.score = Integer.parseInt(parse[1]);
+                    scores[i] = s;
+                    i++;
                 }
-
             }
-            catch(IOException e)
-            {
 
-            }
+        }
+        catch(IOException e)
+        {
+
+        }
 
     }
 
