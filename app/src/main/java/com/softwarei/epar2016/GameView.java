@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.BitmapFactory;
@@ -17,7 +16,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
     public static int MOVESPEED = -5;
-    private int level;
+    private Level level;
     private String levelString;
     private long gameStartTime;
     private long jumpButtonTime;
@@ -26,11 +25,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Sprite sprite;
     private ArrayList<Obstacle> obstacles;
     private int scandalCount;
+    private Scores scores;
 
     public GameView(Context context) {
         super(context);
         getHolder().addCallback(this);
         setFocusable(true);
+        level = new Level(context);
     }
 
     @Override
@@ -41,27 +42,26 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder holder){
         boolean retry = true;
-        int counter = 0;
-        while(retry && counter<1000) {
-            counter++;
-            try{gameLoop.setRunning(false);
+        gameLoop.setRunning(false);
+        while(retry) {
+            try {
                 gameLoop.join();
                 retry = false;
-                gameLoop = null;
-
-            }catch(InterruptedException e){e.printStackTrace();}
-
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder){
-        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level0));
+
+        level.setLevel();
+        background = new Background(level.getBackground());
         sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_run), 2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_duck2), 2);
         obstacles = new ArrayList<Obstacle>();
         gameLoop = new GameLoop(getHolder(), this);
-
         gameLoop.setRunning(true);
         gameLoop.start();
     }
@@ -106,7 +106,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(30);
         canvas.drawText("Scandal: " + scandalCount, 10, 30, paint);
         canvas.drawText("Score: " + sprite.getScore(), 300, 30, paint);
-        canvas.drawText("Year: " + levelString, 300, 475, paint);
         //canvas.drawText("Best: " + best, 600, 30, paint);
         if(!sprite.getPlaying()) {
             Paint paint1 = new Paint();

@@ -42,7 +42,7 @@ public class CharacterSelection extends AppCompatActivity
             {
                 sprite.pickCharacter(ctx, 12);
                 mp = new MusicPlayer();
-                mp.play(ctx);
+//                mp.play(ctx);
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 startActivity(Menu);
             }
