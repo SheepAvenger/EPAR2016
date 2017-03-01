@@ -19,7 +19,7 @@ public class Sprite {
         punishLength = 70;
         int ground = -30;
         score = 0;
-
+//
         this.height = image.getHeight();
         this.width = image.getWidth()/numberOfFrames;
         xInitial = 300;
