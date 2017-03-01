@@ -10,7 +10,7 @@ import android.graphics.BitmapFactory;
 import java.util.ArrayList;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
-
+    // branch_test
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
     public static int MOVESPEED = -5;
