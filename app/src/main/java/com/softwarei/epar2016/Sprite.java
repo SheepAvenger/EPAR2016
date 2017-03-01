@@ -7,15 +7,17 @@ import android.graphics.Rect;
 public class Sprite {
     private int score;
     private boolean jumping, falling, ducking, playing, collision, recovery;
-    private Animation animation = new Animation();
-    private Animation animation2 = new Animation();
+    private Animation animation, animation2;
 
     private long startTime;
-    private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height, xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
+    private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height;
+    private int xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
+    private int jumpHeight, punishLength;
 
-    private int screenWidth, screenHeight;
-    
-    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2, int screenWidth, int screenHeight) {
+
+    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2) {
+        punishLength = 70;
+        int ground = -30;
 
         score = 0;
 
@@ -31,8 +33,9 @@ public class Sprite {
         for(int i = 0; i < playerImage.length; i++) {
             playerImage[i] = Bitmap.createBitmap(image, i*width, 0, width, height);
         }
+        animation = new Animation();
         animation.setFrames(playerImage);
-        animation.setDelay(10);
+        animation.setDelay(100);
 
         this.height2 = image2.getHeight()/numberOfFrames2;
         this.width2 = image2.getWidth();
@@ -44,15 +47,18 @@ public class Sprite {
         for(int i = 0; i < playerImage2.length; i++) {
             playerImage2[i] = Bitmap.createBitmap(image2, 0, i*height2, width2, height2);
         }
+        animation2 = new Animation();
         animation2.setFrames(playerImage2);
-        animation2.setDelay(10);
+        animation2.setDelay(100);
 
         startTime = System.nanoTime();
     }
 
     public void setJumping(long jumpButtonTime) {
         if(!ducking) {
-            System.out.println("jumpButtonTime: " + jumpButtonTime / 1000000);
+            int jumpHeightAddition = (int)(jumpButtonTime / 100000000) * 5;
+            System.out.println("jumpHeightAddition: " + jumpHeightAddition);
+            jumpHeight = 50 - jumpHeightAddition;
             jumping = true;
         }
     }
@@ -107,7 +113,8 @@ public class Sprite {
             falling = false;
         }
 
-        if(yCurrent < height) {
+        if(yCurrent < jumpHeight) {
+
             jumping = false;
             falling = true;
         }
@@ -116,10 +123,10 @@ public class Sprite {
             xCurrent += GameView.MOVESPEED;
             xCurrent2 += GameView.MOVESPEED;
             if(xCurrent <= xNext) {
-                xNext -= 50;
+                xNext -= punishLength;
             }
             if(xCurrent2 <= xNext2) {
-                xNext2 -= 50;
+                xNext2 -= punishLength;
                 collision = false;
             }
         }
@@ -155,10 +162,10 @@ public class Sprite {
     }
 
     public void setPlaying(boolean playing) {
-        xCurrent = xInitial;
-        xNext = xInitial - 50;
-        xCurrent2 = xInitial2;
-        xNext2 = xInitial2 - 50;
+        //xCurrent = xInitial;
+        xNext = xInitial - punishLength;
+        //xCurrent2 = xInitial2;
+        xNext2 = xInitial2 - punishLength;
         this.playing = playing;
     }
 
