@@ -15,7 +15,7 @@ public class Sprite {
 
     private int screenWidth, screenHeight;
     
-    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2 int screenWidth, int screenHeight) {
+    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2, int screenWidth, int screenHeight) {
 
         score = 0;
 
