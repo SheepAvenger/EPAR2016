@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,6 +29,32 @@ public class Scores extends AppCompatActivity
         FILE = "scores.txt";
         scores = new HighScore[10];
         scoreString = new String[10];
+
+        String File = "data/data/com.softwarei.epar2016/scores.txt";
+
+        try
+        {
+            File scoreList = new File(File);
+            if(scoreList.createNewFile())
+            {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput("scores.txt", this.MODE_PRIVATE));
+                outputStreamWriter.write("a 500");
+                outputStreamWriter.write("b 450");
+                outputStreamWriter.write("c 400");
+                outputStreamWriter.write("d 350");
+                outputStreamWriter.write("e 300");
+                outputStreamWriter.write("f 250");
+                outputStreamWriter.write("g 200");
+                outputStreamWriter.write("h 150");
+                outputStreamWriter.write("i 100");
+                outputStreamWriter.write("j 50");
+                outputStreamWriter.close();
+
+            }
+
+        }
+        catch(IOException e){};
+
           try
             {
                 FileInputStream is = ctx.openFileInput(FILE);

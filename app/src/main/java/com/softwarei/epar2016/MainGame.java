@@ -3,6 +3,7 @@ package com.softwarei.epar2016;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,10 +17,13 @@ import android.graphics.Point;
 public class MainGame extends Activity implements View.OnTouchListener {
 
     GameView gameView;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        index = intent.getIntExtra("run", 0);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_game);
@@ -30,21 +34,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
         jumpButton.setOnTouchListener(this);
         Button pauseButton = (Button)findViewById(R.id.Pause);
         pauseButton.setOnTouchListener(this);
-        gameView = new GameView(this);
-        frameLayout.addView(gameView);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setContentView(R.layout.activity_main_game);
-        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
-        Button duckButton = (Button)findViewById(R.id.Duck);
-        duckButton.setOnTouchListener(this);
-        Button jumpButton = (Button)findViewById(R.id.Jump);
-        jumpButton.setOnTouchListener(this);
-        Button pauseButton = (Button)findViewById(R.id.Pause);
-        pauseButton.setOnTouchListener(this);
         gameView = new GameView(this);
         frameLayout.addView(gameView);
     }
@@ -79,5 +69,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
         }
         return true;
     }
+
+    public MainGame(){};
 }
 
