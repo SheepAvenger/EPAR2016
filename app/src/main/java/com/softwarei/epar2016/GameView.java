@@ -17,7 +17,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
-    public static int MOVESPEED = -8;
+    public static int MOVESPEED = -6;
     private Level level;
     private String levelString;
     private CharacterSelection cS;
@@ -84,7 +84,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void jumpButtonUp() {
-        if(!sprite.getJumping() && !sprite.getFalling()) {
+        if(!sprite.getJumping()) {
             sprite.setJumping(System.nanoTime()-jumpButtonTime);
         }
     }
@@ -94,7 +94,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         {
             sprite.setPlaying(true);
         }
-        if(!sprite.getJumping() && !sprite.getFalling()) {
+        if(!sprite.getJumping()) {
             sprite.setDucking(true);
         }
     }

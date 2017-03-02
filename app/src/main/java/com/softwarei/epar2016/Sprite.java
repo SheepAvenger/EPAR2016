@@ -6,7 +6,7 @@ import android.graphics.Rect;
 
 public class Sprite {
     private int score;
-    private boolean jumping, falling, ducking, playing, collision, recovery;
+    private boolean jumping, ducking, playing, collision, recovery;
     private Animation animation, animation2;
 
     private long startTime;
@@ -57,7 +57,7 @@ public class Sprite {
 
             int jumpHeightAddition = (int)(jumpButtonTime / 1000000000);
             System.out.println("jumpHeightAddition: " + jumpHeightAddition);
-            jumpForceInitial = 16 + jumpHeightAddition*4;
+            jumpForceInitial = 20 + jumpHeightAddition * 5;
             jumpForce = jumpForceInitial;
             jumping = true;
         }
@@ -67,12 +67,8 @@ public class Sprite {
         return jumping;
     }
 
-    public boolean getFalling() {
-        return falling;
-    }
-
     public void setDucking(boolean ducking) {
-        if(!jumping || !falling) {
+        if(!jumping) {
             this.ducking = ducking;
         }
     }
@@ -104,21 +100,12 @@ public class Sprite {
         }
 
         if(jumping) {
-            yCurrent -= jumpForce*2;
+            yCurrent -= jumpForce;
             jumpForce--;
-            //yCurrent -= 10;
-        }
-        else if(yCurrent < yInitial) {
-            //yCurrent += 10;
-        }
-        else {
-            //falling = false;
         }
 
-        if(jumpForce <= -jumpForceInitial && yCurrent > yInitial) {
-
+        if(jumpForce <= -jumpForceInitial && yInitial <= yCurrent) {
             jumping = false;
-            //falling = true;
         }
 
         if(collision) {
@@ -134,8 +121,8 @@ public class Sprite {
         }
 
         if(recovery) {
-            xCurrent -= GameView.MOVESPEED;
-            xCurrent2 -= GameView.MOVESPEED;
+            xCurrent -= -1;
+            xCurrent2 -= -1;
             if(xCurrent >= xInitial) {
                 recovery = false;
             }
@@ -152,7 +139,7 @@ public class Sprite {
     }
 
     public int getScore() {
-        return (this.score * 3);
+        return (this.score);
     }
 
     public void setScore(int score) {
