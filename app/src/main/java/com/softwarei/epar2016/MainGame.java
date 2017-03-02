@@ -30,9 +30,12 @@ public class MainGame extends Activity implements View.OnTouchListener {
         jumpButton.setOnTouchListener(this);
         Button pauseButton = (Button)findViewById(R.id.Pause);
         pauseButton.setOnTouchListener(this);
-
+        Button resumeButton = (Button)findViewById(R.id.Resume);
+        resumeButton.setOnTouchListener(this);
         gameView = new GameView(this, index);
         frameLayout.addView(gameView);
+        running = (RelativeLayout)findViewById(R.id.gameRunning);
+        paused = (RelativeLayout)findViewById(R.id.gamePaused);
     }
 
     @Override
@@ -56,8 +59,16 @@ public class MainGame extends Activity implements View.OnTouchListener {
                 break;
             case R.id.Pause:
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    //Intent intent = new Intent(this, .class);
-                    //startActivity(intent);
+                    running.setVisibility(View.INVISIBLE);
+                    paused.setVisibility(View.VISIBLE);
+                    gameView.pauseButtonUp();
+                }
+                break;
+            case R.id.Resume:
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    paused.setVisibility(View.INVISIBLE);
+                    running.setVisibility(View.VISIBLE);
+                    gameView.resumeButtonUp();
                 }
                 break;
             default:

@@ -108,6 +108,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void duckButtonUp() {
         sprite.setDucking(false);
     }
+    
+    public void pauseButtonUp() {
+        gameLoop.setRunning(false);
+    }
+
+    public void resumeButtonUp() {
+        gameLoop.setRunning(true);
+        gameLoop.start();
+    }
+
 
     public boolean collision(Obstacle o, Sprite s) {
         if(Rect.intersects(o.getRectangle(), s.getRectangle())) {
