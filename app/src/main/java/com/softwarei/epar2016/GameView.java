@@ -19,6 +19,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public static final int HEIGHT = 480;
     public static int MOVESPEED = -6;
     private Level level;
+    private Character character;
     private String levelString;
     private CharacterSelection cS;
     private long timing;
@@ -31,12 +32,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap scandal;
     private int scandalCount;
     private Scores scores;
+    private int index;
+    private Context ctx;
 
-    public GameView(Context context) {
+    public GameView(Context context, int i) {
         super(context);
+        ctx = context;
         getHolder().addCallback(this);
         setFocusable(true);
+        index = i;
         level = new Level(context);
+        character = new Character(context);
     }
 
     @Override
@@ -64,8 +70,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         background = new Background(level.getBackground());
         level.setLevel();
-        sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_run), 2,
-                BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_duck2), 2);
+        sprite = new Sprite(index, 2, 2, WIDTH, HEIGHT, ctx);
 
         obstacles = new ArrayList<Obstacle>();
         obstacle = BitmapFactory.decodeResource(getResources(), R.drawable.o_donkey);

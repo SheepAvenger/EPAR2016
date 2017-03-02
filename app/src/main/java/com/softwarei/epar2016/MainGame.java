@@ -35,7 +35,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
         Button pauseButton = (Button)findViewById(R.id.Pause);
         pauseButton.setOnTouchListener(this);
 
-        gameView = new GameView(this);
+        gameView = new GameView(this, index);
         frameLayout.addView(gameView);
     }
 

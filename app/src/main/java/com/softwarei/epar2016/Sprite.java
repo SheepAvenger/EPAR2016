@@ -1,5 +1,6 @@
 package com.softwarei.epar2016;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -13,23 +14,30 @@ public class Sprite {
     private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height;
     private int xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
     private int jumpForceInitial, jumpForce, punishLength;
+    private Bitmap image1;
+    private Bitmap image2;
 
 
-    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2) {
+    public Sprite(int index, int numberOfFrames, int numberOfFrames2, int screenWidth, int screenHeight, Context context) {
         punishLength = 70;
         int ground = -20;
-
         score = 0;
 
-        this.height = image.getHeight();
-        this.width = image.getWidth()/numberOfFrames;
+        Character sprites = new Character(context);
+        sprites.setIndex(index);
+        image1 = sprites.getCharacter();
+        sprites.setIndex(index+1);
+        image2 = sprites.getCharacter();
+
+        this.height = image1.getHeight();
+        this.width = image1.getWidth()/numberOfFrames;
         xInitial = 300;
         xCurrent = xInitial;
         yInitial = GameView.HEIGHT - height + ground;
         yCurrent = yInitial;
         Bitmap[] playerImage = new Bitmap[numberOfFrames];
         for(int i = 0; i < playerImage.length; i++) {
-            playerImage[i] = Bitmap.createBitmap(image, i*width, 0, width, height);
+            playerImage[i] = Bitmap.createBitmap(image1, i*width, 0, width, height);
         }
         animation = new Animation();
         animation.setFrames(playerImage);
