@@ -12,7 +12,7 @@ public class Sprite {
     private long startTime;
     private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height;
     private int xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
-    private int jumpHeight, punishLength;
+    private int jumpForceInitial, jumpForce, punishLength;
 
 
     public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2) {
@@ -54,9 +54,11 @@ public class Sprite {
 
     public void setJumping(long jumpButtonTime) {
         if(!ducking) {
-            int jumpHeightAddition = (int)(jumpButtonTime / 100000000) * 5;
+
+            int jumpHeightAddition = (int)(jumpButtonTime / 1000000000);
             System.out.println("jumpHeightAddition: " + jumpHeightAddition);
-            jumpHeight = 50 - jumpHeightAddition;
+            jumpForceInitial = 16 + jumpHeightAddition*4;
+            jumpForce = jumpForceInitial;
             jumping = true;
         }
     }
@@ -102,19 +104,21 @@ public class Sprite {
         }
 
         if(jumping) {
-            yCurrent -= 10;
+            yCurrent -= jumpForce*2;
+            jumpForce--;
+            //yCurrent -= 10;
         }
         else if(yCurrent < yInitial) {
-            yCurrent += 10;
+            //yCurrent += 10;
         }
         else {
-            falling = false;
+            //falling = false;
         }
 
-        if(yCurrent < jumpHeight) {
+        if(jumpForce <= -jumpForceInitial && yCurrent > yInitial) {
 
             jumping = false;
-            falling = true;
+            //falling = true;
         }
 
         if(collision) {

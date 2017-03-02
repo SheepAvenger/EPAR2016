@@ -5,7 +5,7 @@ import android.view.SurfaceHolder;
 
 public class GameLoop extends Thread
 {
-    private int FPS = 30;
+    private int FPS = 60;
     private double averageFPS;
     private SurfaceHolder surfaceHolder;
     private GameView gameView;
