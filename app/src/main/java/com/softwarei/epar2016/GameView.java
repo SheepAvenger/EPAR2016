@@ -29,6 +29,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private ArrayList<Obstacle> obstacles;
     private Bitmap obstacle;
     private Bitmap scandal;
+    private Bitmap noScandal;
     private int scandalCount;
     private Scores scores;
     private int index;
@@ -74,6 +75,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         obstacles = new ArrayList<Obstacle>();
         obstacle = BitmapFactory.decodeResource(getResources(), R.drawable.o_donkey);
         scandal = BitmapFactory.decodeResource(getResources(), R.drawable.scandal);
+        noScandal = BitmapFactory.decodeResource(getResources(), R.drawable.no_scandal);
 
         gameLoop = new GameLoop(getHolder(), this);
         gameLoop.setRunning(true);
@@ -131,8 +133,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void drawScandal(Canvas canvas) {
+        for(int i = 3; i > scandalCount; i--) {
+            canvas.drawBitmap(noScandal, i * 80 - 70, 10, null);
+        }
         for(int i = 0; i < scandalCount; i++) {
-            canvas.drawBitmap(scandal, 10 + i * 80, 10, null);
+            canvas.drawBitmap(scandal, i * 80 + 10, 10, null);
         }
     }
 
