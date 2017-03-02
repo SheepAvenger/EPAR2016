@@ -1,18 +1,14 @@
 package com.softwarei.epar2016;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.view.WindowManager;
-import android.view.Display;
-import android.graphics.Point;
 
 public class MainGame extends Activity implements View.OnTouchListener {
 
@@ -34,9 +30,12 @@ public class MainGame extends Activity implements View.OnTouchListener {
         jumpButton.setOnTouchListener(this);
         Button pauseButton = (Button)findViewById(R.id.Pause);
         pauseButton.setOnTouchListener(this);
-
-        gameView = new GameView(this);
+        Button resumeButton = (Button)findViewById(R.id.Resume);
+        resumeButton.setOnTouchListener(this);
+        gameView = new GameView(this, index);
         frameLayout.addView(gameView);
+        running = (RelativeLayout)findViewById(R.id.gameRunning);
+        paused = (RelativeLayout)findViewById(R.id.gamePaused);
     }
 
     @Override
@@ -60,8 +59,16 @@ public class MainGame extends Activity implements View.OnTouchListener {
                 break;
             case R.id.Pause:
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    //Intent intent = new Intent(this, .class);
-                    //startActivity(intent);
+                    running.setVisibility(View.INVISIBLE);
+                    paused.setVisibility(View.VISIBLE);
+                    gameView.pauseButtonUp();
+                }
+                break;
+            case R.id.Resume:
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    paused.setVisibility(View.INVISIBLE);
+                    running.setVisibility(View.VISIBLE);
+                    gameView.resumeButtonUp();
                 }
                 break;
             default:

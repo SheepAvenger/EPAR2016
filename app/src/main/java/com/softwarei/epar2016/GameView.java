@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.BitmapFactory;
@@ -19,6 +18,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public static final int HEIGHT = 480;
     public static int MOVESPEED = -6;
     private Level level;
+    private Character character;
     private String levelString;
     private CharacterSelection cS;
     private long timing;
@@ -29,14 +29,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private ArrayList<Obstacle> obstacles;
     private Bitmap obstacle;
     private Bitmap scandal;
+    private Bitmap noScandal;
     private int scandalCount;
     private Scores scores;
+    private int index;
+    private Context ctx;
 
-    public GameView(Context context) {
+    public GameView(Context context, int i) {
         super(context);
+        ctx = context;
         getHolder().addCallback(this);
         setFocusable(true);
+        index = i;
         level = new Level(context);
+        character = new Character(context);
     }
 
     @Override
@@ -64,12 +70,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         background = new Background(level.getBackground());
         level.setLevel();
-        sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_run), 2,
-                BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_duck2), 2);
+        sprite = new Sprite(index, 2, 2, ctx);
 
         obstacles = new ArrayList<Obstacle>();
         obstacle = BitmapFactory.decodeResource(getResources(), R.drawable.o_donkey);
         scandal = BitmapFactory.decodeResource(getResources(), R.drawable.scandal);
+        noScandal = BitmapFactory.decodeResource(getResources(), R.drawable.no_scandal);
 
         gameLoop = new GameLoop(getHolder(), this);
         gameLoop.setRunning(true);
@@ -102,6 +108,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void duckButtonUp() {
         sprite.setDucking(false);
     }
+    
+    public void pauseButtonUp() {
+        gameLoop.setRunning(false);
+    }
+
+    public void resumeButtonUp() {
+        gameLoop.setRunning(true);
+        gameLoop.start();
+    }
+
 
     public boolean collision(Obstacle o, Sprite s) {
         if(Rect.intersects(o.getRectangle(), s.getRectangle())) {
@@ -127,8 +143,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void drawScandal(Canvas canvas) {
+        for(int i = 3; i > scandalCount; i--) {
+            canvas.drawBitmap(noScandal, i * 80 - 70, 10, null);
+        }
         for(int i = 0; i < scandalCount; i++) {
-            canvas.drawBitmap(scandal, 10 + i * 80, 10, null);
+            canvas.drawBitmap(scandal, i * 80 + 10, 10, null);
         }
     }
 
