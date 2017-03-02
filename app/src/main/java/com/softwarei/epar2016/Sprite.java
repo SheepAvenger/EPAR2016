@@ -54,10 +54,9 @@ public class Sprite {
 
     public void setJumping(long jumpButtonTime) {
         if(!ducking) {
-
-            int jumpHeightAddition = (int)(jumpButtonTime / 1000000000);
-            System.out.println("jumpHeightAddition: " + jumpHeightAddition);
-            jumpForceInitial = 20 + jumpHeightAddition * 5;
+            int jumpForceAddition = (int)(jumpButtonTime / 1000000000);
+            //System.out.println("jumpHeightAddition: " + jumpForceAddition);
+            jumpForceInitial = 20 + jumpForceAddition * 5;
             jumpForce = jumpForceInitial;
             jumping = true;
         }
