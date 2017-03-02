@@ -96,7 +96,7 @@ public class Sprite {
 
     public void update() {
         long elapsed = (System.nanoTime() - startTime) / 1000000;
-        if(elapsed > 100) {
+        if(elapsed > 1000) {
             score++;
             startTime = System.nanoTime();
         }
