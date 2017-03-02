@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 
 public class DealWithVlad extends AppCompatActivity{
     private Bitmap slotMachine;
+    private double averageFPS;
     private Bitmap slotScroll;
     private Bitmap slotTrophy;
     private Bitmap slotMoney;
@@ -34,6 +35,7 @@ public class DealWithVlad extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.deal_with_vlad);
 
+        canvas = null;
         canvas = new Canvas();
 
         sprite = new Sprite(14, 10, 5, this);
@@ -55,17 +57,36 @@ public class DealWithVlad extends AppCompatActivity{
     protected void onStart() {
         super.onStart();
 
-        long startTime;
+        long startTime = 0;
         long timeMillis;
         long waitTime;
         long totalTime = 0;
         int frameCount = 0;
-        long targetTime = 1000/FPS;
+        long targetTime = 1000 / FPS;
 
-        while(true) {
+        while (true) {
             this.sprite.update();
             this.sprite.draw(canvas);
+
+            timeMillis = (System.nanoTime() - startTime) / 1000000;
+            waitTime = targetTime - timeMillis;
+
+            try {
+                Thread.sleep(waitTime);
+            } catch (Exception e) {
+            }
+
+            totalTime += System.nanoTime() - startTime;
+            frameCount++;
+            if (frameCount == FPS) {
+                averageFPS = 1000 / ((totalTime / frameCount) / 1000000);
+                frameCount = 0;
+                totalTime = 0;
+                //System.out.println(averageFPS);
+            }
         }
+
+
     }
 
     /*public void Power() {
