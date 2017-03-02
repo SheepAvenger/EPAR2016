@@ -3,6 +3,7 @@ package com.softwarei.epar2016;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,10 +17,13 @@ import android.graphics.Point;
 public class MainGame extends Activity implements View.OnTouchListener {
 
     GameView gameView;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        index = intent.getIntExtra("run", 0);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_game);
@@ -33,7 +37,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
         Display display = getWindowManager().getDefaultDisplay();
         Point resolution = new Point();
         display.getSize(resolution);
-        gameView = new GameView(this, resolution.x, resolution.y);
+        gameView = new GameView(this, resolution.x, resolution.y, index);
         frameLayout.addView(gameView);
     }
 

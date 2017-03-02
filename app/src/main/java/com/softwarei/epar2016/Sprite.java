@@ -1,5 +1,6 @@
 package com.softwarei.epar2016;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -9,18 +10,25 @@ public class Sprite {
     private boolean jumping, falling, ducking, playing, collision, recovery;
     private Animation animation = new Animation();
     private Animation animation2 = new Animation();
+    private Bitmap image1;
+    private Bitmap image2;
 
     private long startTime;
     private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height, xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
 
     private int screenWidth, screenHeight;
     
-    public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2, int screenWidth, int screenHeight) {
+    public Sprite(int index, int numberOfFrames, int numberOfFrames2, int screenWidth, int screenHeight, Context context) {
 
         score = 0;
+        Character sprites = new Character(context);
+        sprites.setIndex(index);
+        image1 = sprites.getCharacter();
+        sprites.setIndex(index+1);
+        image2 = sprites.getCharacter();
 
-        this.height = image.getHeight();
-        this.width = image.getWidth()/numberOfFrames;
+        this.height = image1.getHeight();
+        this.width = image1.getWidth()/numberOfFrames;
         this.screenWidth = screenWidth;
         xInitial = screenWidth/2 - width;
         xCurrent = xInitial;
@@ -29,7 +37,7 @@ public class Sprite {
         yCurrent = yInitial;
         Bitmap[] playerImage = new Bitmap[numberOfFrames];
         for(int i = 0; i < playerImage.length; i++) {
-            playerImage[i] = Bitmap.createBitmap(image, i*width, 0, width, height);
+            playerImage[i] = Bitmap.createBitmap(image1, i*width, 0, width, height);
         }
         animation.setFrames(playerImage);
         animation.setDelay(10);

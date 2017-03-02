@@ -2,6 +2,8 @@ package com.softwarei.epar2016;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import android.app.IntentService;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -23,10 +25,10 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
 
     private static final String TAG = null;
     MediaPlayer player;
-    MediaPlayer levels;
     int[] songs = {R.raw.music_main_menu, R.raw.careless_whisper, R.raw.never_gonna_give_you_up, R.raw.pursite};
-    private int current_index = 1;
+    private int current_index;
 
+    @Override
     public IBinder onBind(Intent arg0) {
 
         return null;
@@ -35,52 +37,49 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
     @Override
     public void onCreate() {
         super.onCreate();
-        mainmenu();
-        //player.setLooping(true); // Set looping
-
     }
     @Override
     public void onCompletion(MediaPlayer mp) {
         play(this);
     }
 
+
     public void mainmenu()
     {
-        player = MediaPlayer.create(getApplicationContext(),R.raw.bird);
-        player.setLooping(true);
 
     }
 
     public void play(Context ctx)
     {
-        //player.stop();
-        levels = MediaPlayer.create(getApplicationContext(),songs[current_index]);
-        levels.setOnCompletionListener(this);
-        if(current_index == 3) // change to 10 when other songs added
-        {
-            current_index = 0;
-        }
-        current_index++;
-        AssetFileDescriptor afd = ctx.getResources().openRawResourceFd(songs[current_index]);
-        try
-        {
-            player.reset();
-            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
-            player.prepare();
-            player.start();
-        }
-        catch(IllegalArgumentException e)
-        {
+            if(current_index == 3) // change to 10 when other songs added
+            {
+                current_index = 1;
+            }
+            AssetFileDescriptor afd = (ctx.getResources().openRawResourceFd(songs[current_index]));
+            try
+            {
+                player.reset();
+                player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+                player.prepare();
+                player.start();
+                current_index++;
+            }
+            catch(IllegalArgumentException e)
+            {
 
-        }
-        catch (IllegalStateException e)
-        {
-        }
-        catch (IOException e)
-        {
-        }
+            }
+            catch (IllegalStateException e)
+            {
+            }
+            catch (IOException e)
+            {
+            }
     }
     public int onStartCommand(Intent intent, int flags, int startId) {
+        current_index = intent.getIntExtra("index", 0);
+        player = MediaPlayer.create(getApplicationContext(),songs[current_index]);
+        if(current_index == 0)
+            player.setLooping(true);
         player.start();
         return START_NOT_STICKY;
     }
@@ -96,9 +95,11 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
     }
 
     public void onStop() {
+        //here
 
     }
     public void onPause() {
+
 
     }
     @Override

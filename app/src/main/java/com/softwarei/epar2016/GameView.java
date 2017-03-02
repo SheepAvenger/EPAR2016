@@ -1,6 +1,7 @@
 package com.softwarei.epar2016;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
@@ -16,12 +17,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Background background;
     private Sprite sprite;
     private int scandalCount;
+    int index;
+    Context ctx;
 
-    private int screenWidth;
-    private int screenHeight;
+    public static int screenWidth;
+    public static int screenHeight;
     
-    public GameView(Context context, int screenWidth, int screenHeight) {
+    public GameView(Context context, int screenWidth, int screenHeight, int indexs) {
         super(context);
+        index = indexs;
+        ctx = context;
+
         getHolder().addCallback(this);
         setFocusable(true);
         
@@ -42,9 +48,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder){
         background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level0));
-        sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_washington_run), 2,
-                BitmapFactory.decodeResource(getResources(), R.drawable.c_washington_duck), 2,
-                screenWidth, screenHeight);
+        sprite = new Sprite(index, 2, 2, screenWidth, screenHeight, ctx);
         gameLoop = new GameLoop(getHolder(), this);
 
         gameLoop.setRunning(true);
