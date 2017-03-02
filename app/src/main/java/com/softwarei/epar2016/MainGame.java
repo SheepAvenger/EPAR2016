@@ -14,6 +14,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
 
     GameView gameView;
     int index;
+    RelativeLayout running, paused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
