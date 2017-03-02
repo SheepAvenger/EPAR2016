@@ -17,7 +17,7 @@ public class Character extends AppCompatActivity
     public Character(Context ctx)
     {
         index = 0;
-        character = new Bitmap[14];
+        character = new Bitmap[16];
         character[0] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_washington_run);
         character[1] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_washington_duck);
         character[2] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_trump_run);
@@ -32,15 +32,8 @@ public class Character extends AppCompatActivity
         character[11] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_clinton_duck);
         character[12] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_abe_run);
         character[13] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_abe_duck2);
-        /*int  x = R.drawable.c_washington_run;
-        for(int i = 0; i < 14; i++)
-        {
-            x -=i;
-            character[i] = BitmapFactory.decodeResource(ctx.getResources(), x);
-        }*/
-        /**This will place c_TrumpStand at index 0, with c_TrumpRun at 1, and c_TrumpDuck at 2. AbeDuck will be at 14.
-         *  All Stand images will be at an index divisabel by 3, from there it is +1 to run imgage or +2 to duck image.
-         */
+        character[14] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.slot_machine);
+        character[15] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.slot_scroll);
     }
 
     public void setIndex(int i)
