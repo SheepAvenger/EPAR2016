@@ -34,10 +34,8 @@ public class MainGame extends Activity implements View.OnTouchListener {
         jumpButton.setOnTouchListener(this);
         Button pauseButton = (Button)findViewById(R.id.Pause);
         pauseButton.setOnTouchListener(this);
-        Display display = getWindowManager().getDefaultDisplay();
-        Point resolution = new Point();
-        display.getSize(resolution);
-        gameView = new GameView(this, resolution.x, resolution.y, index);
+
+        gameView = new GameView(this);
         frameLayout.addView(gameView);
     }
 
