@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.BitmapFactory;
@@ -16,7 +17,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
-    public static int MOVESPEED = -5;
+    public static int MOVESPEED = -8;
     private Level level;
     private String levelString;
     private CharacterSelection cS;
@@ -60,10 +61,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder){
 
-        level.setLevel();
-        //level.getBackground()
-        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level9));
 
+        background = new Background(level.getBackground());
+        level.setLevel();
         sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_run), 2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_duck2), 2);
 
