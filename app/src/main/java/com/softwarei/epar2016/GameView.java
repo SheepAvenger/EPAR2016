@@ -61,7 +61,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder){
 
         level.setLevel();
-        background = new Background(level.getBackground());
+        //level.getBackground()
+        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.level9));
 
         sprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_run), 2,
                 BitmapFactory.decodeResource(getResources(), R.drawable.c_abe_duck2), 2);
@@ -138,7 +139,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             long timeElapsed = (System.nanoTime()-timing)/1000000;
             if(timeElapsed >(5000 - sprite.getScore()/4)){
-                obstacles.add(new Obstacle(obstacle,WIDTH + 10, HEIGHT - obstacle.getHeight() - 30));
+                obstacles.add(new Obstacle(obstacle,WIDTH + 10, HEIGHT - obstacle.getHeight() - 15));
                 timing = System.nanoTime();
             }
 

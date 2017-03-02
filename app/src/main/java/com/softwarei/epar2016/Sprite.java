@@ -17,7 +17,7 @@ public class Sprite {
 
     public Sprite(Bitmap image, int numberOfFrames, Bitmap image2, int numberOfFrames2) {
         punishLength = 70;
-        int ground = -30;
+        int ground = -20;
 
         score = 0;
 
