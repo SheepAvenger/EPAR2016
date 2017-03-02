@@ -14,7 +14,7 @@ public class Background {
 
     public void update() {
         x += GameView.MOVESPEED;
-        if(x < -GameView.WIDTH){
+        if(x < -GameView.screenWidth){
             x = 0;
         }
     }
@@ -22,7 +22,7 @@ public class Background {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(image, x, 0, null);
         if(x < 0) {
-            canvas.drawBitmap(image, x + GameView.WIDTH, 0, null);
+            canvas.drawBitmap(image, x + GameView.screenWidth, 0, null);
         }
     }
 }

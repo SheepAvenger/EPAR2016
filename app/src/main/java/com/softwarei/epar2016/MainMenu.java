@@ -15,16 +15,14 @@ import android.widget.Toast;
 import static android.app.Service.START_STICKY;
 import static com.softwarei.epar2016.R.raw.music_main_menu;
 
-
 public class MainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-
-        Intent music = new Intent(MainMenu.this, MusicPlayer.class);
-        music.putExtra("MainMenu", 1);
+        final Intent music = new Intent(getApplication(), MusicPlayer.class);
+        music.putExtra("index", 0);
         startService(music);
 
 
