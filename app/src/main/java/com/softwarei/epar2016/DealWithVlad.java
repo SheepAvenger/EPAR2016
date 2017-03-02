@@ -62,7 +62,7 @@ public class DealWithVlad extends AppCompatActivity{
         long waitTime;
         long totalTime = 0;
         int frameCount = 0;
-        long targetTime = 1000 / FPS;
+        long targetTime = 1000 /FPS;
 
         while (true) {
             this.sprite.update();
