@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.BitmapFactory;
@@ -70,7 +69,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         background = new Background(level.getBackground());
         level.setLevel();
-        sprite = new Sprite(index, 2, 2, WIDTH, HEIGHT, ctx);
+        sprite = new Sprite(index, 2, 2, ctx);
 
         obstacles = new ArrayList<Obstacle>();
         obstacle = BitmapFactory.decodeResource(getResources(), R.drawable.o_donkey);

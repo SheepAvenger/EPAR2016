@@ -18,7 +18,7 @@ public class Sprite {
     private Bitmap image2;
 
 
-    public Sprite(int index, int numberOfFrames, int numberOfFrames2, int screenWidth, int screenHeight, Context context) {
+    public Sprite(int index, int numberOfFrames, int numberOfFrames2, Context context) {
         punishLength = 70;
         int ground = -20;
         score = 0;
@@ -28,6 +28,8 @@ public class Sprite {
         image1 = sprites.getCharacter();
         sprites.setIndex(index+1);
         image2 = sprites.getCharacter();
+
+
 
         this.height = image1.getHeight();
         this.width = image1.getWidth()/numberOfFrames;

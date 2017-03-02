@@ -1,9 +1,7 @@
 package com.softwarei.epar2016;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,8 +9,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.view.WindowManager;
-import android.view.Display;
-import android.graphics.Point;
 
 public class MainGame extends Activity implements View.OnTouchListener {
 
