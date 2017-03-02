@@ -37,7 +37,8 @@
         </service>
 
         <activity android:name=".DealWithVlad"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 
