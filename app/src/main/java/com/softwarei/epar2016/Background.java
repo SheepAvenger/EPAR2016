@@ -7,17 +7,14 @@ public class Background {
 
     private Bitmap image;
     private int x;
-    private int screenWidth, screenHeight;
-    
-    public Background(Bitmap image, int screenWidth, int screenHeight) {
+
+    public Background(Bitmap image) {
         this.image = image;
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
     }
 
     public void update() {
         x += GameView.MOVESPEED;
-        if(x < -screenWidth){
+        if(x < -GameView.WIDTH){
             x = 0;
         }
     }
@@ -25,7 +22,7 @@ public class Background {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(image, x, 0, null);
         if(x < 0) {
-            canvas.drawBitmap(image, x + screenWidth, 0, null);
+            canvas.drawBitmap(image, x + GameView.WIDTH, 0, null);
         }
     }
 }

@@ -30,10 +30,22 @@ public class MainGame extends Activity implements View.OnTouchListener {
         jumpButton.setOnTouchListener(this);
         Button pauseButton = (Button)findViewById(R.id.Pause);
         pauseButton.setOnTouchListener(this);
-        Display display = getWindowManager().getDefaultDisplay();
-        Point resolution = new Point();
-        display.getSize(resolution);
-        gameView = new GameView(this, resolution.x, resolution.y);
+        gameView = new GameView(this);
+        frameLayout.addView(gameView);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setContentView(R.layout.activity_main_game);
+        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
+        Button duckButton = (Button)findViewById(R.id.Duck);
+        duckButton.setOnTouchListener(this);
+        Button jumpButton = (Button)findViewById(R.id.Jump);
+        jumpButton.setOnTouchListener(this);
+        Button pauseButton = (Button)findViewById(R.id.Pause);
+        pauseButton.setOnTouchListener(this);
+        gameView = new GameView(this);
         frameLayout.addView(gameView);
     }
 
@@ -67,7 +79,5 @@ public class MainGame extends Activity implements View.OnTouchListener {
         }
         return true;
     }
-
-    public MainGame(){};
 }
 
