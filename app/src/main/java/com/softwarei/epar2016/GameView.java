@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -18,9 +19,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public static final int HEIGHT = 480;
     public static int MOVESPEED = -6;
     private Level level;
-    private Character character;
-    private String levelString;
-    private CharacterSelection cS;
     private long timing;
     private long jumpButtonTime;
     private GameLoop gameLoop;
@@ -35,6 +33,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Scores scores;
     private int index;
     private Context ctx;
+    Random rand;
 
     public GameView(Context context, int i) {
         super(context);
@@ -43,7 +42,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
         index = i;
         level = new Level(context);
-        character = new Character(context);
+        rand = new Random();
     }
 
     @Override
@@ -159,12 +158,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             sprite.update();
 
             long timeElapsed = (System.nanoTime()-timing)/1000000;
-            if(timeElapsed >(5000 - sprite.getScore()/4)){
-                if(timeElapsed % 2 == 1) {
+            if(timeElapsed > (3000 - sprite.getScore()/4)){
+                if(timeElapsed % 2 == 0) {
                     obstacles.add(new Obstacle(obstacle, WIDTH + 10, HEIGHT - obstacle.getHeight() - 15));
                 }
                 else {
-                    obstacles.add(new Obstacle(obstacle2, WIDTH + 10, HEIGHT - obstacle2.getHeight() - 166));
+                    int max = HEIGHT - obstacle2.getHeight() - 15;
+                    int min = obstacle2.getHeight();
+                    int posY = rand.nextInt((max - min) + 1) + min;
+                    obstacles.add(new Obstacle(obstacle2, WIDTH + 10, posY));
+                    //obstacles.add(new Obstacle(obstacle2, WIDTH + 10, HEIGHT - obstacle2.getHeight() - 160));
                 }
                 timing = System.nanoTime();
             }
