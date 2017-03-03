@@ -7,8 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 public class MainGame extends Activity implements View.OnTouchListener {
@@ -26,13 +26,13 @@ public class MainGame extends Activity implements View.OnTouchListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_game);
         FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
-        Button duckButton = (Button)findViewById(R.id.Duck);
+        ImageButton duckButton = (ImageButton) findViewById(R.id.Duck);
         duckButton.setOnTouchListener(this);
-        Button jumpButton = (Button)findViewById(R.id.Jump);
+        ImageButton jumpButton = (ImageButton) findViewById(R.id.Jump);
         jumpButton.setOnTouchListener(this);
-        Button pauseButton = (Button)findViewById(R.id.Pause);
+        ImageButton pauseButton = (ImageButton)findViewById(R.id.Pause);
         pauseButton.setOnTouchListener(this);
-        Button resumeButton = (Button)findViewById(R.id.Resume);
+        ImageButton resumeButton = (ImageButton)findViewById(R.id.Resume);
         resumeButton.setOnTouchListener(this);
         gameView = new GameView(this, index);
         frameLayout.addView(gameView);
