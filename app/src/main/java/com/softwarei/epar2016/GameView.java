@@ -28,6 +28,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Sprite sprite;
     private ArrayList<Obstacle> obstacles;
     private Bitmap obstacle;
+    private Bitmap obstacle2;
     private Bitmap scandal;
     private Bitmap noScandal;
     private int scandalCount;
@@ -74,6 +75,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         obstacles = new ArrayList<Obstacle>();
         obstacle = BitmapFactory.decodeResource(getResources(), R.drawable.o_donkey);
+        obstacle2 = BitmapFactory.decodeResource(getResources(), R.drawable.o_elephant);
         scandal = BitmapFactory.decodeResource(getResources(), R.drawable.scandal);
         noScandal = BitmapFactory.decodeResource(getResources(), R.drawable.no_scandal);
 
@@ -158,7 +160,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             long timeElapsed = (System.nanoTime()-timing)/1000000;
             if(timeElapsed >(5000 - sprite.getScore()/4)){
-                obstacles.add(new Obstacle(obstacle,WIDTH + 10, HEIGHT - obstacle.getHeight() - 15));
+                if(timeElapsed % 2 == 1) {
+                    obstacles.add(new Obstacle(obstacle, WIDTH + 10, HEIGHT - obstacle.getHeight() - 15));
+                }
+                else {
+                    obstacles.add(new Obstacle(obstacle2, WIDTH + 10, HEIGHT - obstacle2.getHeight() - 166));
+                }
                 timing = System.nanoTime();
             }
 

@@ -48,8 +48,8 @@ public class MainMenu extends AppCompatActivity {
         {
             public void onClick(View v)
             {
-                Intent characterSelection = new Intent(MainMenu.this, DealWithVlad.class);
-                startActivity(characterSelection);
+                Intent dealWithVlad = new Intent(MainMenu.this, DealWithVlad.class);
+                startActivity(dealWithVlad);
 
             }
         });

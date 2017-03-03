@@ -31,7 +31,7 @@ public class Character extends AppCompatActivity
         character[10] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_clinton_run);
         character[11] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_clinton_duck);
         character[12] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_abe_run);
-        character[13] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_abe_duck2);
+        character[13] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.c_abe_duck);
         character[14] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.slot_machine);
         character[15] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.slot_scroll);
     }
