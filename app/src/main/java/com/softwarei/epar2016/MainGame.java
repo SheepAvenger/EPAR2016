@@ -20,12 +20,11 @@ public class MainGame extends Activity implements View.OnTouchListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        index = intent.getIntExtra("run", 0);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_game);
-        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
+
         ImageButton duckButton = (ImageButton) findViewById(R.id.Duck);
         duckButton.setOnTouchListener(this);
         ImageButton jumpButton = (ImageButton) findViewById(R.id.Jump);
@@ -34,8 +33,13 @@ public class MainGame extends Activity implements View.OnTouchListener {
         pauseButton.setOnTouchListener(this);
         ImageButton resumeButton = (ImageButton)findViewById(R.id.Resume);
         resumeButton.setOnTouchListener(this);
+
+        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
+        Intent intent = getIntent();
+        index = intent.getIntExtra("run", 0);
         gameView = new GameView(this, index);
         frameLayout.addView(gameView);
+
         running = (RelativeLayout)findViewById(R.id.gameRunning);
         paused = (RelativeLayout)findViewById(R.id.gamePaused);
     }

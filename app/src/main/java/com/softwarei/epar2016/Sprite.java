@@ -149,11 +149,15 @@ public class Sprite {
 
     //change back to non-static if messes with anything
     public int getScore() {
-        return (this.score);
+        return (score);
     }
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public void resetScore() {
+        this.score = 0;
     }
 
     public boolean getPlaying() {
@@ -166,10 +170,6 @@ public class Sprite {
         //xCurrent2 = xInitial2;
         xNext2 = xInitial2 - punishLength;
         this.playing = playing;
-    }
-
-    public void resetScore() {
-        this.score = 0;
     }
 
     public Rect getRectangle() {

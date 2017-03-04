@@ -19,7 +19,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public static final int HEIGHT = 480;
     public static int MOVESPEED = -6;
     private Level level;
-    private long timing;
+    private long timingObstacle;
     private long jumpButtonTime;
     private GameLoop gameLoop;
     private Background background;
@@ -33,7 +33,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Scores scores;
     private int index;
     private Context ctx;
-    Random rand;
+    private Random rand;
 
     public GameView(Context context, int i) {
         super(context);
@@ -47,7 +47,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
-        timing = System.nanoTime();
+        timingObstacle = System.nanoTime();
     }
 
     @Override
@@ -67,14 +67,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder){
 
-
         background = new Background(level.getBackground());
-        level.setLevel();
         sprite = new Sprite(index, 2, 2, ctx);
 
         obstacles = new ArrayList<Obstacle>();
         obstacle = BitmapFactory.decodeResource(getResources(), R.drawable.o_donkey);
         obstacle2 = BitmapFactory.decodeResource(getResources(), R.drawable.o_elephant);
+        
         scandal = BitmapFactory.decodeResource(getResources(), R.drawable.scandal);
         noScandal = BitmapFactory.decodeResource(getResources(), R.drawable.no_scandal);
 
@@ -97,8 +96,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void duckButtonDown() {
-        if(!sprite.getPlaying())
-        {
+        if(!sprite.getPlaying()) {
             sprite.setPlaying(true);
         }
         if(!sprite.getJumping()) {
@@ -133,7 +131,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(30);
         //canvas.drawText("Scandal: " + scandalCount, 10, 30, paint);
         canvas.drawText("Score: " + sprite.getScore(), 300, 30, paint);
-        //canvas.drawText("Best: " + best, 600, 30, paint);
+        canvas.drawText("Level: " + level.getLevel(), 300, 480, paint);
         if(!sprite.getPlaying()) {
             Paint paint1 = new Paint();
             paint1.setColor(Color.WHITE);
@@ -154,10 +152,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
         if (sprite.getPlaying()){
+            if((int)(gameLoop.time / 1000000000) > 90 * (level.getLevel() + 1)) {
+                level.setLevel();
+                background = new Background(level.getBackground());
+            }
+
             background.update();
             sprite.update();
 
-            long timeElapsed = (System.nanoTime()-timing)/1000000;
+            long timeElapsed = (System.nanoTime()-timingObstacle)/1000000;
             if(timeElapsed > (3000 - sprite.getScore()/4)){
                 if(timeElapsed % 2 == 0) {
                     obstacles.add(new Obstacle(obstacle, WIDTH + 10, HEIGHT - obstacle.getHeight() - 15));
@@ -169,7 +172,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     obstacles.add(new Obstacle(obstacle2, WIDTH + 10, posY));
                     //obstacles.add(new Obstacle(obstacle2, WIDTH + 10, HEIGHT - obstacle2.getHeight() - 160));
                 }
-                timing = System.nanoTime();
+                timingObstacle = System.nanoTime();
             }
 
             for(int i = 0; i< obstacles.size(); i++) {
@@ -177,13 +180,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 if(collision(obstacles.get(i),sprite)) {
                     sprite.setCollision();
-
                     obstacles.remove(i);
                     scandalCount++;
-
-
-
                 }
+                
                 if(scandalCount >= 3 && !sprite.getCollision()) {
                     sprite.setPlaying(false);
                     scandalCount = 0;
