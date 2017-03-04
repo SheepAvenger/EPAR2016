@@ -33,7 +33,9 @@ public class MainGame extends Activity implements View.OnTouchListener {
         pauseButton.setOnTouchListener(this);
         ImageButton resumeButton = (ImageButton)findViewById(R.id.Resume);
         resumeButton.setOnTouchListener(this);
-
+        ImageButton quitButton = (ImageButton)findViewById(R.id.Quit);
+        quitButton.setOnTouchListener(this);
+        
         FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
         Intent intent = getIntent();
         index = intent.getIntExtra("run", 0);
@@ -77,6 +79,11 @@ public class MainGame extends Activity implements View.OnTouchListener {
                     gameView.resumeButtonUp();
                 }
                 break;
+            case R.id.Quit:
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    Intent MainMenu = new Intent(MainGame.this, MainMenu.class);
+                    startActivity(MainMenu);
+                }
             default:
                 break;
         }
