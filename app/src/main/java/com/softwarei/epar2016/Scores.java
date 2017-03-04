@@ -37,7 +37,7 @@ public class Scores extends AppCompatActivity
             File scoreList = new File(File);
             if(scoreList.createNewFile())
             {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput("scores.txt", this.MODE_PRIVATE));
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("scores.txt", ctx.MODE_PRIVATE));
                 outputStreamWriter.write("a 500");
                 outputStreamWriter.write("b 450");
                 outputStreamWriter.write("c 400");
