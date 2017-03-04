@@ -3,24 +3,22 @@ package com.softwarei.epar2016;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
-public class GameLoop extends Thread
-{
+public class GameLoop extends Thread {
     private int FPS = 60;
     private double averageFPS;
     private SurfaceHolder surfaceHolder;
     private GameView gameView;
     private boolean running;
     public static Canvas canvas;
+    public static long time;
 
-    public GameLoop(SurfaceHolder surfaceHolder, GameView gameView)
-    {
+    public GameLoop(SurfaceHolder surfaceHolder, GameView gameView) {
         super();
         this.surfaceHolder = surfaceHolder;
         this.gameView = gameView;
     }
     @Override
-    public void run()
-    {
+    public void run() {
         long startTime;
         long timeMillis;
         long waitTime;
@@ -38,11 +36,9 @@ public class GameLoop extends Thread
                     this.gameView.update();
                     this.gameView.draw(canvas);
                 }
-            } catch (Exception e) {
-            }
+            } catch (Exception e) {e.printStackTrace();}
             finally{
-                if(canvas != null)
-                {
+                if(canvas != null) {
                     try {
                         surfaceHolder.unlockCanvasAndPost(canvas);
                     }
@@ -50,27 +46,30 @@ public class GameLoop extends Thread
                 }
             }
 
-
             timeMillis = (System.nanoTime() - startTime) / 1000000;
             waitTime = targetTime - timeMillis;
 
-            try{
-                this.sleep(waitTime);
-            }catch(Exception e){}
+            if(waitTime >= 0) {
+                try {
+                    this.sleep(waitTime);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
             totalTime += System.nanoTime() - startTime;
             frameCount++;
-            if(frameCount == FPS)
-            {
+            if(frameCount == FPS) {
                 averageFPS = 1000 / ((totalTime/frameCount) / 1000000);
                 frameCount = 0;
+                time += totalTime;
                 totalTime = 0;
                 //System.out.println(averageFPS);
             }
         }
     }
-    public void setRunning(boolean b)
-    {
+
+    public void setRunning(boolean b) {
         running = b;
     }
 }
