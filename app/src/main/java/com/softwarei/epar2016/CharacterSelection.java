@@ -23,8 +23,6 @@ import java.io.OutputStreamWriter;
 
 public class CharacterSelection extends AppCompatActivity
 {
-    private MusicPlayer mp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,12 +77,13 @@ public class CharacterSelection extends AppCompatActivity
         else
             Washington.setEnabled(false);
 
+        final Intent music = new Intent(getApplication(), MusicPlayer.class);
+
         Abe.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                final Intent music = new Intent(getApplication(), MusicPlayer.class);
                 music.putExtra("index", 1);
                 startService(music);
 
@@ -99,7 +98,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                final Intent music = new Intent(getApplication(), MusicPlayer.class);
                 music.putExtra("index", 1);
                 startService(music);
 
@@ -114,7 +112,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                final Intent music = new Intent(getApplication(), MusicPlayer.class);
                 music.putExtra("index", 1);
                 startService(music);
 
@@ -129,7 +126,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                final Intent music = new Intent(getApplication(), MusicPlayer.class);
                 music.putExtra("index", 1);
                 startService(music);
 
@@ -144,7 +140,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                final Intent music = new Intent(getApplication(), MusicPlayer.class);
                 music.putExtra("index", 1);
                 startService(music);
 
@@ -158,7 +153,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                final Intent music = new Intent(getApplication(), MusicPlayer.class);
                 music.putExtra("index", 1);
                 startService(music);
 
@@ -172,7 +166,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                final Intent music = new Intent(getApplication(), MusicPlayer.class);
                 music.putExtra("index", 1);
                 startService(music);
 
@@ -186,7 +179,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                final Intent music = new Intent(getApplication(), MusicPlayer.class);
                 music.putExtra("index", 1);
                 startService(music);
 

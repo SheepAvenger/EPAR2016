@@ -70,6 +70,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
                     running.setVisibility(View.INVISIBLE);
                     paused.setVisibility(View.VISIBLE);
                     gameView.pauseButtonUp();
+                    //pauseService(new Intent(MainGame.this, MusicPlayer.class));
                 }
                 break;
             case R.id.Resume:
@@ -81,6 +82,10 @@ public class MainGame extends Activity implements View.OnTouchListener {
                 break;
             case R.id.Quit:
                 if (event.getAction() == MotionEvent.ACTION_UP) {
+                    final Intent music = new Intent(getApplication(), MusicPlayer.class);
+                    music.putExtra("index", 0);
+                    startService(music); // move this to gameover when completed
+
                     Intent MainMenu = new Intent(MainGame.this, MainMenu.class);
                     startActivity(MainMenu);
                 }
