@@ -152,7 +152,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
         if (sprite.getPlaying()){
-            if((int)(gameLoop.time / 1000000000) > 90 * (level.getLevel() + 1)) {
+            if((int)(gameLoop.time / 1000000000) > 2 * (level.getLevel() + 1) && level.getLevel() < 9) {
+                MOVESPEED--;
                 level.setLevel();
                 background = new Background(level.getBackground());
             }
@@ -182,18 +183,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     sprite.setCollision();
                     obstacles.remove(i);
                     scandalCount++;
-                }
-                
-                if(scandalCount >= 3 && !sprite.getCollision()) {
-                    sprite.setPlaying(false);
-                    scandalCount = 0;
-                    sprite.setRecovery();
+                    break;
                 }
 
                 if(obstacles.get(i).getX()<-100) {
                     obstacles.remove(i);
                     break;
                 }
+            }
+
+            if(scandalCount >= 3 && !sprite.getCollision()) {
+                sprite.setPlaying(false);
+                scandalCount = 0;
+                MOVESPEED = -6;
+                level.resetLevel();
+                background = new Background(level.getBackground());
+                sprite.resetScore();
+                sprite.setRecovery();
             }
         }
     }

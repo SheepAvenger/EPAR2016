@@ -49,9 +49,13 @@ public class GameLoop extends Thread {
             timeMillis = (System.nanoTime() - startTime) / 1000000;
             waitTime = targetTime - timeMillis;
 
-            try{
-                this.sleep(waitTime);
-            }catch(Exception e){e.printStackTrace();}
+            if(waitTime >= 0) {
+                try {
+                    this.sleep(waitTime);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
             totalTime += System.nanoTime() - startTime;
             frameCount++;
