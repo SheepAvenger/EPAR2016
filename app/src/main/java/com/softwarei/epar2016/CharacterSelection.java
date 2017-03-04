@@ -77,7 +77,7 @@ public class CharacterSelection extends AppCompatActivity
         else
             Washington.setEnabled(false);
 
-        final Intent music = new Intent(getApplication(), MusicPlayer.class);
+       final Intent music = new Intent(getApplication(), MusicPlayer.class);
 
         Abe.setOnClickListener(new View.OnClickListener()
         {

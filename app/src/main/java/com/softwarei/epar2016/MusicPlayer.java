@@ -11,6 +11,7 @@ import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.IBinder;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -37,7 +38,6 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
     public void onCreate() {
         super.onCreate();
         player = MediaPlayer.create(getApplicationContext(),songs[current_index]);
-
     }
 
     @Override
@@ -109,6 +109,11 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
     public void onPause() {
         player.pause();
 
+    }
+
+    public void onResume()
+    {
+        player.start();
     }
     @Override
     public void onDestroy() {

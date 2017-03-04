@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 public class MainGame extends Activity implements View.OnTouchListener {
 
     GameView gameView;
+    MusicPlayer mp;
     int index;
     RelativeLayout running, paused;
 
@@ -35,6 +36,8 @@ public class MainGame extends Activity implements View.OnTouchListener {
         resumeButton.setOnTouchListener(this);
         ImageButton quitButton = (ImageButton)findViewById(R.id.Quit);
         quitButton.setOnTouchListener(this);
+
+        mp = new MusicPlayer();
         
         FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
         Intent intent = getIntent();
@@ -70,6 +73,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
                     running.setVisibility(View.INVISIBLE);
                     paused.setVisibility(View.VISIBLE);
                     gameView.pauseButtonUp();
+                    mp.onPause();
                     //pauseService(new Intent(MainGame.this, MusicPlayer.class));
                 }
                 break;
@@ -78,10 +82,12 @@ public class MainGame extends Activity implements View.OnTouchListener {
                     paused.setVisibility(View.INVISIBLE);
                     running.setVisibility(View.VISIBLE);
                     gameView.resumeButtonUp();
+                    mp.onResume();
                 }
                 break;
             case R.id.Quit:
                 if (event.getAction() == MotionEvent.ACTION_UP) {
+                    mp.onDestroy();
                     final Intent music = new Intent(getApplication(), MusicPlayer.class);
                     music.putExtra("index", 0);
                     startService(music); // move this to gameover when completed
