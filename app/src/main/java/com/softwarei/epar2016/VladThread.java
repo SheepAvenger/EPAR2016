@@ -73,7 +73,7 @@ public class VladThread extends SurfaceView implements Runnable {
         machineStill = BitmapFactory.decodeResource(getResources(), R.drawable.slot_machine_still);
         this.machineWidth = machMap.getWidth() / machineCols;
         this.machineHeight = machMap.getHeight();
-        spinMachine = true;
+        spinMachine = false;
 
         scrollMap = BitmapFactory.decodeResource(getResources(), R.drawable.slot_scroll);
         this.scrollWidth = scrollMap.getWidth() / scrollCols;
