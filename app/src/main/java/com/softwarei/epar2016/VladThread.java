@@ -41,20 +41,15 @@ public class VladThread extends SurfaceView implements Runnable {
     Bitmap machineStill;
     Boolean spinMachine;
 
+    int testCount;
+    int secondTestCount;
+
     private int scrollCols = 5;
     private int scrollSpriteFrame = 0;
     private int scrollWidth;
     private int scrollHeight;
     Bitmap scrollMap;
     Boolean scrollOptions;
-
-    private long startTime;
-    private long timeMillis;
-    private long waitTime;
-    private long totalTime = 0;
-    private int frameCount = 0;
-    private long targetTime = 1000/fps;
-    private double averageFPS;
 
     VladThread(Context context) {
         super(context);
@@ -79,6 +74,11 @@ public class VladThread extends SurfaceView implements Runnable {
         this.scrollWidth = scrollMap.getWidth() / scrollCols;
         this.scrollHeight = scrollMap.getHeight();
         scrollOptions = false;
+
+        gameThread = new Thread(this);
+
+        testCount = 0;
+        secondTestCount = 0;
     }
 
     @Override
@@ -89,7 +89,6 @@ public class VladThread extends SurfaceView implements Runnable {
 
             update();
             draw();
-
             long timeThisFrame = System.currentTimeMillis() - startFrameTime;
             if (timeThisFrame >= 1) {
                 fps = 1000 / timeThisFrame;
@@ -123,20 +122,42 @@ public class VladThread extends SurfaceView implements Runnable {
             Rect vdst = new Rect(500, 0, 910, (int) (GameView.HEIGHT / 1.1));
             canvas.drawBitmap(vladMap, vsrc, vdst, null);
 
+            if (spinMachine) {
+                int msrcX = machineSpriteFrame * machineWidth;
+                Rect msrc = new Rect(msrcX, 0, msrcX + machineWidth, machineHeight);
+                Rect mdst = new Rect(50, 70, 350, 230);
+                canvas.drawBitmap(machMap, msrc, mdst, null);
+                try {
+                    gameThread.sleep(100);
+                } catch (InterruptedException e) {}
+                if (machineSpriteFrame == 9) {
+                    scrollOptions = true;
+                    spinMachine = false;
+                }
+            }
+            else if (scrollOptions) {
+                int ssrcX = scrollSpriteFrame * scrollWidth;
+                Rect ssrc = new Rect(ssrcX, 0, ssrcX + scrollWidth, scrollHeight);
+                Rect sdst = new Rect(135, 125, 205, 175);
+                canvas.drawBitmap(scrollMap, ssrc, sdst, null);
+                try {
+                    gameThread.sleep(50);
+                } catch (InterruptedException e) {}
+                secondTestCount++;
+                if (secondTestCount == 1000) {
+                    scrollOptions = false;
+                    secondTestCount = 0;
+                }
+            }
+            else {
+                canvas.drawBitmap(machineStill, 0, 110, null);
+                testCount++;
+                if (testCount == 1000){
+                    spinMachine = true;
+                    testCount = 0;
+                }
+            }
 
-            //draws still image
-            //not sure where it would go, here or in deal with vlad but we need to create a conditional to only spin after he speaks
-            canvas.drawBitmap(machineStill, 0, 110, null);
-
-            /*int msrcX = machineSpriteFrame * machineWidth;
-            Rect msrc = new Rect(msrcX, 0, msrcX + machineWidth, machineHeight);
-            Rect mdst = new Rect(50, 70, 350, 230);
-            canvas.drawBitmap(machMap, msrc, mdst, null);
-
-            int ssrcX = scrollSpriteFrame * scrollWidth;
-            Rect ssrc = new Rect(ssrcX, 0, ssrcX + scrollWidth, scrollHeight);
-            Rect sdst = new Rect(135, 125, 205, 175);
-            canvas.drawBitmap(scrollMap, ssrc, sdst, null);*/
 
             ourHolder.unlockCanvasAndPost(canvas);
         }
