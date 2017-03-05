@@ -1,21 +1,17 @@
 package com.softwarei.epar2016;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Random;
 
 /**
  * Created by Rob on 2/25/2017.
@@ -45,7 +41,7 @@ public class CharacterSelection extends AppCompatActivity
             if(!unlockable.createNewFile())
             {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput("characters.txt", this.MODE_PRIVATE));
-                outputStreamWriter.write(1);
+                outputStreamWriter.write(0);
                 outputStreamWriter.write(0);
                 outputStreamWriter.close();
 
@@ -77,14 +73,17 @@ public class CharacterSelection extends AppCompatActivity
         else
             Washington.setEnabled(false);
 
-        final Intent music = new Intent(getApplication(), MusicPlayer.class);
+        Random rand = new Random();
+        int index = rand.nextInt(7) + 2;
+
+       final Intent music = new Intent(getApplication(), MusicPlayer.class);
+        music.putExtra("index", index);
 
         Abe.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                music.putExtra("index", 1);
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
@@ -98,7 +97,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                music.putExtra("index", 1);
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
@@ -112,7 +110,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                music.putExtra("index", 1);
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
@@ -126,7 +123,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                music.putExtra("index", 1);
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
@@ -140,7 +136,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                music.putExtra("index", 1);
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
@@ -153,7 +148,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                music.putExtra("index", 1);
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
@@ -166,7 +160,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                music.putExtra("index", 1);
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
@@ -179,7 +172,6 @@ public class CharacterSelection extends AppCompatActivity
             public void onClick(View v)
             {
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
-                music.putExtra("index", 1);
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
