@@ -14,6 +14,7 @@ import android.widget.Toast;
  */
 
 public class GameOver extends AppCompatActivity {
+    //comment
     private EditText initials;
     private String playerInit;
 
