@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * Created by Monte Cristso on 3/4/2017.
+ * Created by Stu on 3/4/2017.
  */
 
 public class GameOver extends AppCompatActivity {
