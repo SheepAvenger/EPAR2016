@@ -92,7 +92,7 @@ public class Scores extends AppCompatActivity
             {
                 if(score > scores[i].score)
                 {
-                    for(int j = 8; j > i; j--)
+                    for(int j = 9; j > i; j--)
                     {
                         scores[j].score = scores[j-1].score;
                         scores[j].name = scores[j-1].name;
