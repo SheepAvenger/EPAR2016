@@ -11,6 +11,7 @@ import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.IBinder;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
 
     private static final String TAG = null;
     private static MediaPlayer player;
-    int[] songs = {R.raw.music_main_menu, R.raw.careless_whisper, R.raw.never_gonna_give_you_up, R.raw.pursite};
+    int[] songs = {R.raw.music_main_menu,R.raw.deal_vlad, R.raw.careless_whisper, R.raw.never_gonna_give_you_up, R.raw.we_built_this_city, R.raw.chop_suey, R.raw.pursite, R.raw.before_i_forget, R.raw.guiles_theme};
     private int current_index;
 
     @Override
@@ -37,7 +38,6 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
     public void onCreate() {
         super.onCreate();
         player = MediaPlayer.create(getApplicationContext(),songs[current_index]);
-
     }
 
     @Override
@@ -51,9 +51,9 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
 
     public void play()
     {
-            if(current_index == 3) // change to 10 when other songs added
+            if(current_index == 7) // change to 10 when other songs added
             {
-                current_index = 1;
+                current_index = 2;
             }
             AssetFileDescriptor afd = (this.getResources().openRawResourceFd(songs[current_index]));
             try
@@ -109,6 +109,11 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
     public void onPause() {
         player.pause();
 
+    }
+
+    public void onResume()
+    {
+        player.start();
     }
     @Override
     public void onDestroy() {
