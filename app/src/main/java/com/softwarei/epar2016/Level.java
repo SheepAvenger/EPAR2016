@@ -41,6 +41,11 @@ public class Level extends AppCompatActivity
         return level;
     }
 
+    public void resetLevel()
+    {
+        level = 0;
+    }
+
     public Bitmap getBackground()
     {
         return Background[level];

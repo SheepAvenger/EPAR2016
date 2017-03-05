@@ -32,6 +32,7 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
         <service android:name=".MusicPlayer"
             android:theme="@style/AppTheme.NoActionBar">
         </service>
@@ -39,6 +40,11 @@
         <activity android:name=".DealWithVlad"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name=".GameOver"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

@@ -14,18 +14,18 @@ import android.widget.RelativeLayout;
 public class MainGame extends Activity implements View.OnTouchListener {
 
     GameView gameView;
+    MusicPlayer mp;
     int index;
     RelativeLayout running, paused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        index = intent.getIntExtra("run", 0);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_game);
-        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
+
         ImageButton duckButton = (ImageButton) findViewById(R.id.Duck);
         duckButton.setOnTouchListener(this);
         ImageButton jumpButton = (ImageButton) findViewById(R.id.Jump);
@@ -34,8 +34,17 @@ public class MainGame extends Activity implements View.OnTouchListener {
         pauseButton.setOnTouchListener(this);
         ImageButton resumeButton = (ImageButton)findViewById(R.id.Resume);
         resumeButton.setOnTouchListener(this);
+        ImageButton quitButton = (ImageButton)findViewById(R.id.Quit);
+        quitButton.setOnTouchListener(this);
+
+        mp = new MusicPlayer();
+        
+        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
+        Intent intent = getIntent();
+        index = intent.getIntExtra("run", 0);
         gameView = new GameView(this, index);
         frameLayout.addView(gameView);
+
         running = (RelativeLayout)findViewById(R.id.gameRunning);
         paused = (RelativeLayout)findViewById(R.id.gamePaused);
     }
@@ -64,6 +73,8 @@ public class MainGame extends Activity implements View.OnTouchListener {
                     running.setVisibility(View.INVISIBLE);
                     paused.setVisibility(View.VISIBLE);
                     gameView.pauseButtonUp();
+                    mp.onPause();
+                    //pauseService(new Intent(MainGame.this, MusicPlayer.class));
                 }
                 break;
             case R.id.Resume:
@@ -71,8 +82,19 @@ public class MainGame extends Activity implements View.OnTouchListener {
                     paused.setVisibility(View.INVISIBLE);
                     running.setVisibility(View.VISIBLE);
                     gameView.resumeButtonUp();
+                    mp.onResume();
                 }
                 break;
+            case R.id.Quit:
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    mp.onDestroy();
+                    final Intent music = new Intent(getApplication(), MusicPlayer.class);
+                    music.putExtra("index", 0);
+                    startService(music); // move this to gameover when completed
+
+                    Intent MainMenu = new Intent(MainGame.this, MainMenu.class);
+                    startActivity(MainMenu);
+                }
             default:
                 break;
         }
