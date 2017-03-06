@@ -52,6 +52,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder){
+        /*
         boolean retry = true;
         gameLoop.setRunning(false);
         while(retry) {
@@ -62,6 +63,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 e.printStackTrace();
             }
         }
+        */
     }
 
     @Override
@@ -80,6 +82,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop = new GameLoop(getHolder(), this);
         gameLoop.setRunning(true);
         gameLoop.start();
+        //sprite.setPlaying(true);
     }
 
     public void jumpButtonDown() {
@@ -152,7 +155,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
         if (sprite.getPlaying()){
-            if((int)(gameLoop.time / 1000000000) > 2 * (level.getLevel() + 1) && level.getLevel() < 9) {
+            if((int)((System.nanoTime() - sprite.getTime()) / 1000000000) > 2 * (level.getLevel() + 1) && level.getLevel() < 9) {
                 MOVESPEED--;
                 level.setLevel();
                 background = new Background(level.getBackground());
@@ -161,7 +164,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             background.update();
             sprite.update();
 
-            long timeElapsed = (System.nanoTime()-timingObstacle)/1000000;
+            long timeElapsed = (System.nanoTime() - timingObstacle)/1000000;
             if(timeElapsed > (3000 - sprite.getScore()/4)){
                 if(timeElapsed % 2 == 0) {
                     obstacles.add(new Obstacle(obstacle, WIDTH + 10, HEIGHT - obstacle.getHeight() - 15));

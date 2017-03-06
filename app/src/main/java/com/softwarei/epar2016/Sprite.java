@@ -10,7 +10,7 @@ public class Sprite {
     private boolean jumping, ducking, playing, collision, recovery;
     private Animation animation, animation2;
 
-    private long startTime;
+    private long startTime, time;
     private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height;
     private int xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
     private int jumpForceInitial, jumpForce, punishLength;
@@ -96,7 +96,7 @@ public class Sprite {
 
     public void update() {
         long elapsed = (System.nanoTime() - startTime) / 1000000;
-        if(elapsed > 1000) {
+        if(elapsed >= 1000) {
             score++;
             startTime = System.nanoTime();
         }
@@ -165,10 +165,13 @@ public class Sprite {
     }
 
     public void setPlaying(boolean playing) {
-        //xCurrent = xInitial;
-        xNext = xInitial - punishLength;
-        //xCurrent2 = xInitial2;
-        xNext2 = xInitial2 - punishLength;
+        if(playing) {
+            //xCurrent = xInitial;
+            xNext = xInitial - punishLength;
+            //xCurrent2 = xInitial2;
+            xNext2 = xInitial2 - punishLength;
+            time = System.nanoTime();
+        }
         this.playing = playing;
     }
 
@@ -180,5 +183,9 @@ public class Sprite {
             return new Rect(xCurrent, yCurrent, xCurrent+width, yCurrent+height);
         }
 
+    }
+
+    public long getTime() {
+        return time;
     }
 }
