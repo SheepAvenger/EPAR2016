@@ -59,7 +59,7 @@ public class GameLoop extends Thread {
                 totalTime += System.nanoTime() - startTime;
                 frameCount++;
                 if (frameCount == FPS) {
-                    //averageFPS = 1000 / ((totalTime / frameCount) / 1000000);
+                    averageFPS = 1000 / ((totalTime / frameCount) / 1000000);
                     frameCount = 0;
                     totalTime = 0;
                     //System.out.println(averageFPS);
