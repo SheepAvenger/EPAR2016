@@ -98,6 +98,7 @@ public class VladThread extends SurfaceView implements Runnable {
             if (timeThisFrame >= 1) {
                 fps = 1000 / timeThisFrame;
             }
+
         }
     }
 
@@ -130,7 +131,7 @@ public class VladThread extends SurfaceView implements Runnable {
             if (spinMachine) {
                 int msrcX = machineSpriteFrame * machineWidth;
                 Rect msrc = new Rect(msrcX, 0, msrcX + machineWidth, machineHeight);
-                Rect mdst = new Rect(50, 70, 350, 230);
+                Rect mdst = new Rect(0, 210, 250, 440);
                 canvas.drawBitmap(machMap, msrc, mdst, null);
                 try {
                     gameThread.sleep(100);
@@ -142,12 +143,13 @@ public class VladThread extends SurfaceView implements Runnable {
                 }
             }
             else if (scrollOptions) {
-                canvas.drawBitmap(machineStill, 0, 110, null);
+                Rect msrc = new Rect(0, 0, machineWidth, machineHeight);
+                Rect mdst = new Rect(0, 210, 250, 440);
+                canvas.drawBitmap(machineStill, msrc, mdst, null);
 
                 int ssrcX = scrollSpriteFrame * scrollWidth;
                 Rect ssrc = new Rect(ssrcX, 0, ssrcX + scrollWidth, scrollHeight);
-                Rect sdst = new Rect(100, 75, 280, 175);
-
+                Rect sdst = new Rect(60, 295, 145, 370);
                 canvas.drawBitmap(scrollMap, ssrc, sdst, null);
                 try {
                     gameThread.sleep(50);
@@ -155,13 +157,15 @@ public class VladThread extends SurfaceView implements Runnable {
 
                 secondTestCount++;
 
-                if (secondTestCount == 1000) {
+                if (secondTestCount == 500) {
                     scrollOptions = false;
                     secondTestCount = 0;
                 }
             }
             else {
-                canvas.drawBitmap(machineStill, 0, 110, null);
+                Rect msrc = new Rect(0, 0, machineWidth, machineHeight);
+                Rect mdst = new Rect(0, 210, 250, 440);
+                canvas.drawBitmap(machineStill, msrc, mdst, null);
                 testCount++;
                 //test how long still image stays on screen
                 if (testCount == 100){
