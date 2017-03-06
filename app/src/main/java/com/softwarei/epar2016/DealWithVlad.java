@@ -6,6 +6,7 @@ import android.os.Bundle;
 public class DealWithVlad extends Activity {
 
     private VladThread vladThread;
+    private GameOver gameOver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

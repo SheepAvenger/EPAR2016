@@ -51,6 +51,8 @@ public class VladThread extends SurfaceView implements Runnable {
     Bitmap scrollMap;
     Boolean scrollOptions;
 
+    private GameOver gameOver;
+
     VladThread(Context context) {
         super(context);
         this.context = context;
@@ -79,6 +81,8 @@ public class VladThread extends SurfaceView implements Runnable {
 
         testCount = 0;
         secondTestCount = 0;
+
+        gameOver = new GameOver();
     }
 
     @Override
@@ -86,8 +90,9 @@ public class VladThread extends SurfaceView implements Runnable {
 
         while (running) {
             long startFrameTime = System.currentTimeMillis();
-
-            update();
+            if (spinMachine || scrollOptions) {
+                update();
+            }
             draw();
             long timeThisFrame = System.currentTimeMillis() - startFrameTime;
             if (timeThisFrame >= 1) {
@@ -130,20 +135,26 @@ public class VladThread extends SurfaceView implements Runnable {
                 try {
                     gameThread.sleep(100);
                 } catch (InterruptedException e) {}
+
                 if (machineSpriteFrame == 9) {
                     scrollOptions = true;
                     spinMachine = false;
                 }
             }
             else if (scrollOptions) {
+                canvas.drawBitmap(machineStill, 0, 110, null);
+
                 int ssrcX = scrollSpriteFrame * scrollWidth;
                 Rect ssrc = new Rect(ssrcX, 0, ssrcX + scrollWidth, scrollHeight);
-                Rect sdst = new Rect(135, 125, 205, 175);
+                Rect sdst = new Rect(100, 75, 280, 175);
+
                 canvas.drawBitmap(scrollMap, ssrc, sdst, null);
                 try {
                     gameThread.sleep(50);
                 } catch (InterruptedException e) {}
+
                 secondTestCount++;
+
                 if (secondTestCount == 1000) {
                     scrollOptions = false;
                     secondTestCount = 0;
@@ -152,7 +163,8 @@ public class VladThread extends SurfaceView implements Runnable {
             else {
                 canvas.drawBitmap(machineStill, 0, 110, null);
                 testCount++;
-                if (testCount == 1000){
+                //test how long still image stays on screen
+                if (testCount == 100){
                     spinMachine = true;
                     testCount = 0;
                 }
