@@ -16,7 +16,6 @@ public class Sprite {
     private int jumpForceInitial, jumpForce, punishLength;
     private Bitmap image1, image2;
 
-
     public Sprite(int index, int numberOfFrames, int numberOfFrames2, Context context) {
         punishLength = 70;
         int ground = -20;

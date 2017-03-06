@@ -48,7 +48,6 @@ public class GameLoop extends Thread {
 
                 timeMillis = (System.nanoTime() - startTime) / 1000000;
                 waitTime = targetTime - timeMillis;
-
                 if (waitTime >= 0) {
                     try {
                         sleep(waitTime);

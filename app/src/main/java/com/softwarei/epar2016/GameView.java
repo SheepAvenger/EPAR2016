@@ -65,7 +65,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         background = new Background(level.getBackground());
         sprite = new Sprite(index, 2, 2, ctx);
-
         obstacles = new ArrayList<Obstacle>();
         obstacle = BitmapFactory.decodeResource(getResources(), R.drawable.o_donkey);
         obstacle2 = BitmapFactory.decodeResource(getResources(), R.drawable.o_elephant);
