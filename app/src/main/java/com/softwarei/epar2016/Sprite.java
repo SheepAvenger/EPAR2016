@@ -143,7 +143,6 @@ public class Sprite {
         }
     }
 
-    //change back to non-static if messes with anything
     public int getScore() {
         return score;
     }
