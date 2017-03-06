@@ -114,16 +114,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void resumeButtonUp() {
         gameLoop.setPause(false);
-        //gameLoop.start();
         levelTime += System.nanoTime() - pauseTime;
     }
 
 
     public boolean collision(Obstacle o, Sprite s) {
-        if(Rect.intersects(o.getRectangle(), s.getRectangle())) {
-            return true;
-        }
-        return false;
+        return Rect.intersects(o.getRectangle(), s.getRectangle());
     }
 
     public void drawText(Canvas canvas) {
