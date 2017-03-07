@@ -24,7 +24,7 @@ public class GameLoop extends Thread {
         targetTime = 1000/FPS;
 
         while(running) {
-            if(!pause) {
+            //if(!pause) {
                 startTime = System.nanoTime();
                 canvas = null;
 
@@ -64,10 +64,10 @@ public class GameLoop extends Thread {
                     totalTime = 0;
                     //System.out.println(averageFPS);
                 }
-            }
+            //}
         }
     }
-
+/*
     public void setRunning(boolean running) {
         this.running = running;
     }
@@ -75,4 +75,5 @@ public class GameLoop extends Thread {
     public void setPause(boolean pause) {
         this.pause = pause;
     }
+    */
 }
