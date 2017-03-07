@@ -114,7 +114,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void resumeButtonUp() {
-        gameLoop = new GameLoop(getHolder(), this);
+        //gameLoop = new GameLoop(getHolder(), this);
         gameLoop.setRunning(true);
         gameLoop.start();
         //gameLoop.setPause(false);
