@@ -1,6 +1,7 @@
 package com.softwarei.epar2016;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -31,10 +32,8 @@ public class DealWithVlad extends Activity {
     protected void onPause() {
         super.onPause();
         //vladThread.pause();
-        Intent gameOver = new Intent(DealWithVlad.this, GameOver.class);
-        gameOver.putExtra("score",0);
-        startActivity(gameOver);
     }
+
 
     @Override
     protected void onResume() {

@@ -1,5 +1,7 @@
 package com.softwarei.epar2016;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,7 @@ public class GameOver extends AppCompatActivity {
     //comment
     private EditText initials;
     private String playerInit;
+    private int score;
 
 
 
@@ -23,10 +26,13 @@ public class GameOver extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_over);
+        Intent intent = getIntent();
+        score = intent.getIntExtra("score", 0);
         this.playerInit="";
 
         initials = (EditText) findViewById(R.id.getInitials);
-        Scores s = new  Scores(this);
+        final Scores s = new  Scores(this);
+        final Context ctx = this;
         Button button1;
         button1 = (Button) findViewById(R.id.hScores);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +40,7 @@ public class GameOver extends AppCompatActivity {
             public void onClick(View v) {
                 GameOver.this.setInitials(initials.getText().toString());
                 if(playerInit.length() >0 && playerInit.length() <= 8) {
+                    s.addScore(score,playerInit, ctx);
                     Intent viewHScores = new Intent(GameOver.this, HighScores.class);
                     startActivity(viewHScores);
                 }
