@@ -116,7 +116,6 @@ public class VladThread extends SurfaceView implements Runnable {
         vladGuess = new Random().nextInt(10) + 1;
         speech = false;
         leaveGame = true;
-        dealWithVlad = new DealWithVlad();
         //need to figure out a way to end thread and pass to gameOver.
         gameOver = new GameOver();
     }
