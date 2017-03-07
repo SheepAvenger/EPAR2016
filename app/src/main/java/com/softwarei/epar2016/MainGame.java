@@ -87,7 +87,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
                 break;
             case R.id.Quit:
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    mp.onDestroy();
+                    stopService(new Intent(MainGame.this, MusicPlayer.class));
                     final Intent music = new Intent(getApplication(), MusicPlayer.class);
                     music.putExtra("index", 0);
                     startService(music); // move this to gameover when completed

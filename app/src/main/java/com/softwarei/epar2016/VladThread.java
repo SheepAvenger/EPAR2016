@@ -41,6 +41,9 @@ public class VladThread extends SurfaceView implements Runnable {
     Bitmap machineStill;
     Boolean spinMachine;
 
+    int testCount;
+    int secondTestCount;
+
     private int scrollCols = 5;
     private int scrollSpriteFrame = 0;
     private int scrollWidth;
@@ -48,13 +51,7 @@ public class VladThread extends SurfaceView implements Runnable {
     Bitmap scrollMap;
     Boolean scrollOptions;
 
-    private long startTime;
-    private long timeMillis;
-    private long waitTime;
-    private long totalTime = 0;
-    private int frameCount = 0;
-    private long targetTime = 1000/fps;
-    private double averageFPS;
+    private GameOver gameOver;
 
     VladThread(Context context) {
         super(context);
@@ -73,12 +70,19 @@ public class VladThread extends SurfaceView implements Runnable {
         machineStill = BitmapFactory.decodeResource(getResources(), R.drawable.slot_machine_still);
         this.machineWidth = machMap.getWidth() / machineCols;
         this.machineHeight = machMap.getHeight();
-        spinMachine = true;
+        spinMachine = false;
 
         scrollMap = BitmapFactory.decodeResource(getResources(), R.drawable.slot_scroll);
         this.scrollWidth = scrollMap.getWidth() / scrollCols;
         this.scrollHeight = scrollMap.getHeight();
         scrollOptions = false;
+
+        gameThread = new Thread(this);
+
+        testCount = 0;
+        secondTestCount = 0;
+
+        gameOver = new GameOver();
     }
 
     @Override
@@ -86,14 +90,15 @@ public class VladThread extends SurfaceView implements Runnable {
 
         while (running) {
             long startFrameTime = System.currentTimeMillis();
-
-            update();
+            if (spinMachine || scrollOptions) {
+                update();
+            }
             draw();
-
             long timeThisFrame = System.currentTimeMillis() - startFrameTime;
             if (timeThisFrame >= 1) {
                 fps = 1000 / timeThisFrame;
             }
+
         }
     }
 
@@ -123,20 +128,52 @@ public class VladThread extends SurfaceView implements Runnable {
             Rect vdst = new Rect(500, 0, 910, (int) (GameView.HEIGHT / 1.1));
             canvas.drawBitmap(vladMap, vsrc, vdst, null);
 
+            if (spinMachine) {
+                int msrcX = machineSpriteFrame * machineWidth;
+                Rect msrc = new Rect(msrcX, 0, msrcX + machineWidth, machineHeight);
+                Rect mdst = new Rect(0, 210, 250, 440);
+                canvas.drawBitmap(machMap, msrc, mdst, null);
+                try {
+                    gameThread.sleep(100);
+                } catch (InterruptedException e) {}
 
-            //draws still image
-            //not sure where it would go, here or in deal with vlad but we need to create a conditional to only spin after he speaks
-            canvas.drawBitmap(machineStill, 0, 110, null);
+                if (machineSpriteFrame == 9) {
+                    scrollOptions = true;
+                    spinMachine = false;
+                }
+            }
+            else if (scrollOptions) {
+                Rect msrc = new Rect(0, 0, machineWidth, machineHeight);
+                Rect mdst = new Rect(0, 210, 250, 440);
+                canvas.drawBitmap(machineStill, msrc, mdst, null);
 
-            /*int msrcX = machineSpriteFrame * machineWidth;
-            Rect msrc = new Rect(msrcX, 0, msrcX + machineWidth, machineHeight);
-            Rect mdst = new Rect(50, 70, 350, 230);
-            canvas.drawBitmap(machMap, msrc, mdst, null);
+                int ssrcX = scrollSpriteFrame * scrollWidth;
+                Rect ssrc = new Rect(ssrcX, 0, ssrcX + scrollWidth, scrollHeight);
+                Rect sdst = new Rect(60, 295, 145, 370);
+                canvas.drawBitmap(scrollMap, ssrc, sdst, null);
+                try {
+                    gameThread.sleep(50);
+                } catch (InterruptedException e) {}
 
-            int ssrcX = scrollSpriteFrame * scrollWidth;
-            Rect ssrc = new Rect(ssrcX, 0, ssrcX + scrollWidth, scrollHeight);
-            Rect sdst = new Rect(135, 125, 205, 175);
-            canvas.drawBitmap(scrollMap, ssrc, sdst, null);*/
+                secondTestCount++;
+
+                if (secondTestCount == 500) {
+                    scrollOptions = false;
+                    secondTestCount = 0;
+                }
+            }
+            else {
+                Rect msrc = new Rect(0, 0, machineWidth, machineHeight);
+                Rect mdst = new Rect(0, 210, 250, 440);
+                canvas.drawBitmap(machineStill, msrc, mdst, null);
+                testCount++;
+                //test how long still image stays on screen
+                if (testCount == 100){
+                    spinMachine = true;
+                    testCount = 0;
+                }
+            }
+
 
             ourHolder.unlockCanvasAndPost(canvas);
         }

@@ -46,6 +46,11 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+                android:name=".Scandal"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>
