@@ -30,7 +30,7 @@ public class DealWithVlad extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        vladThread.pause();
+        //vladThread.pause();
         Intent gameOver = new Intent(DealWithVlad.this, GameOver.class);
         gameOver.putExtra("score",0);
         startActivity(gameOver);

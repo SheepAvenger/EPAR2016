@@ -133,7 +133,7 @@ public class VladThread extends SurfaceView implements Runnable {
                 fps = 1000 / timeThisFrame;
             }
             if (leaveGame) {
-                dealWithVlad.onPause();
+                //dealWithVlad.onPause();
             }
         }
     }
