@@ -10,13 +10,11 @@ public class Sprite {
     private boolean jumping, ducking, playing, collision, recovery;
     private Animation animation, animation2;
 
-    private long startTime, time;
+    private long startTime;
     private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height;
     private int xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
     private int jumpForceInitial, jumpForce, punishLength;
-    private Bitmap image1;
-    private Bitmap image2;
-
+    private Bitmap image1, image2;
 
     public Sprite(int index, int numberOfFrames, int numberOfFrames2, Context context) {
         punishLength = 70;
@@ -28,8 +26,6 @@ public class Sprite {
         image1 = sprites.getCharacter();
         sprites.setIndex(index+1);
         image2 = sprites.getCharacter();
-
-
 
         this.height = image1.getHeight();
         this.width = image1.getWidth()/numberOfFrames;
@@ -149,7 +145,7 @@ public class Sprite {
 
     //change back to non-static if messes with anything
     public int getScore() {
-        return (score);
+        return score;
     }
 
     public void setScore(int score) {
@@ -157,11 +153,11 @@ public class Sprite {
     }
 
     public void resetScore() {
-        this.score = 0;
+        score = 0;
     }
 
     public boolean getPlaying() {
-        return this.playing;
+        return playing;
     }
 
     public void setPlaying(boolean playing) {
@@ -170,7 +166,6 @@ public class Sprite {
             xNext = xInitial - punishLength;
             //xCurrent2 = xInitial2;
             xNext2 = xInitial2 - punishLength;
-            time = System.nanoTime();
         }
         this.playing = playing;
     }
@@ -183,9 +178,5 @@ public class Sprite {
             return new Rect(xCurrent, yCurrent, xCurrent+width, yCurrent+height);
         }
 
-    }
-
-    public long getTime() {
-        return time;
     }
 }
