@@ -67,6 +67,8 @@ public class VladThread extends SurfaceView implements Runnable {
     private final EditText userGuess;
     int vladGuess;
     Boolean speech;
+    Boolean leaveGame;
+    DealWithVlad dealWithVlad;
 
     VladThread(Context context) {
         super(context);
@@ -113,6 +115,8 @@ public class VladThread extends SurfaceView implements Runnable {
         userGuess = null;
         vladGuess = new Random().nextInt(10) + 1;
         speech = false;
+        leaveGame = true;
+        dealWithVlad = new DealWithVlad();
         //need to figure out a way to end thread and pass to gameOver.
         gameOver = new GameOver();
     }
@@ -128,6 +132,9 @@ public class VladThread extends SurfaceView implements Runnable {
             long timeThisFrame = System.currentTimeMillis() - startFrameTime;
             if (timeThisFrame >= 1) {
                 fps = 1000 / timeThisFrame;
+            }
+            if (leaveGame) {
+                dealWithVlad.onPause();
             }
         }
     }
@@ -211,6 +218,7 @@ public class VladThread extends SurfaceView implements Runnable {
                 if (secondTestCount == 500) {
                     scrollOptions = false;
                     secondTestCount = 0;
+                    leaveGame = true;
                 }
             }
 
