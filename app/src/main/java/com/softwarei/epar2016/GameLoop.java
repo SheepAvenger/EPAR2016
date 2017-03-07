@@ -67,13 +67,13 @@ public class GameLoop extends Thread {
             //}
         }
     }
-/*
+
     public void setRunning(boolean running) {
         this.running = running;
     }
 
-    public void setPause(boolean pause) {
-        this.pause = pause;
-    }
-    */
+//    public void setPause(boolean pause) {
+//        this.pause = pause;
+//    }
+
 }
