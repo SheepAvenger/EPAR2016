@@ -9,7 +9,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
-
+import android.content.Intent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -34,6 +34,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private int index;
     private Context ctx;
     private Random rand;
+    private Scandal scandalScreen;
 
     public GameView(Context context, int i) {
         super(context);
@@ -48,6 +49,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
         timingObstacle = System.nanoTime();
+        System.out.println("Surface was changed");
+
     }
 
     @Override
@@ -64,6 +67,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         */
+        System.out.println("Surface was destroyed");
     }
 
     @Override
@@ -83,6 +87,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop.setRunning(true);
         gameLoop.start();
         //sprite.setPlaying(true);
+        System.out.println("Surface was created");
+
     }
 
     public void jumpButtonDown() {
@@ -185,7 +191,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 if(collision(obstacles.get(i),sprite)) {
                     sprite.setCollision();
                     obstacles.remove(i);
-                    scandalCount++;
+                    //scandalCount++;
+                    scandalCount = 3;
+                    Context context = GameView.this.getContext();
+                    context.startActivity(new Intent(context, Scandal.class));
+                    //gameLoop.setRunning(false);
                     break;
                 }
 
@@ -203,6 +213,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 background = new Background(level.getBackground());
                 sprite.resetScore();
                 sprite.setRecovery();
+
             }
         }
     }
