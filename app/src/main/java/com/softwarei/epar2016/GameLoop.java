@@ -10,7 +10,6 @@ public class GameLoop extends Thread {
     private GameView gameView;
     private boolean running;
     public static Canvas canvas;
-    public static long time;
 
     public GameLoop(SurfaceHolder surfaceHolder, GameView gameView) {
         super();
@@ -19,12 +18,10 @@ public class GameLoop extends Thread {
     }
     @Override
     public void run() {
-        long startTime;
-        long timeMillis;
-        long waitTime;
-        long totalTime = 0;
         int frameCount = 0;
-        long targetTime = 1000/FPS;
+        long startTime, timeMillis, waitTime, totalTime, targetTime;
+        totalTime = 0;
+        targetTime = 1000/FPS;
 
         while(running) {
             startTime = System.nanoTime();
@@ -51,7 +48,7 @@ public class GameLoop extends Thread {
 
             if(waitTime >= 0) {
                 try {
-                    this.sleep(waitTime);
+                    sleep(waitTime);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -62,7 +59,6 @@ public class GameLoop extends Thread {
             if(frameCount == FPS) {
                 averageFPS = 1000 / ((totalTime/frameCount) / 1000000);
                 frameCount = 0;
-                time += totalTime;
                 totalTime = 0;
                 //System.out.println(averageFPS);
             }
