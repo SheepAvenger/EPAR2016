@@ -16,10 +16,10 @@ public class Sprite {
     private int jumpForceInitial, jumpForce, punishLength;
     private Bitmap image1, image2;
 
-    public Sprite(int index, int numberOfFrames, int numberOfFrames2, Context context) {
+    public Sprite(int index, int numberOfFrames, int numberOfFrames2, Context context, int score) {
         punishLength = 70;
         int ground = -20;
-        score = 0;
+        this.score = score;
 
         Character sprites = new Character(context);
         sprites.setIndex(index);

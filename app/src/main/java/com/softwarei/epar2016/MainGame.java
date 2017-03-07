@@ -15,7 +15,10 @@ public class MainGame extends Activity implements View.OnTouchListener {
 
     GameView gameView;
     MusicPlayer mp;
-    int index;
+   private int index;
+    private int level_index;
+    private int score;
+    private int scandal;
     RelativeLayout running, paused;
 
     @Override
@@ -41,8 +44,11 @@ public class MainGame extends Activity implements View.OnTouchListener {
         
         FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
         Intent intent = getIntent();
-        index = intent.getIntExtra("run", 0);
-        gameView = new GameView(this, index);
+        index = intent.getIntExtra("character", 0);
+        level_index = intent.getIntExtra("level",0);
+        score = intent.getIntExtra("score",0);
+        scandal = intent.getIntExtra("scandal",0);
+        gameView = new GameView(this, index, level_index, scandal, score);
         frameLayout.addView(gameView);
 
         running = (RelativeLayout)findViewById(R.id.gameRunning);

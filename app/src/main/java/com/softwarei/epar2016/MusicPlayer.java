@@ -26,7 +26,8 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
 
     private static final String TAG = null;
     private static MediaPlayer player;
-    int[] songs = {R.raw.music_main_menu,R.raw.deal_vlad, R.raw.careless_whisper, R.raw.never_gonna_give_you_up, R.raw.we_built_this_city, R.raw.chop_suey, R.raw.pursite, R.raw.before_i_forget, R.raw.guiles_theme};
+    int[] songs = {R.raw.music_main_menu,R.raw.deal_vlad, R.raw.careless_whisper, R.raw.never_gonna_give_you_up, R.raw.we_built_this_city,
+            R.raw.chop_suey, R.raw.pursite, R.raw.before_i_forget, R.raw.guiles_theme, R.raw.what_is_love, R.raw.eye_of_the_tiger};
     private int current_index;
 
     @Override
@@ -51,7 +52,7 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
 
     public void play()
     {
-            if(current_index == 7) // change to 10 when other songs added
+            if(current_index == 10) // change to 10 when other songs added
             {
                 current_index = 2;
             }

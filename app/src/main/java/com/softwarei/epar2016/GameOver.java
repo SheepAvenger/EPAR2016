@@ -27,7 +27,8 @@ public class GameOver extends AppCompatActivity {
         this.playerInit="";
 
         initials = (EditText) findViewById(R.id.getInitials);
-
+        Scores s = new  Scores(this);
+        s.addScore(1000, "RLM", this);
         Button button1;
         button1 = (Button) findViewById(R.id.hScores);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -35,7 +36,7 @@ public class GameOver extends AppCompatActivity {
             public void onClick(View v) {
                 GameOver.this.setInitials(initials.getText().toString());
                 if(playerInit.length() >0 && playerInit.length() <= 8) {
-                    Intent viewHScores = new Intent(GameOver.this, MainMenu.class);
+                    Intent viewHScores = new Intent(GameOver.this, HighScores.class);
                     startActivity(viewHScores);
                 }
                 else

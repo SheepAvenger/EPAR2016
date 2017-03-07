@@ -24,6 +24,8 @@ public class MainMenu extends AppCompatActivity {
         {
             public void onClick(View v)
             {
+                //Intent hs = new Intent(MainMenu.this, HighScores.class);
+                //startActivity(hs);
                 Intent hs = new Intent(MainMenu.this, HighScores.class);
                 startActivity(hs);
             }

@@ -1,6 +1,7 @@
 package com.softwarei.epar2016;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,35 +20,47 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public static final int HEIGHT = 480;
     public static int MOVESPEED = -6;
     private Level level;
-    private long obstacleTime, jumpButtonTime, levelTime, pauseTime;
+    private long timingObstacle;
+    private long jumpButtonTime;
     private GameLoop gameLoop;
     private Background background;
     private Sprite sprite;
     private ArrayList<Obstacle> obstacles;
-    private Bitmap obstacle, obstacle2, scandal, noScandal;
+    private Bitmap obstacle;
+    private Bitmap obstacle2;
+    private Bitmap scandal;
+    private Bitmap noScandal;
     private int scandalCount;
     private Scores scores;
     private int index;
-    private Context ctx;
+    private int score;
+    private int hitCount;
+    private static Context ctx;
+    private int level_index;
     private Random rand;
 
-    public GameView(Context context, int i) {
+    public GameView(Context context, int index, int levels, int scandal, int score) {
         super(context);
         ctx = context;
         getHolder().addCallback(this);
         setFocusable(true);
-        index = i;
-        level = new Level(context);
+        this.index = index;
+        scandalCount = scandal;
+        this.score = score;
+        level_index = levels;
+
+        level = new Level(context, levels);
         rand = new Random();
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
-        obstacleTime = System.nanoTime();
+        timingObstacle = System.nanoTime();
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
+    public void surfaceDestroyed(SurfaceHolder holder){
+        /*
         boolean retry = true;
         gameLoop.setRunning(false);
         while(retry) {
@@ -58,13 +71,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 e.printStackTrace();
             }
         }
+        */
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder){
 
         background = new Background(level.getBackground());
-        sprite = new Sprite(index, 2, 2, ctx);
+        sprite = new Sprite(index, 2, 2, ctx,score);
+
         obstacles = new ArrayList<Obstacle>();
         obstacle = BitmapFactory.decodeResource(getResources(), R.drawable.o_donkey);
         obstacle2 = BitmapFactory.decodeResource(getResources(), R.drawable.o_elephant);
@@ -76,14 +91,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop.setRunning(true);
         gameLoop.start();
         //sprite.setPlaying(true);
-        //levelTime = System.nanoTime();
     }
 
     public void jumpButtonDown() {
         jumpButtonTime = System.nanoTime();
         if(!sprite.getPlaying()) {
             sprite.setPlaying(true);
-            levelTime = System.nanoTime();
         }
     }
 
@@ -96,7 +109,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void duckButtonDown() {
         if(!sprite.getPlaying()) {
             sprite.setPlaying(true);
-            levelTime = System.nanoTime();
         }
         if(!sprite.getJumping()) {
             sprite.setDucking(true);
@@ -109,21 +121,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     
     public void pauseButtonUp() {
         gameLoop.setRunning(false);
-        //gameLoop.setPause(true);
-        pauseTime = System.nanoTime();
     }
 
     public void resumeButtonUp() {
-        //gameLoop = new GameLoop(getHolder(), this);
         gameLoop.setRunning(true);
         gameLoop.start();
-        //gameLoop.setPause(false);
-        levelTime += System.nanoTime() - pauseTime;
     }
 
 
     public boolean collision(Obstacle o, Sprite s) {
-        return Rect.intersects(o.getRectangle(), s.getRectangle());
+        if(Rect.intersects(o.getRectangle(), s.getRectangle())) {
+            return true;
+        }
+        return false;
     }
 
     public void drawText(Canvas canvas) {
@@ -131,8 +141,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(Color.WHITE);
         paint.setTextSize(30);
         //canvas.drawText("Scandal: " + scandalCount, 10, 30, paint);
-        canvas.drawText("Score: " + sprite.getScore(), 350, 30, paint);
-        canvas.drawText("Level: " + level.getLevel(), 350, 478, paint);
+        canvas.drawText("Score: " + sprite.getScore(), 300, 30, paint);
+        canvas.drawText("Level: " + level.getLevel(), 300, 480, paint);
         if(!sprite.getPlaying()) {
             Paint paint1 = new Paint();
             paint1.setColor(Color.WHITE);
@@ -153,16 +163,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
         if (sprite.getPlaying()){
-            if((int)((System.nanoTime() - levelTime) / 1000000000) > 2 * (level.getLevel() + 1) && level.getLevel() < 9) {
+            if((int)((System.nanoTime() - sprite.getTime()) / 1000000000) > 2 * (level.getLevel() + 1) && level.getLevel() < 9) {
                 MOVESPEED--;
                 level.setLevel();
                 background = new Background(level.getBackground());
+                level_index = level.getLevel();
             }
 
             background.update();
             sprite.update();
+            score = sprite.getScore();
 
-            long timeElapsed = (System.nanoTime() - obstacleTime)/1000000;
+            long timeElapsed = (System.nanoTime() - timingObstacle)/1000000;
             if(timeElapsed > (3000 - sprite.getScore()/4)){
                 if(timeElapsed % 2 == 0) {
                     obstacles.add(new Obstacle(obstacle, WIDTH + 10, HEIGHT - obstacle.getHeight() - 15));
@@ -174,7 +186,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     obstacles.add(new Obstacle(obstacle2, WIDTH + 10, posY));
                     //obstacles.add(new Obstacle(obstacle2, WIDTH + 10, HEIGHT - obstacle2.getHeight() - 160));
                 }
-                obstacleTime = System.nanoTime();
+                timingObstacle = System.nanoTime();
             }
 
             for(int i = 0; i< obstacles.size(); i++) {
@@ -183,7 +195,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 if(collision(obstacles.get(i),sprite)) {
                     sprite.setCollision();
                     obstacles.remove(i);
-                    scandalCount++;
+                    hitCount++;
                     break;
                 }
 
@@ -194,13 +206,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             if(scandalCount >= 3 && !sprite.getCollision()) {
-                sprite.setPlaying(false);
-                scandalCount = 0;
-                MOVESPEED = -6;
-                level.resetLevel();
-                background = new Background(level.getBackground());
-                sprite.resetScore();
-                sprite.setRecovery();
+                gameLoop.setRunning(false);
+                Intent scandal = new Intent(GameView.ctx, Scandal.class);
+                scandal.putExtra("character",index);
+                scandal.putExtra("scandal",scandalCount);
+                scandal.putExtra("level",level_index);
+                scandal.putExtra("score",score);
+                ctx.startActivity(scandal);
             }
         }
     }

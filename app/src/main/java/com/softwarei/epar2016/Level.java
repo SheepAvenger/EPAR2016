@@ -14,9 +14,9 @@ public class Level extends AppCompatActivity
     private int level;
     private Bitmap Background[];
 
-    public Level(Context ctx)
+    public Level(Context ctx, int l)
     {
-        level = 0;
+        level = (l == 0) ? 0 : l;
         Background = new Bitmap[10];
         Background[0] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.level0);
         Background[1] = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.level1);

@@ -74,10 +74,12 @@ public class CharacterSelection extends AppCompatActivity
             Washington.setEnabled(false);
 
         Random rand = new Random();
-        int index = rand.nextInt(7) + 2;
+        int index = rand.nextInt(9) + 2;
 
        final Intent music = new Intent(getApplication(), MusicPlayer.class);
         music.putExtra("index", index);
+
+       final Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
 
         Abe.setOnClickListener(new View.OnClickListener()
         {
@@ -87,7 +89,7 @@ public class CharacterSelection extends AppCompatActivity
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("run",12);
+                Menu.putExtra("character",12);
                 startActivity(Menu);
             }
         });
@@ -100,7 +102,7 @@ public class CharacterSelection extends AppCompatActivity
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("run",2);
+                Menu.putExtra("character",2);
                 startActivity(Menu);
             }
         });
@@ -112,8 +114,7 @@ public class CharacterSelection extends AppCompatActivity
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
                 startService(music);
 
-                Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("run",8);
+                Menu.putExtra("character",8);
                 startActivity(Menu);
             }
         });
@@ -126,7 +127,7 @@ public class CharacterSelection extends AppCompatActivity
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("run",4);
+                Menu.putExtra("character",4);
                 startActivity(Menu);
             }
         });
@@ -139,7 +140,7 @@ public class CharacterSelection extends AppCompatActivity
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("run",2);
+                Menu.putExtra("character",2);
                 startActivity(Menu);
             }
         });
@@ -151,7 +152,7 @@ public class CharacterSelection extends AppCompatActivity
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("run",10);
+                Menu.putExtra("character",10);
                 startActivity(Menu);
             }
         });
@@ -163,7 +164,7 @@ public class CharacterSelection extends AppCompatActivity
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("run",0);
+                Menu.putExtra("character",0);
                 startActivity(Menu);
             }
         });
@@ -175,7 +176,7 @@ public class CharacterSelection extends AppCompatActivity
                 startService(music);
 
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("run",6);
+                Menu.putExtra("character",6);
                 startActivity(Menu);
             }
         });

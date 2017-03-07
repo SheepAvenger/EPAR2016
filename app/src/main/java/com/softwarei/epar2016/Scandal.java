@@ -16,8 +16,11 @@ import android.os.Message;
  */
 
 public class Scandal extends AppCompatActivity{
-    private int numScandal=0;
+    private int numScandal;
     private int index=0;
+    private int character_index;
+    private int score;
+    private int level;
     boolean bold = true;
     private String[] candidates={"Dishonest Abe!","Clinton!","FDR!","Obama!",
                                 "Trump", "Bernie Sanders!", "Washington", "Kennedy" };
@@ -83,6 +86,13 @@ public class Scandal extends AppCompatActivity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scandal);
+
+        Intent intent = getIntent();
+        character_index = intent.getIntExtra("character", 0);
+        numScandal = intent.getIntExtra("scandal", 0);
+        level = intent.getIntExtra("level", 0);
+        score = intent.getIntExtra("score", 0);
+
         scandal = (TextView) findViewById(R.id.scandalous);
         candidate= (TextView) findViewById(R.id.scan_candidate);
         scandalousScandal= (TextView) findViewById(R.id.scandalous_scandal);
@@ -125,7 +135,14 @@ public class Scandal extends AppCompatActivity{
                 }
                 else
                 {
+                    Intent Main = new Intent(Scandal.this, MainGame.class);
+                    Main.putExtra("character",character_index);
+                    Main.putExtra("scandal",numScandal);
+                    Main.putExtra("level",level);
+                    Main.putExtra("score",score);
+                    startActivity(Main);
                     //return to main game.
+                    //need current level, score, scandal count, and character
                 }
             }
 

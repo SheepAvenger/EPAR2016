@@ -19,17 +19,15 @@ public class Scores extends AppCompatActivity
 {
     private HighScore scores[];
     private String scoreString[];
-    String FILE;
+    String File;
 
     public Scores(){};
 
     public Scores(Context ctx)
     {
         int i = 0;
-        FILE = "scores.txt";
         scores = new HighScore[10];
         scoreString = new String[10];
-
         String File = "data/data/com.softwarei.epar2016/scores.txt";
 
         try
@@ -38,16 +36,16 @@ public class Scores extends AppCompatActivity
             if(scoreList.createNewFile())
             {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("scores.txt", ctx.MODE_PRIVATE));
-                outputStreamWriter.write("a 500");
-                outputStreamWriter.write("b 450");
-                outputStreamWriter.write("c 400");
-                outputStreamWriter.write("d 350");
-                outputStreamWriter.write("e 300");
-                outputStreamWriter.write("f 250");
-                outputStreamWriter.write("g 200");
-                outputStreamWriter.write("h 150");
-                outputStreamWriter.write("i 100");
-                outputStreamWriter.write("j 50");
+                outputStreamWriter.write("a 500\n");
+                outputStreamWriter.write("b 450\n");
+                outputStreamWriter.write("c 400\n");
+                outputStreamWriter.write("d 350\n");
+                outputStreamWriter.write("e 300\n");
+                outputStreamWriter.write("f 250\n");
+                outputStreamWriter.write("g 200\n");
+                outputStreamWriter.write("h 150\n");
+                outputStreamWriter.write("i 100\n");
+                outputStreamWriter.write("j 50\n");
                 outputStreamWriter.close();
 
             }
@@ -57,7 +55,7 @@ public class Scores extends AppCompatActivity
 
           try
             {
-                FileInputStream is = ctx.openFileInput(FILE);
+                FileInputStream is = ctx.openFileInput("scores.txt");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 if(is != null)
                 {
@@ -87,7 +85,7 @@ public class Scores extends AppCompatActivity
         boolean newHighScore = false;
         try
         {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput(FILE, ctx.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("scores.txt", ctx.MODE_PRIVATE));
             for(int i = 0; i < 10; i++)
             {
                 if(score > scores[i].score)
