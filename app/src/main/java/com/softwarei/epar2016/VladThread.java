@@ -12,6 +12,9 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.EditText;
+
+import java.util.Random;
 
 public class VladThread extends SurfaceView implements Runnable {
 
@@ -39,74 +42,104 @@ public class VladThread extends SurfaceView implements Runnable {
     private int machineHeight;
     Bitmap machMap;
     Bitmap machineStill;
-    Boolean spinMachine;
 
-    int testCount;
-    int secondTestCount;
+
+    private int speechCols = 4;
+    private int speechSpriteFrame = 0;
+    private int speechWidth;
+    private int speechHeight;
+    Bitmap speechMap;
 
     private int scrollCols = 5;
     private int scrollSpriteFrame = 0;
     private int scrollWidth;
     private int scrollHeight;
     Bitmap scrollMap;
-    Boolean scrollOptions;
 
     private GameOver gameOver;
+
+    //testing variables
+    int testCount;
+    int secondTestCount;
+    Boolean spinMachine;
+    Boolean scrollOptions;
+    int openUserGuessInput;
+    private final EditText userGuess;
+    int vladGuess;
 
     VladThread(Context context) {
         super(context);
         this.context = context;
         ourHolder = getHolder();
 
+        //get the bitmap for the background
         backMap = BitmapFactory.decodeResource(getResources(), R.drawable.vlad_background);
         this.backWidth = backMap.getWidth();
         this.backHeight = backMap.getHeight();
 
+        //get the bitmap for Vlad
         vladMap = BitmapFactory.decodeResource(getResources(), R.drawable.vlad);
         this.vladWidth = vladMap.getWidth();
         this.vladHeight = vladMap.getHeight();
 
+        //get the bitmap for the slot machine
         machMap = BitmapFactory.decodeResource(getResources(), R.drawable.slot_machine);
         machineStill = BitmapFactory.decodeResource(getResources(), R.drawable.slot_machine_still);
         this.machineWidth = machMap.getWidth() / machineCols;
         this.machineHeight = machMap.getHeight();
-        spinMachine = false;
 
+
+        //get the bit map for the different options scrolling animation
         scrollMap = BitmapFactory.decodeResource(getResources(), R.drawable.slot_scroll);
         this.scrollWidth = scrollMap.getWidth() / scrollCols;
         this.scrollHeight = scrollMap.getHeight();
-        scrollOptions = false;
 
+
+        //get the bitmap for what vlad is saying
+        speechMap = BitmapFactory.decodeResource(getResources(), R.drawable.first_speech_bubble);
+        this.speechWidth = speechMap.getWidth()/speechCols;
+        this.speechHeight = speechMap.getHeight();
+
+        //create thread to slow down slot machine and options animation
         gameThread = new Thread(this);
 
+        //testing variables
+        spinMachine = false;
+        scrollOptions = false;
         testCount = 0;
         secondTestCount = 0;
-
+        openUserGuessInput = 0;
+        userGuess = null;
+        vladGuess = new Random().nextInt(10) + 1;
+        //need to figure out a way to end thread and pass to gameOver.
         gameOver = new GameOver();
     }
 
     @Override
     public void run() {
 
+        //loop to continue drawing images
         while (running) {
             long startFrameTime = System.currentTimeMillis();
-            if (spinMachine || scrollOptions) {
-                update();
-            }
             draw();
+            update();
             long timeThisFrame = System.currentTimeMillis() - startFrameTime;
             if (timeThisFrame >= 1) {
                 fps = 1000 / timeThisFrame;
             }
-
         }
     }
 
     private void update() {
-        if (running) {
+
+        //updates the animation frames
+        if (spinMachine || scrollOptions) {
             machineSpriteFrame = ++machineSpriteFrame % machineCols;
             scrollSpriteFrame = ++scrollSpriteFrame % scrollCols;
         }
+        //updates dialog for Vlad
+        else if (speechSpriteFrame !=4)
+            speechSpriteFrame = ++speechSpriteFrame % speechCols;
     }
     private void draw() {
 
@@ -119,14 +152,26 @@ public class VladThread extends SurfaceView implements Runnable {
 
             canvas.drawColor(Color.LTGRAY);
 
+            //draw the background
             Rect bsrc = new Rect(0, 0, backWidth, backHeight);
             Rect bdst = new Rect(0, 0, GameView.WIDTH, GameView.HEIGHT);
             canvas.drawBitmap(backMap, bsrc, bdst, null);
 
-
+            //draw vlad
             Rect vsrc = new Rect(0, 0, vladWidth, vladHeight);
             Rect vdst = new Rect(500, 0, 910, (int) (GameView.HEIGHT / 1.1));
             canvas.drawBitmap(vladMap, vsrc, vdst, null);
+
+            //only draw the speech before any animation
+            if (spinMachine==false && scrollOptions == false) {
+                int spsrcX = speechSpriteFrame * speechWidth;
+                Rect spsrc = new Rect(spsrcX, 0, spsrcX + speechWidth, speechHeight);
+                Rect spdst = new Rect(400, 50, 600, 200);
+                canvas.drawBitmap(speechMap, spsrc, spdst, null);
+                try {
+                    gameThread.sleep(60);
+                } catch (InterruptedException e) {}
+            }
 
             if (spinMachine) {
                 int msrcX = machineSpriteFrame * machineWidth;
@@ -134,7 +179,7 @@ public class VladThread extends SurfaceView implements Runnable {
                 Rect mdst = new Rect(0, 210, 250, 440);
                 canvas.drawBitmap(machMap, msrc, mdst, null);
                 try {
-                    gameThread.sleep(100);
+                    gameThread.sleep(200);
                 } catch (InterruptedException e) {}
 
                 if (machineSpriteFrame == 9) {
