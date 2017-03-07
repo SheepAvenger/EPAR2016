@@ -28,7 +28,6 @@ public class GameOver extends AppCompatActivity {
 
         initials = (EditText) findViewById(R.id.getInitials);
         Scores s = new  Scores(this);
-        s.addScore(1000, "RLM", this);
         Button button1;
         button1 = (Button) findViewById(R.id.hScores);
         button1.setOnClickListener(new View.OnClickListener() {

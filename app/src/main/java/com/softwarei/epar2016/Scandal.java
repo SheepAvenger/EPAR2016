@@ -17,13 +17,14 @@ import android.os.Message;
 
 public class Scandal extends AppCompatActivity{
     private int numScandal;
-    private int index=0;
+    private int tinyZebra;
+    private int index;
     private int character_index;
     private int score;
     private int level;
     boolean bold = true;
     private String[] candidates={"Dishonest Abe!","Clinton!","FDR!","Obama!",
-                                "Trump", "Bernie Sanders!", "Washington", "Kennedy" };
+                                "Trump", "Washington", "Kennedy" };
     private String scandalousCand= "";
     private String[] abeScandal =
                     {"Caught browsing unseemly pictographs of women's ankles!!!",
@@ -90,6 +91,8 @@ public class Scandal extends AppCompatActivity{
         Intent intent = getIntent();
         character_index = intent.getIntExtra("character", 0);
         numScandal = intent.getIntExtra("scandal", 0);
+        tinyZebra = numScandal;
+        numScandal--;
         level = intent.getIntExtra("level", 0);
         score = intent.getIntExtra("score", 0);
 
@@ -128,16 +131,25 @@ public class Scandal extends AppCompatActivity{
             @Override
             public void onClick(View v)
             {
-                if(numScandal ==3)
+                if(tinyZebra == 3)
                 {
+                    stopService(new Intent(Scandal.this, MusicPlayer.class));
+                    Intent music = new Intent(getApplication(), MusicPlayer.class);
+                    music.putExtra("index", 1);
+                    startService(music);
+
                     Intent deal = new Intent(Scandal.this, DealWithVlad.class);
+                    deal.putExtra("character",character_index);
+                    deal.putExtra("scandal",tinyZebra);
+                    deal.putExtra("level",level);
+                    deal.putExtra("score",score);
                     startActivity(deal);
                 }
                 else
                 {
                     Intent Main = new Intent(Scandal.this, MainGame.class);
                     Main.putExtra("character",character_index);
-                    Main.putExtra("scandal",numScandal);
+                    Main.putExtra("scandal",tinyZebra);
                     Main.putExtra("level",level);
                     Main.putExtra("score",score);
                     startActivity(Main);
@@ -154,6 +166,12 @@ public class Scandal extends AppCompatActivity{
 
     public void setScandalousCand()
     {
+        index = ((character_index == 0)? 5 :
+        (character_index == 2)? 4 :
+        (character_index == 4)? 3 :
+        (character_index == 6)? 6 :
+        (character_index == 8)? 2 :
+        (character_index == 10)? 1 : 0);
         scandalousCand= candidates[index];
     }
 
@@ -164,31 +182,29 @@ public class Scandal extends AppCompatActivity{
 
     public String getScandal()
     {
-        switch(index){
-            case 0:
+        switch(character_index){
+            case 12:
                 return abeScandal[numScandal];
-            case 1:
+            case 10:
                 return clintonScandal[numScandal];
-            case 2:
+            case 8:
                 return fdrScandal[numScandal];
 
-            case 3:
+            case 4:
                 return obamaScandal[numScandal];
 
-            case 4:
+            case 2:
                 return trumpScandal[numScandal];
 
-            case 5:
-                return bernScandal[numScandal];
-
-            case 6:
+            case 0:
                 return "Washington Scandal";
 
-            case 7:
+            case 6:
                 return "Kennedy Scandal";
 
             default:
-                return "Invalid Scandal";
+                return bernScandal[numScandal];
+
         }
     }
 

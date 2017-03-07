@@ -199,8 +199,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
 
-            if(scandalCount >= 3 && !sprite.getCollision()) {
+            if(hitCount >= 3 && !sprite.getCollision()) {
                 gameLoop.setRunning(false);
+                scandalCount++;
                 Intent scandal = new Intent(GameView.ctx, Scandal.class);
                 scandal.putExtra("character",index);
                 scandal.putExtra("scandal",scandalCount);
