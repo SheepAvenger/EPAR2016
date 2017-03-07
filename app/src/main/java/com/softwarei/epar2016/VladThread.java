@@ -66,6 +66,7 @@ public class VladThread extends SurfaceView implements Runnable {
     int openUserGuessInput;
     private final EditText userGuess;
     int vladGuess;
+    Boolean speech;
 
     VladThread(Context context) {
         super(context);
@@ -111,6 +112,7 @@ public class VladThread extends SurfaceView implements Runnable {
         openUserGuessInput = 0;
         userGuess = null;
         vladGuess = new Random().nextInt(10) + 1;
+        speech = false;
         //need to figure out a way to end thread and pass to gameOver.
         gameOver = new GameOver();
     }
@@ -138,8 +140,10 @@ public class VladThread extends SurfaceView implements Runnable {
             scrollSpriteFrame = ++scrollSpriteFrame % scrollCols;
         }
         //updates dialog for Vlad
-        else if (speechSpriteFrame !=4)
+        if (speechSpriteFrame != 3 && speech) {
             speechSpriteFrame = ++speechSpriteFrame % speechCols;
+        }
+
     }
     private void draw() {
 
@@ -163,14 +167,15 @@ public class VladThread extends SurfaceView implements Runnable {
             canvas.drawBitmap(vladMap, vsrc, vdst, null);
 
             //only draw the speech before any animation
-            if (spinMachine==false && scrollOptions == false) {
+            if (spinMachine == false && scrollOptions == false) {
                 int spsrcX = speechSpriteFrame * speechWidth;
                 Rect spsrc = new Rect(spsrcX, 0, spsrcX + speechWidth, speechHeight);
                 Rect spdst = new Rect(400, 50, 600, 200);
                 canvas.drawBitmap(speechMap, spsrc, spdst, null);
                 try {
-                    gameThread.sleep(60);
+                    gameThread.sleep(100);
                 } catch (InterruptedException e) {}
+                speech = true;
             }
 
             if (spinMachine) {
@@ -179,7 +184,7 @@ public class VladThread extends SurfaceView implements Runnable {
                 Rect mdst = new Rect(0, 210, 250, 440);
                 canvas.drawBitmap(machMap, msrc, mdst, null);
                 try {
-                    gameThread.sleep(200);
+                    gameThread.sleep(100);
                 } catch (InterruptedException e) {}
 
                 if (machineSpriteFrame == 9) {
@@ -187,6 +192,7 @@ public class VladThread extends SurfaceView implements Runnable {
                     spinMachine = false;
                 }
             }
+
             else if (scrollOptions) {
                 Rect msrc = new Rect(0, 0, machineWidth, machineHeight);
                 Rect mdst = new Rect(0, 210, 250, 440);
@@ -194,7 +200,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
                 int ssrcX = scrollSpriteFrame * scrollWidth;
                 Rect ssrc = new Rect(ssrcX, 0, ssrcX + scrollWidth, scrollHeight);
-                Rect sdst = new Rect(60, 295, 145, 370);
+                Rect sdst = new Rect(60, 295, 145, 367);
                 canvas.drawBitmap(scrollMap, ssrc, sdst, null);
                 try {
                     gameThread.sleep(50);
@@ -207,6 +213,7 @@ public class VladThread extends SurfaceView implements Runnable {
                     secondTestCount = 0;
                 }
             }
+
             else {
                 Rect msrc = new Rect(0, 0, machineWidth, machineHeight);
                 Rect mdst = new Rect(0, 210, 250, 440);
@@ -221,6 +228,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
 
             ourHolder.unlockCanvasAndPost(canvas);
+
         }
 
     }
