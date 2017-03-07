@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/scandalous_scandal">
+
+    <TextView
+        android:text="Scandal!!!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scandalous"
+        android:textSize="60dp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_above="@+id/scan_candidate"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:text="Did THIS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scandalous_scandal"
+        android:textColor="#000000"
+        android:layout_marginBottom="311dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:text="Candidate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scan_candidate"
+        android:textSize="40dp"
+        android:textColor="#000000"
+        android:layout_above="@+id/scandalous_scandal"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"/>
+
+    <Button
+        android:text="Continue"
+        android:textSize="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scan_candidate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="107dp"
+        android:id="@+id/mg" />
+</RelativeLayout>
