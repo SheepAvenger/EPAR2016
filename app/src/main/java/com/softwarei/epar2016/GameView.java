@@ -127,6 +127,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void resumeButtonUp() {
+        gameLoop = new GameLoop(getHolder(), this);
         gameLoop.setRunning(true);
         gameLoop.start();
         levelTime += System.nanoTime() - pauseTime;
@@ -163,7 +164,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
         if (sprite.getPlaying()){
-            if(level.getLevel() < 9 && (int)((System.nanoTime() - levelTime) / 1000000000) >= 2 * (level.getLevel() + 1)) {
+            if(level.getLevel() < 9 && (int)((System.nanoTime() - levelTime) / 1000000000) >= 90 * (level.getLevel() + 1)) {
                 MOVESPEED--;
                 sprite.speedUp();
                 level.setLevel();
