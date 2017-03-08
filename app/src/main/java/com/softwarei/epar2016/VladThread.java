@@ -24,7 +24,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
     private Canvas canvas;
     private SurfaceHolder ourHolder;
-
+    //here
     Context context;
 
     long fps = 60;

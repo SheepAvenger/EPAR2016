@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
+//here
 public class DealWithVlad extends Activity {
 
     private VladThread vladThread;

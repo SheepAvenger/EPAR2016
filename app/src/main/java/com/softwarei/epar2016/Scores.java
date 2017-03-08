@@ -19,6 +19,7 @@ import java.lang.String;
 
 public class Scores extends AppCompatActivity
 {
+    //here
     private HighScore scores[];
     private String scoreString[];
 

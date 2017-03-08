@@ -15,7 +15,7 @@ import android.widget.Toast;
  */
 
 public class GameOver extends AppCompatActivity {
-    //comment
+    //here
     private EditText initials;
     private String playerInit;
     private int score;

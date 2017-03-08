@@ -50,6 +50,7 @@ public class Scandal extends AppCompatActivity{
             "Quote: \"Can I live Eight more years? Let's find out together!!\""};
     //private String[] washScandal={};
     //private String[] kenScandal={};
+    //here
 
 
     private TextView scandal, candidate , scandalousScandal;
