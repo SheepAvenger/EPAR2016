@@ -24,10 +24,10 @@ public class MainMenu extends AppCompatActivity {
         {
             public void onClick(View v)
             {
-                //Intent hs = new Intent(MainMenu.this, HighScores.class);
-                //startActivity(hs);
                 Intent hs = new Intent(MainMenu.this, HighScores.class);
+                hs.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(hs);
+                finish();
             }
 
         });
@@ -39,7 +39,9 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v)
             {
                 Intent characterSelection = new Intent(MainMenu.this, CharacterSelection.class);
+                characterSelection.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(characterSelection);
+                finish();
             }
 
         });
@@ -51,10 +53,17 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v)
             {
                 Intent dealWithVlad = new Intent(MainMenu.this, DealWithVlad.class);
+                dealWithVlad.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(dealWithVlad);
-
+                finish();
             }
         });
+
     }
 
+    @Override
+    public void onBackPressed() {
+
+        finish();
+    }
 }

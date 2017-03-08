@@ -104,7 +104,9 @@ public class MainGame extends Activity implements View.OnTouchListener {
                     startService(music); // move this to gameover when completed
 
                     Intent MainMenu = new Intent(MainGame.this, MainMenu.class);
+                    MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(MainMenu);
+                    finish();
                 }
             default:
                 break;
@@ -113,5 +115,13 @@ public class MainGame extends Activity implements View.OnTouchListener {
     }
 
     public MainGame(){};
+
+    @Override
+    public void onBackPressed() {
+        Intent MainMenu = new Intent(MainGame.this, MainMenu.class);
+        MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(MainMenu);
+        finish();
+    }
 }
 

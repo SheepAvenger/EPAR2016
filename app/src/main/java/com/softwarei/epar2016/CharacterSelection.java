@@ -91,6 +91,7 @@ public class CharacterSelection extends AppCompatActivity
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 Menu.putExtra("character",12);
                 startActivity(Menu);
+                finish();
             }
         });
 
@@ -104,6 +105,7 @@ public class CharacterSelection extends AppCompatActivity
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 Menu.putExtra("character",2);
                 startActivity(Menu);
+                finish();
             }
         });
 
@@ -116,6 +118,7 @@ public class CharacterSelection extends AppCompatActivity
 
                 Menu.putExtra("character",8);
                 startActivity(Menu);
+                finish();
             }
         });
 
@@ -129,6 +132,7 @@ public class CharacterSelection extends AppCompatActivity
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 Menu.putExtra("character",4);
                 startActivity(Menu);
+                finish();
             }
         });
 
@@ -142,6 +146,7 @@ public class CharacterSelection extends AppCompatActivity
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 Menu.putExtra("character",2);
                 startActivity(Menu);
+                finish();
             }
         });
         Sanders.setOnClickListener(new View.OnClickListener()
@@ -154,6 +159,7 @@ public class CharacterSelection extends AppCompatActivity
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 Menu.putExtra("character",10);
                 startActivity(Menu);
+                finish();
             }
         });
         Washington.setOnClickListener(new View.OnClickListener()
@@ -166,6 +172,7 @@ public class CharacterSelection extends AppCompatActivity
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 Menu.putExtra("character",0);
                 startActivity(Menu);
+                finish();
             }
         });
         Kennedy.setOnClickListener(new View.OnClickListener()
@@ -178,6 +185,7 @@ public class CharacterSelection extends AppCompatActivity
                 Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
                 Menu.putExtra("character",6);
                 startActivity(Menu);
+                finish();
             }
         });
     }
@@ -185,6 +193,14 @@ public class CharacterSelection extends AppCompatActivity
     public CharacterSelection()
     {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent MainMenu = new Intent(CharacterSelection.this, MainMenu.class);
+        MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(MainMenu);
+        finish();
     }
 
 }

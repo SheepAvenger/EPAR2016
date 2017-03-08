@@ -29,9 +29,9 @@ public class HighScores extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.high_scores);
         ctx = getApplicationContext();
-       ScrollView scroll = (ScrollView) this.findViewById(R.id.scrollView0);
-       LinearLayout linear = (LinearLayout) this.findViewById(R.id.linear0);
-       TextView textView0 = (TextView) this.findViewById(R.id.textView0);
+        ScrollView scroll = (ScrollView) this.findViewById(R.id.scrollView0);
+        LinearLayout linear = (LinearLayout) this.findViewById(R.id.linear0);
+        TextView textView0 = (TextView) this.findViewById(R.id.textView0);
         TextView textView1 = (TextView) this.findViewById(R.id.textView1);
         TextView textView2 = (TextView) this.findViewById(R.id.textView2);
         TextView textView3 = (TextView) this.findViewById(R.id.textView3);
@@ -50,8 +50,9 @@ public class HighScores extends AppCompatActivity
             public void onClick(View v)
             {
                 Intent Menu = new Intent(HighScores.this, MainMenu.class);
+                Menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(Menu);
-
+                finish();
             }
         });
     }
@@ -67,5 +68,12 @@ public class HighScores extends AppCompatActivity
         {
             texts[i].setText(scores[i]);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent MainMenu = new Intent(HighScores.this, MainMenu.class);
+        MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(MainMenu);
+        finish();
     }
 }

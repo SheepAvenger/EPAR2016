@@ -48,7 +48,9 @@ public class GameOver extends AppCompatActivity {
                     startService(music);
 
                     Intent viewHScores = new Intent(getApplicationContext(), HighScores.class);
+                    viewHScores.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(viewHScores);//error here
+                    finish();
                 }
                 else
                 {
@@ -75,5 +77,13 @@ public class GameOver extends AppCompatActivity {
         Toast.makeText(this, "I SAID ENTER YOUR INITIALS NOT THE MAGNA CARTA", Toast.LENGTH_LONG).show();
         setInitials("");
         initials.setText("Enter your Name");
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent MainMenu = new Intent(GameOver.this, MainMenu.class);
+        MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(MainMenu);
+        finish();
     }
 }
