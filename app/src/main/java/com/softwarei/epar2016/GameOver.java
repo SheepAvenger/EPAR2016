@@ -40,11 +40,15 @@ public class GameOver extends AppCompatActivity {
             public void onClick(View v) {
                 GameOver.this.setInitials(initials.getText().toString());
                 if(playerInit.length() >0 && playerInit.length() <= 8) {
-                    s.addScore(score,playerInit, ctx);
-                    final Intent music = new Intent(getApplication(), MusicPlayer.class);
+                    s.addScore(score,playerInit, getApplicationContext());
+
+                    stopService(new Intent(getApplicationContext(), MusicPlayer.class));
+                    Intent music = new Intent(getApplication(), MusicPlayer.class);
                     music.putExtra("index", 0);
-                    Intent viewHScores = new Intent(GameOver.this, HighScores.class);
-                    startActivity(viewHScores);
+                    startService(music);
+
+                    Intent viewHScores = new Intent(getApplicationContext(), HighScores.class);
+                    startActivity(viewHScores);//error here
                 }
                 else
                 {
