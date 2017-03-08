@@ -1,7 +1,5 @@
 package com.softwarei.epar2016;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +30,6 @@ public class GameOver extends AppCompatActivity {
 
         initials = (EditText) findViewById(R.id.getInitials);
         final Scores s = new  Scores(getApplicationContext());
-        final Context ctx = this;
         Button button1;
         button1 = (Button) findViewById(R.id.hScores);
         button1.setOnClickListener(new View.OnClickListener() {

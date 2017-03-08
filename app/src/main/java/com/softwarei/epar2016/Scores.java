@@ -1,16 +1,15 @@
 package com.softwarei.epar2016;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.lang.String;
 
 /**
@@ -54,21 +53,17 @@ public class Scores extends AppCompatActivity
             }
 
         }
-        catch(IOException e){};
+        catch(IOException e){
+            Log.e("error",""+e.getMessage());};
 
           try
             {
                 FileInputStream is = new FileInputStream(scoreList);
-                int length = (int) scoreList.length();
-
-                //byte[] bytes = new byte[length];
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 if(is != null)
                 {
                     while (i != 10)
                     {
-                        //is.read(bytes);
-                        //scoreString[i] = new String(bytes);
                         scoreString[i] = reader.readLine();
                         HighScore s = new HighScore();
                         String parse[] = scoreString[i].split(" ");
@@ -84,14 +79,14 @@ public class Scores extends AppCompatActivity
             }
             catch(IOException e)
             {
-
+                Log.e("error",""+e.getMessage());
             }
 
     }
 
     public void addScore(int score, String name, Context ctx)
     {
-        String newString = "";
+        String newString;
         boolean newHighScore = false;
         File path = ctx.getFilesDir();
         File scoreList = new File(path, "score.txt");
@@ -126,7 +121,7 @@ public class Scores extends AppCompatActivity
 
         }
         catch(IOException e) {
-
+            Log.e("error",""+e.getMessage());
         }
     }
 

@@ -15,7 +15,6 @@ public class MainGame extends Activity implements View.OnTouchListener {
 
     GameView gameView;
     MusicPlayer mp;
-    private int index, level_index, score, scandal, speed, delay;
     boolean recovery;
     int[] position;
     RelativeLayout running, paused;
@@ -40,7 +39,9 @@ public class MainGame extends Activity implements View.OnTouchListener {
         quitButton.setOnTouchListener(this);
 
         mp = new MusicPlayer();
-        
+        int index, level_index, score, scandal, speed, delay;
+
+
         FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
 
         Intent intent = getIntent();
@@ -101,7 +102,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
                     stopService(new Intent(MainGame.this, MusicPlayer.class));
                     final Intent music = new Intent(getApplication(), MusicPlayer.class);
                     music.putExtra("index", 0);
-                    startService(music); // move this to gameover when completed
+                    startService(music);
 
                     Intent MainMenu = new Intent(MainGame.this, MainMenu.class);
                     MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -114,7 +115,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
         return true;
     }
 
-    public MainGame(){};
+    public MainGame(){}
 
     @Override
     public void onBackPressed() {

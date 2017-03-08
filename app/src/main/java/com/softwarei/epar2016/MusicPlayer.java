@@ -1,22 +1,12 @@
 package com.softwarei.epar2016;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import android.app.IntentService;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
-import android.os.CountDownTimer;
 import android.os.IBinder;
-import android.widget.ImageButton;
-
-import java.util.List;
-
-import static android.support.v4.media.session.PlaybackStateCompat.ACTION_PLAY;
-import static com.softwarei.epar2016.R.raw.music_main_menu;
+import android.util.Log;
 
 /**
  * Created by Rob on 2/25/2017.
@@ -24,7 +14,6 @@ import static com.softwarei.epar2016.R.raw.music_main_menu;
 
 public class MusicPlayer extends Service implements MediaPlayer.OnCompletionListener {
 
-    private static final String TAG = null;
     private static MediaPlayer player;
     int[] songs = {R.raw.music_main_menu,R.raw.deal_vlad, R.raw.careless_whisper, R.raw.never_gonna_give_you_up, R.raw.we_built_this_city,
             R.raw.chop_suey, R.raw.before_i_forget, R.raw.guiles_theme, R.raw.what_is_love, R.raw.eye_of_the_tiger,R.raw.final_countdown};
@@ -65,15 +54,9 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
                 player.start();
                 current_index++;
             }
-            catch(IllegalArgumentException e)
-            {
-
-            }
-            catch (IllegalStateException e)
-            {
-            }
             catch (IOException e)
             {
+                Log.e("error",""+e.getMessage());
             }
     }
     public int onStartCommand(Intent intent, int flags, int startId) {
