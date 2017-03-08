@@ -42,6 +42,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
         mp = new MusicPlayer();
         
         FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
+
         Intent intent = getIntent();
         index = intent.getIntExtra("character", 0);
         level_index = intent.getIntExtra("level",0);

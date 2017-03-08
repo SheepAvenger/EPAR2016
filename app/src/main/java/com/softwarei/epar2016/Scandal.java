@@ -20,8 +20,7 @@ public class Scandal extends AppCompatActivity{
     private int tinyZebra;
     private int index;
     private int character_index;
-    private int score;
-    private int level, speed;
+    private int score, level, speed;
     boolean recovery;
     int[] position;
     boolean bold = true;

@@ -9,7 +9,6 @@ public class Sprite {
     private int score;
     private boolean jumping, ducking, playing, collision, recovery;
     private Animation animation, animation2;
-
     private long startTime;
     private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height;
     private int xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;

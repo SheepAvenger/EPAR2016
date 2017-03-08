@@ -161,7 +161,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
-        //System.out.println("Speed: " + MOVESPEED);
         if (sprite.getPlaying()){
             if(level.getLevel() < 9 && (int)((System.nanoTime() - levelTime) / 1000000000) >= 2 * (level.getLevel() + 1)) {
                 MOVESPEED--;
