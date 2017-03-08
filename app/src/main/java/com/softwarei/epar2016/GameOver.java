@@ -15,7 +15,7 @@ import android.widget.Toast;
  */
 
 public class GameOver extends AppCompatActivity {
-    //comment
+    //here
     private EditText initials;
     private String playerInit;
     private int score;
@@ -31,7 +31,7 @@ public class GameOver extends AppCompatActivity {
         this.playerInit="";
 
         initials = (EditText) findViewById(R.id.getInitials);
-        final Scores s = new  Scores(this);
+        final Scores s = new  Scores(getApplicationContext());
         final Context ctx = this;
         Button button1;
         button1 = (Button) findViewById(R.id.hScores);
@@ -41,6 +41,8 @@ public class GameOver extends AppCompatActivity {
                 GameOver.this.setInitials(initials.getText().toString());
                 if(playerInit.length() >0 && playerInit.length() <= 8) {
                     s.addScore(score,playerInit, ctx);
+                    final Intent music = new Intent(getApplication(), MusicPlayer.class);
+                    music.putExtra("index", 0);
                     Intent viewHScores = new Intent(GameOver.this, HighScores.class);
                     startActivity(viewHScores);
                 }

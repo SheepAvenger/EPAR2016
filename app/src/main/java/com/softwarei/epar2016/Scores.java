@@ -1,14 +1,17 @@
 package com.softwarei.epar2016;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.String;
 
 /**
  * Created by Rob on 2/23/2017.
@@ -16,9 +19,9 @@ import java.io.OutputStreamWriter;
 
 public class Scores extends AppCompatActivity
 {
+    //here
     private HighScore scores[];
     private String scoreString[];
-    String File;
 
     public Scores(){};
 
@@ -27,24 +30,25 @@ public class Scores extends AppCompatActivity
         int i = 0;
         scores = new HighScore[10];
         scoreString = new String[10];
-        String File = "data/data/com.softwarei.epar2016/score.txt";
+        File path = ctx.getFilesDir();
+        File scoreList = new File(path, "score.txt");
 
         try
         {
-            File scoreList = new File(File);
-            if(scoreList.createNewFile())
+
+            if(scoreList.createNewFile() || scoreList.length() == 0)
             {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("score.txt", ctx.MODE_PRIVATE));
-                outputStreamWriter.write("a 500\n");
-                outputStreamWriter.write("b 450\n");
-                outputStreamWriter.write("c 400\n");
-                outputStreamWriter.write("d 350\n");
-                outputStreamWriter.write("e 300\n");
-                outputStreamWriter.write("f 250\n");
-                outputStreamWriter.write("g 200\n");
-                outputStreamWriter.write("h 150\n");
-                outputStreamWriter.write("i 100\n");
-                outputStreamWriter.write("j 50\n");
+                FileOutputStream outputStreamWriter = new FileOutputStream(scoreList);
+                outputStreamWriter.write("a 0\n".getBytes());
+                outputStreamWriter.write("b 0\n".getBytes());
+                outputStreamWriter.write("c 0\n".getBytes());
+                outputStreamWriter.write("d 0\n".getBytes());
+                outputStreamWriter.write("e 0\n".getBytes());
+                outputStreamWriter.write("f 0\n".getBytes());
+                outputStreamWriter.write("g 0\n".getBytes());
+                outputStreamWriter.write("h 0\n".getBytes());
+                outputStreamWriter.write("i 0\n".getBytes());
+                outputStreamWriter.write("j 0\n".getBytes());
                 outputStreamWriter.close();
 
             }
@@ -54,12 +58,17 @@ public class Scores extends AppCompatActivity
 
           try
             {
-                FileInputStream is = ctx.openFileInput("score.txt");
+                FileInputStream is = new FileInputStream(scoreList);
+                int length = (int) scoreList.length();
+
+                //byte[] bytes = new byte[length];
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 if(is != null)
                 {
                     while (i != 10)
                     {
+                        //is.read(bytes);
+                        //scoreString[i] = new String(bytes);
                         scoreString[i] = reader.readLine();
                         HighScore s = new HighScore();
                         String parse[] = scoreString[i].split(" ");
@@ -82,9 +91,11 @@ public class Scores extends AppCompatActivity
     {
         String newString = "";
         boolean newHighScore = false;
+        File path = ctx.getFilesDir();
+        File scoreList = new File(path, "score.txt");
         try
         {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("score.txt", ctx.MODE_PRIVATE));
+            FileOutputStream outputStreamWriter = new FileOutputStream(scoreList);
             for(int i = 0; i < 10; i++)
             {
                 if(score > scores[i].score)
@@ -106,7 +117,7 @@ public class Scores extends AppCompatActivity
                 {
                     newString = scores[i].name + " " + scores[i].score + "\n";
                     scoreString[i] = newString;
-                    outputStreamWriter.write(scoreString[i]);
+                    outputStreamWriter.write(scoreString[i].getBytes());
                 }
             }
             outputStreamWriter.close();

@@ -21,11 +21,10 @@ public class VladThread extends SurfaceView implements Runnable {
 
     private volatile boolean running;
     private Thread gameThread = null;
-    private Thread speechThread = null;
 
     private Canvas canvas;
     private SurfaceHolder ourHolder;
-
+    //here
     Context context;
 
     long fps = 60;
@@ -71,11 +70,13 @@ public class VladThread extends SurfaceView implements Runnable {
     Boolean speech;
     Boolean leaveGame;
     DealWithVlad dealWithVlad;
+    private int score;
 
-    VladThread(Context context) {
+    VladThread(Context context, int score) {
         super(context);
         this.context = context;
         ourHolder = getHolder();
+        this.score = score;
         dealWithVlad = new DealWithVlad();
 
         //get the bitmap for the background
@@ -108,7 +109,6 @@ public class VladThread extends SurfaceView implements Runnable {
 
         //create thread to slow down slot machine and options animation
         gameThread = new Thread(this);
-        speechThread = new Thread(this);
 
         //testing variables
         spinMachine = false;
@@ -138,13 +138,11 @@ public class VladThread extends SurfaceView implements Runnable {
             }
             if (leaveGame) {
                 running = false;
-
             }
-            Intent gameOver = new Intent(context, GameOver.class);
-            gameOver.putExtra("score",0);
-            context.startActivity(gameOver);
         }
-
+        Intent gameOver = new Intent(context, GameOver.class);
+        gameOver.putExtra("score",score);
+        context.startActivity(gameOver);
     }
 
     private void update() {
@@ -156,10 +154,7 @@ public class VladThread extends SurfaceView implements Runnable {
         }
         //updates dialog for Vlad
         if (speechSpriteFrame != 3 && speech) {
-            try {
-                gameThread.sleep(100);
-                speechSpriteFrame = ++speechSpriteFrame % speechCols;
-            } catch (InterruptedException e) {}
+            speechSpriteFrame = ++speechSpriteFrame % speechCols;
         }
 
     }
@@ -190,6 +185,9 @@ public class VladThread extends SurfaceView implements Runnable {
                 Rect spsrc = new Rect(spsrcX, 0, spsrcX + speechWidth, speechHeight);
                 Rect spdst = new Rect(400, 50, 600, 200);
                 canvas.drawBitmap(speechMap, spsrc, spdst, null);
+                try {
+                    gameThread.sleep(100);
+                } catch (InterruptedException e) {}
                 speech = true;
             }
 
@@ -241,8 +239,12 @@ public class VladThread extends SurfaceView implements Runnable {
                     testCount = 0;
                 }
             }
+
+
             ourHolder.unlockCanvasAndPost(canvas);
+
         }
+
     }
 
 
