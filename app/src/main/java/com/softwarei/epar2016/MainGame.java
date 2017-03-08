@@ -15,7 +15,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
 
     GameView gameView;
     MusicPlayer mp;
-    private int index, level_index, score, scandal, speed;
+    private int index, level_index, score, scandal, speed, delay;
     boolean recovery;
     int[] position;
     RelativeLayout running, paused;
@@ -51,8 +51,9 @@ public class MainGame extends Activity implements View.OnTouchListener {
         speed = intent.getIntExtra("speed",-6);
         recovery = intent.getBooleanExtra("recovery",false);
         position = intent.getIntArrayExtra("position");
+        delay = intent.getIntExtra("delay",100);
 
-        gameView = new GameView(this, index, level_index, scandal, score, speed, recovery, position);
+        gameView = new GameView(this, index, level_index, scandal, score, speed, recovery, position, delay);
         frameLayout.addView(gameView);
 
         running = (RelativeLayout)findViewById(R.id.gameRunning);

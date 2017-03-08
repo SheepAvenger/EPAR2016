@@ -16,11 +16,7 @@ import android.os.Message;
  */
 
 public class Scandal extends AppCompatActivity{
-    private int numScandal;
-    private int tinyZebra;
-    private int index;
-    private int character_index;
-    private int score, level, speed;
+    private int numScandal, tinyZebra, index, character_index, score, level, speed, delay;
     boolean recovery;
     int[] position;
     boolean bold = true;
@@ -99,7 +95,7 @@ public class Scandal extends AppCompatActivity{
         speed = intent.getIntExtra("speed",-6);
         recovery = intent.getBooleanExtra("recovery",true);
         position = intent.getIntArrayExtra("position");
-
+        delay = intent.getIntExtra("delay",100);
         scandal = (TextView) findViewById(R.id.scandalous);
         candidate= (TextView) findViewById(R.id.scan_candidate);
         scandalousScandal= (TextView) findViewById(R.id.scandalous_scandal);
@@ -150,6 +146,7 @@ public class Scandal extends AppCompatActivity{
                     deal.putExtra("speed",speed);
                     deal.putExtra("recovery",recovery);
                     deal.putExtra("position",position);
+                    deal.putExtra("delay",delay);
                     startActivity(deal);
                 }
                 else
@@ -162,6 +159,7 @@ public class Scandal extends AppCompatActivity{
                     Main.putExtra("speed",speed);
                     Main.putExtra("recovery",recovery);
                     Main.putExtra("position",position);
+                    Main.putExtra("delay",delay);
                     startActivity(Main);
                     //return to main game.
                     //need current level, score, scandal count, and character
