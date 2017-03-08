@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@drawable/scandalous_scandal">
+    android:background="@drawable/scandalous_scandal"
+    android:orientation="vertical">
 
     <TextView
         android:text="Scandal!!!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/scandalous"
-        android:textSize="60dp"
+        android:textSize="45dp"
         android:textColor="#000000"
         android:textStyle="bold"
         android:layout_above="@+id/scan_candidate"
@@ -26,25 +27,25 @@
         android:layout_centerHorizontal="true"
         android:textAlignment="center"/>
 
-    <Button
-        android:text="Continue"
-        android:textSize="40dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mg"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:text="Did THIS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/scandalous_scandal"
         android:textColor="#000000"
-        android:textSize="35dp"
+        android:textSize="20dp"
         android:scaleType="centerCrop"
         android:textStyle="bold"
         android:textAlignment="center"
         android:layout_above="@+id/mg"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Continue"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mg"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -5,6 +5,7 @@ package com.softwarei.epar2016;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -67,11 +68,14 @@ public class VladThread extends SurfaceView implements Runnable {
     private final EditText userGuess;
     int vladGuess;
     Boolean speech;
+    Boolean leaveGame;
+    DealWithVlad dealWithVlad;
 
     VladThread(Context context) {
         super(context);
         this.context = context;
         ourHolder = getHolder();
+        dealWithVlad = new DealWithVlad();
 
         //get the bitmap for the background
         backMap = BitmapFactory.decodeResource(getResources(), R.drawable.vlad_background);
@@ -113,6 +117,7 @@ public class VladThread extends SurfaceView implements Runnable {
         userGuess = null;
         vladGuess = new Random().nextInt(10) + 1;
         speech = false;
+        leaveGame = false;
         //need to figure out a way to end thread and pass to gameOver.
         gameOver = new GameOver();
     }
@@ -129,7 +134,13 @@ public class VladThread extends SurfaceView implements Runnable {
             if (timeThisFrame >= 1) {
                 fps = 1000 / timeThisFrame;
             }
+            if (leaveGame) {
+                running = false;
+            }
         }
+        Intent gameOver = new Intent(context, GameOver.class);
+        gameOver.putExtra("score",0);
+        context.startActivity(gameOver);
     }
 
     private void update() {
@@ -208,9 +219,10 @@ public class VladThread extends SurfaceView implements Runnable {
 
                 secondTestCount++;
 
-                if (secondTestCount == 500) {
+                if (secondTestCount == 5) {
                     scrollOptions = false;
                     secondTestCount = 0;
+                    leaveGame = true;
                 }
             }
 
