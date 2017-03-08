@@ -21,7 +21,9 @@ public class Scandal extends AppCompatActivity{
     private int index;
     private int character_index;
     private int score;
-    private int level;
+    private int level, speed;
+    boolean recovery;
+    int[] position;
     boolean bold = true;
     private String[] candidates={"Dishonest Abe!","Clinton!","FDR!","Obama!",
                                 "Trump", "Washington", "Kennedy" };
@@ -95,6 +97,9 @@ public class Scandal extends AppCompatActivity{
         numScandal--;
         level = intent.getIntExtra("level", 0);
         score = intent.getIntExtra("score", 0);
+        speed = intent.getIntExtra("speed",-6);
+        recovery = intent.getBooleanExtra("recovery",true);
+        position = intent.getIntArrayExtra("position");
 
         scandal = (TextView) findViewById(R.id.scandalous);
         candidate= (TextView) findViewById(R.id.scan_candidate);
@@ -143,6 +148,9 @@ public class Scandal extends AppCompatActivity{
                     deal.putExtra("scandal",tinyZebra);
                     deal.putExtra("level",level);
                     deal.putExtra("score",score);
+                    deal.putExtra("speed",speed);
+                    deal.putExtra("recovery",recovery);
+                    deal.putExtra("position",position);
                     startActivity(deal);
                 }
                 else
@@ -152,6 +160,9 @@ public class Scandal extends AppCompatActivity{
                     Main.putExtra("scandal",tinyZebra);
                     Main.putExtra("level",level);
                     Main.putExtra("score",score);
+                    Main.putExtra("speed",speed);
+                    Main.putExtra("recovery",recovery);
+                    Main.putExtra("position",position);
                     startActivity(Main);
                     //return to main game.
                     //need current level, score, scandal count, and character

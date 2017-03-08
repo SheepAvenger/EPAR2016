@@ -16,11 +16,11 @@ public class Sprite {
     private int jumpForceInitial, jumpForce, punishLength;
     private Bitmap image1, image2;
 
-    public Sprite(int index, int numberOfFrames, int numberOfFrames2, Context context, int score) {
+    public Sprite(int index, int numberOfFrames, int numberOfFrames2, Context context, int score, boolean recovery, int[] position) {
         punishLength = 70;
         int ground = -20;
         this.score = score;
-
+        this.recovery = recovery;
         Character sprites = new Character(context);
         sprites.setIndex(index);
         image1 = sprites.getCharacter();
@@ -30,8 +30,13 @@ public class Sprite {
         this.height = image1.getHeight();
         this.width = image1.getWidth()/numberOfFrames;
         xInitial = 300;
-        xCurrent = xInitial;
         yInitial = GameView.HEIGHT - height + ground;
+        if(recovery) {
+            xCurrent = position[0];
+        }
+        else {
+            xCurrent = xInitial;
+        }
         yCurrent = yInitial;
         Bitmap[] playerImage = new Bitmap[numberOfFrames];
         for(int i = 0; i < playerImage.length; i++) {
@@ -44,8 +49,13 @@ public class Sprite {
         this.height2 = image2.getHeight()/numberOfFrames2;
         this.width2 = image2.getWidth();
         xInitial2 = xCurrent + width - width2;
-        xCurrent2 = xInitial2;
         yInitial2 = GameView.HEIGHT - height2 + ground;
+        if(recovery) {
+            xCurrent2 = position[1];
+        }
+        else {
+            xCurrent2 = xInitial2;
+        }
         yCurrent2 = yInitial2;
         Bitmap[] playerImage2 = new Bitmap[numberOfFrames2];
         for(int i = 0; i < playerImage2.length; i++) {
@@ -116,11 +126,11 @@ public class Sprite {
         if(collision) {
             xCurrent += GameView.MOVESPEED;
             xCurrent2 += GameView.MOVESPEED;
-            if(xCurrent <= xNext) {
-                xNext -= punishLength;
-            }
             if(xCurrent2 <= xNext2) {
                 xNext2 -= punishLength;
+            }
+            if(xCurrent <= xNext) {
+                xNext -= punishLength;
                 collision = false;
             }
         }
@@ -143,7 +153,6 @@ public class Sprite {
         }
     }
 
-    //change back to non-static if messes with anything
     public int getScore() {
         return score;
     }
@@ -162,9 +171,7 @@ public class Sprite {
 
     public void setPlaying(boolean playing) {
         if(playing) {
-            //xCurrent = xInitial;
             xNext = xInitial - punishLength;
-            //xCurrent2 = xInitial2;
             xNext2 = xInitial2 - punishLength;
         }
         this.playing = playing;
@@ -178,5 +185,12 @@ public class Sprite {
             return new Rect(xCurrent, yCurrent, xCurrent+width, yCurrent+height);
         }
 
+    }
+
+    public int[] getPosition() {
+        int[] position = new int[2];
+        position[0] = xCurrent;
+        position[1] = xCurrent2;
+        return position;
     }
 }

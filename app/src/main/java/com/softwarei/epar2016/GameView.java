@@ -10,7 +10,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -30,8 +29,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Scores scores;
     private static Context ctx;
     private Random rand;
+    private boolean recovery;
+    int[] position;
 
-    public GameView(Context context, int index, int levels, int scandal, int score) {
+    public GameView(Context context, int index, int levels, int scandal, int score, int speed, boolean recovery, int[] position) {
         super(context);
         ctx = context;
         getHolder().addCallback(this);
@@ -40,7 +41,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         scandalCount = scandal;
         this.score = score;
         level_index = levels;
-
+        MOVESPEED = speed;
+        this.recovery = recovery;
+        this.position = position;
         level = new Level(context, levels);
         rand = new Random();
     }
@@ -48,11 +51,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
         obstacleTime = System.nanoTime();
+        levelTime = System.nanoTime();
+        //System.out.println("surfaceChanged");
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder){
-        /*
+
         boolean retry = true;
         gameLoop.setRunning(false);
         while(retry) {
@@ -63,14 +68,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 e.printStackTrace();
             }
         }
-        */
+        //System.out.println("surfaceDestroyed");
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder){
 
         background = new Background(level.getBackground());
-        sprite = new Sprite(index, 2, 2, ctx,score);
+        sprite = new Sprite(index, 2, 2, ctx, score, recovery, position);
 
         obstacles = new ArrayList<Obstacle>();
         obstacle = BitmapFactory.decodeResource(getResources(), R.drawable.o_donkey);
@@ -82,16 +87,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop = new GameLoop(getHolder(), this);
         gameLoop.setRunning(true);
         gameLoop.start();
-        //sprite.setPlaying(true);
-        //levelTime = System.nanoTime();
+        sprite.setPlaying(true);
+        levelTime = System.nanoTime();
+        //System.out.println("surfaceCreated");
     }
 
     public void jumpButtonDown() {
         jumpButtonTime = System.nanoTime();
-        if(!sprite.getPlaying()) {
-            sprite.setPlaying(true);
-            levelTime = System.nanoTime();
-        }
+//        if(!sprite.getPlaying()) {
+//            sprite.setPlaying(true);
+//            levelTime = System.nanoTime();
+//        }
     }
 
     public void jumpButtonUp() {
@@ -101,10 +107,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void duckButtonDown() {
-        if(!sprite.getPlaying()) {
-            sprite.setPlaying(true);
-            levelTime = System.nanoTime();
-        }
+//        if(!sprite.getPlaying()) {
+//            sprite.setPlaying(true);
+//            levelTime = System.nanoTime();
+//        }
         if(!sprite.getJumping()) {
             sprite.setDucking(true);
         }
@@ -137,13 +143,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         //canvas.drawText("Scandal: " + scandalCount, 10, 30, paint);
         canvas.drawText("Score: " + sprite.getScore(), 350, 30, paint);
         canvas.drawText("Level: " + level.getLevel(), 350, 478, paint);
-        if(!sprite.getPlaying()) {
-            Paint paint1 = new Paint();
-            paint1.setColor(Color.WHITE);
-            paint1.setTextSize(40);
-            canvas.drawText("Tap JUMP or DUCK to start", WIDTH / 3, HEIGHT / 2, paint1);
-
-        }
+//        if(!sprite.getPlaying()) {
+//            Paint paint1 = new Paint();
+//            paint1.setColor(Color.WHITE);
+//            paint1.setTextSize(40);
+//            canvas.drawText("Tap JUMP or DUCK to start", WIDTH / 3, HEIGHT / 2, paint1);
+//        }
     }
 
     public void drawScandal(Canvas canvas) {
@@ -156,8 +161,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
+        //System.out.println("Speed: " + MOVESPEED);
         if (sprite.getPlaying()){
-            if((int)((System.nanoTime() - levelTime) / 1000000000) > 2 * (level.getLevel() + 1) && level.getLevel() < 9) {
+            if(level.getLevel() < 9 && (int)((System.nanoTime() - levelTime) / 1000000000) >= 2 * (level.getLevel() + 1)) {
                 MOVESPEED--;
                 level.setLevel();
                 background = new Background(level.getBackground());
@@ -199,7 +205,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
 
-            if(hitCount >= 3 && !sprite.getCollision()) {
+            if(hitCount >= 3 && !sprite.getCollision() && !sprite.getJumping()) {
                 gameLoop.setRunning(false);
                 scandalCount++;
                 Intent scandal = new Intent(GameView.ctx, Scandal.class);
@@ -207,6 +213,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 scandal.putExtra("scandal",scandalCount);
                 scandal.putExtra("level",level_index);
                 scandal.putExtra("score",score);
+                scandal.putExtra("speed",MOVESPEED);
+                scandal.putExtra("recover",true);
+                scandal.putExtra("position",sprite.getPosition());
                 ctx.startActivity(scandal);
             }
         }
@@ -215,8 +224,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        final float scaleFactorX = getWidth()/(WIDTH*1.f);
-        final float scaleFactorY = getHeight()/(HEIGHT*1.f);
+        final float scaleFactorX = getWidth() / (WIDTH * 1.f);
+        final float scaleFactorY = getHeight() / (HEIGHT * 1.f);
         if (canvas != null) {
             final int savedState = canvas.save();
             canvas.scale(scaleFactorX, scaleFactorY);
