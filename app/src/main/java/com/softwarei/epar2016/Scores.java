@@ -21,7 +21,6 @@ public class Scores extends AppCompatActivity
 {
     private HighScore scores[];
     private String scoreString[];
-    String File;
 
     public Scores(){};
 
@@ -30,17 +29,15 @@ public class Scores extends AppCompatActivity
         int i = 0;
         scores = new HighScore[10];
         scoreString = new String[10];
-        String File = "data/data/com.softwarei.epar2016/scores.txt";
         File path = ctx.getFilesDir();
-        File scoreList = new File(path, "score.txt");//File);
+        File scoreList = new File(path, "score.txt");
 
         try
         {
 
-            if(scoreList.createNewFile())
+            if(scoreList.createNewFile() || scoreList.length() == 0)
             {
                 FileOutputStream outputStreamWriter = new FileOutputStream(scoreList);
-               //OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("scores.txt", ctx.MODE_PRIVATE));
                 outputStreamWriter.write("a 0\n".getBytes());
                 outputStreamWriter.write("b 0\n".getBytes());
                 outputStreamWriter.write("c 0\n".getBytes());
@@ -60,17 +57,17 @@ public class Scores extends AppCompatActivity
 
           try
             {
-                //FileInputStream reader = new FileInputStream(scoreList);
-                //int length = (int) scoreList.length();
+                FileInputStream is = new FileInputStream(scoreList);
+                int length = (int) scoreList.length();
 
                 //byte[] bytes = new byte[length];
-                FileInputStream is = new FileInputStream(scoreList);
-                BufferedReader reader = new BufferedReader(new FileReader(scoreList));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 if(is != null)
                 {
                     while (i != 10)
                     {
-                        //reader.read(bytes);
+                        //is.read(bytes);
+                        //scoreString[i] = new String(bytes);
                         scoreString[i] = reader.readLine();
                         HighScore s = new HighScore();
                         String parse[] = scoreString[i].split(" ");
@@ -93,9 +90,11 @@ public class Scores extends AppCompatActivity
     {
         String newString = "";
         boolean newHighScore = false;
+        File path = ctx.getFilesDir();
+        File scoreList = new File(path, "score.txt");
         try
         {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("scores.txt", ctx.MODE_PRIVATE));
+            FileOutputStream outputStreamWriter = new FileOutputStream(scoreList);
             for(int i = 0; i < 10; i++)
             {
                 if(score > scores[i].score)
@@ -117,7 +116,7 @@ public class Scores extends AppCompatActivity
                 {
                     newString = scores[i].name + " " + scores[i].score + "\n";
                     scoreString[i] = newString;
-                    outputStreamWriter.write(scoreString[i]);
+                    outputStreamWriter.write(scoreString[i].getBytes());
                 }
             }
             outputStreamWriter.close();

@@ -12,20 +12,20 @@ public class DealWithVlad extends Activity {
 
     private int numScandal;
     private int character_index;
-    private int score;
+    public int score;
     private int level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        vladThread = new VladThread(this);
-        setContentView(vladThread);
-
         Intent intent = getIntent();
         character_index = intent.getIntExtra("character", 0);
         numScandal = intent.getIntExtra("scandal", 0);
         level = intent.getIntExtra("level", 0);
         score = intent.getIntExtra("score", 0);
+        vladThread = new VladThread(this,score);
+        setContentView(vladThread);
+
     }
 
     @Override

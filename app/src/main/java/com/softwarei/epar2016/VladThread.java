@@ -70,11 +70,13 @@ public class VladThread extends SurfaceView implements Runnable {
     Boolean speech;
     Boolean leaveGame;
     DealWithVlad dealWithVlad;
+    private int score;
 
-    VladThread(Context context) {
+    VladThread(Context context, int score) {
         super(context);
         this.context = context;
         ourHolder = getHolder();
+        this.score = score;
         dealWithVlad = new DealWithVlad();
 
         //get the bitmap for the background
@@ -139,7 +141,7 @@ public class VladThread extends SurfaceView implements Runnable {
             }
         }
         Intent gameOver = new Intent(context, GameOver.class);
-        gameOver.putExtra("score",0);
+        gameOver.putExtra("score",score);
         context.startActivity(gameOver);
     }
 
