@@ -54,7 +54,7 @@ public class Scores extends AppCompatActivity
 
         }
         catch(IOException e){
-            Log.e("error",""+e.getMessage());};
+            Log.e("error",""+e.getMessage());}
 
           try
             {
