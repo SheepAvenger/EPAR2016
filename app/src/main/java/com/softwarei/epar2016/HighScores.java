@@ -22,11 +22,13 @@ import static android.R.attr.id;
 public class HighScores extends AppCompatActivity
 {
     private String scores[];
+    private Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.high_scores);
+        ctx = getApplicationContext();
        ScrollView scroll = (ScrollView) this.findViewById(R.id.scrollView0);
        LinearLayout linear = (LinearLayout) this.findViewById(R.id.linear0);
        TextView textView0 = (TextView) this.findViewById(R.id.textView0);
@@ -40,7 +42,7 @@ public class HighScores extends AppCompatActivity
         TextView textView8 = (TextView) this.findViewById(R.id.textView8);
         TextView textView9 = (TextView) this.findViewById(R.id.textView9);
         TextView[] texts = {textView0, textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8, textView9};
-        HighScores h = new HighScores(scroll, linear, this, texts);
+        HighScores h = new HighScores(scroll, linear, ctx, texts);
         Button mainMenu;
         mainMenu=(Button)findViewById(R.id.highscoreMainMenu);
         mainMenu.setOnClickListener(new View.OnClickListener()
@@ -57,9 +59,9 @@ public class HighScores extends AppCompatActivity
     {
         //to load
     }
-    public HighScores(ScrollView scroll, LinearLayout linear,Context ctx, TextView[] texts)
+    public HighScores(ScrollView scroll, LinearLayout linear,Context ctxs, TextView[] texts)
     {
-        Scores s = new Scores(ctx);
+        Scores s = new Scores(ctxs);
         scores = s.getScore();
         for(int i = 0; i < 10; i++)
         {

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -29,23 +31,26 @@ public class Scores extends AppCompatActivity
         scores = new HighScore[10];
         scoreString = new String[10];
         String File = "data/data/com.softwarei.epar2016/scores.txt";
+        File path = ctx.getFilesDir();
+        File scoreList = new File(path, "score.txt");//File);
 
         try
         {
-            File scoreList = new File(File);
+
             if(scoreList.createNewFile())
             {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("scores.txt", ctx.MODE_PRIVATE));
-                outputStreamWriter.write("a 500\n");
-                outputStreamWriter.write("b 450\n");
-                outputStreamWriter.write("c 400\n");
-                outputStreamWriter.write("d 350\n");
-                outputStreamWriter.write("e 300\n");
-                outputStreamWriter.write("f 250\n");
-                outputStreamWriter.write("g 200\n");
-                outputStreamWriter.write("h 150\n");
-                outputStreamWriter.write("i 100\n");
-                outputStreamWriter.write("j 50\n");
+                FileOutputStream outputStreamWriter = new FileOutputStream(scoreList);
+               //OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("scores.txt", ctx.MODE_PRIVATE));
+                outputStreamWriter.write("a 0\n".getBytes());
+                outputStreamWriter.write("b 0\n".getBytes());
+                outputStreamWriter.write("c 0\n".getBytes());
+                outputStreamWriter.write("d 0\n".getBytes());
+                outputStreamWriter.write("e 0\n".getBytes());
+                outputStreamWriter.write("f 0\n".getBytes());
+                outputStreamWriter.write("g 0\n".getBytes());
+                outputStreamWriter.write("h 0\n".getBytes());
+                outputStreamWriter.write("i 0\n".getBytes());
+                outputStreamWriter.write("j 0\n".getBytes());
                 outputStreamWriter.close();
 
             }
@@ -55,12 +60,17 @@ public class Scores extends AppCompatActivity
 
           try
             {
-                FileInputStream is = ctx.openFileInput("scores.txt");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                //FileInputStream reader = new FileInputStream(scoreList);
+                //int length = (int) scoreList.length();
+
+                //byte[] bytes = new byte[length];
+                FileInputStream is = new FileInputStream(scoreList);
+                BufferedReader reader = new BufferedReader(new FileReader(scoreList));
                 if(is != null)
                 {
                     while (i != 10)
                     {
+                        //reader.read(bytes);
                         scoreString[i] = reader.readLine();
                         HighScore s = new HighScore();
                         String parse[] = scoreString[i].split(" ");
