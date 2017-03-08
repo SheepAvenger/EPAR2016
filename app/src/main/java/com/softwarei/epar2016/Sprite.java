@@ -6,16 +6,16 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 public class Sprite {
-    private int score;
     private boolean jumping, ducking, playing, collision, recovery;
     private Animation animation, animation2;
     private long startTime;
     private int xInitial, xNext, xCurrent, yInitial, yCurrent, width, height;
     private int xInitial2, xNext2, xCurrent2, yInitial2, yCurrent2, width2, height2;
-    private int jumpForceInitial, jumpForce, punishLength;
+    private int score, jumpForceInitial, jumpForce, punishLength, delay;
     private Bitmap image1, image2;
 
-    public Sprite(int index, int numberOfFrames, int numberOfFrames2, Context context, int score, boolean recovery, int[] position) {
+    public Sprite(int index, int numberOfFrames, int numberOfFrames2, Context context, int score, boolean recovery, int[] position, int delay) {
+        this.delay = delay;
         punishLength = 70;
         int ground = -20;
         this.score = score;
@@ -43,7 +43,7 @@ public class Sprite {
         }
         animation = new Animation();
         animation.setFrames(playerImage);
-        animation.setDelay(100);
+        animation.setDelay(delay);
 
         this.height2 = image2.getHeight()/numberOfFrames2;
         this.width2 = image2.getWidth();
@@ -62,7 +62,7 @@ public class Sprite {
         }
         animation2 = new Animation();
         animation2.setFrames(playerImage2);
-        animation2.setDelay(100);
+        animation2.setDelay(delay);
 
         startTime = System.nanoTime();
     }
@@ -137,7 +137,7 @@ public class Sprite {
         if(recovery) {
             xCurrent -= -1;
             xCurrent2 -= -1;
-            if(xCurrent >= xInitial) {
+            if(xCurrent >= xNext + punishLength) {
                 recovery = false;
             }
         }
@@ -191,5 +191,15 @@ public class Sprite {
         position[0] = xCurrent;
         position[1] = xCurrent2;
         return position;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public void speedUp() {
+        delay -= 5;
+        animation.setDelay(delay);
+        animation2.setDelay(delay);
     }
 }
