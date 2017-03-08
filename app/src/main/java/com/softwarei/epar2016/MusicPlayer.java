@@ -27,7 +27,7 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
     private static final String TAG = null;
     private static MediaPlayer player;
     int[] songs = {R.raw.music_main_menu,R.raw.deal_vlad, R.raw.careless_whisper, R.raw.never_gonna_give_you_up, R.raw.we_built_this_city,
-            R.raw.chop_suey, R.raw.before_i_forget, R.raw.guiles_theme, R.raw.what_is_love, R.raw.eye_of_the_tiger};
+            R.raw.chop_suey, R.raw.before_i_forget, R.raw.guiles_theme, R.raw.what_is_love, R.raw.eye_of_the_tiger,R.raw.final_countdown};
     private int current_index;
 
     @Override
