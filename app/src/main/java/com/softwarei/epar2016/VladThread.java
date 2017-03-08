@@ -21,6 +21,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
     private volatile boolean running;
     private Thread gameThread = null;
+    private Thread speechThread = null;
 
     private Canvas canvas;
     private SurfaceHolder ourHolder;
@@ -107,6 +108,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
         //create thread to slow down slot machine and options animation
         gameThread = new Thread(this);
+        speechThread = new Thread(this);
 
         //testing variables
         spinMachine = false;
@@ -136,11 +138,13 @@ public class VladThread extends SurfaceView implements Runnable {
             }
             if (leaveGame) {
                 running = false;
+
             }
+            Intent gameOver = new Intent(context, GameOver.class);
+            gameOver.putExtra("score",0);
+            context.startActivity(gameOver);
         }
-        Intent gameOver = new Intent(context, GameOver.class);
-        gameOver.putExtra("score",0);
-        context.startActivity(gameOver);
+
     }
 
     private void update() {
@@ -152,7 +156,10 @@ public class VladThread extends SurfaceView implements Runnable {
         }
         //updates dialog for Vlad
         if (speechSpriteFrame != 3 && speech) {
-            speechSpriteFrame = ++speechSpriteFrame % speechCols;
+            try {
+                gameThread.sleep(100);
+                speechSpriteFrame = ++speechSpriteFrame % speechCols;
+            } catch (InterruptedException e) {}
         }
 
     }
@@ -183,9 +190,6 @@ public class VladThread extends SurfaceView implements Runnable {
                 Rect spsrc = new Rect(spsrcX, 0, spsrcX + speechWidth, speechHeight);
                 Rect spdst = new Rect(400, 50, 600, 200);
                 canvas.drawBitmap(speechMap, spsrc, spdst, null);
-                try {
-                    gameThread.sleep(100);
-                } catch (InterruptedException e) {}
                 speech = true;
             }
 
@@ -237,12 +241,8 @@ public class VladThread extends SurfaceView implements Runnable {
                     testCount = 0;
                 }
             }
-
-
             ourHolder.unlockCanvasAndPost(canvas);
-
         }
-
     }
 
 

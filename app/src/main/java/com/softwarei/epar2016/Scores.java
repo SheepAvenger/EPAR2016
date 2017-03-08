@@ -1,15 +1,14 @@
 package com.softwarei.epar2016;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.String;
 
 /**
  * Created by Rob on 2/23/2017.
@@ -28,14 +27,14 @@ public class Scores extends AppCompatActivity
         int i = 0;
         scores = new HighScore[10];
         scoreString = new String[10];
-        String File = "data/data/com.softwarei.epar2016/scores.txt";
+        String File = "data/data/com.softwarei.epar2016/score.txt";
 
         try
         {
             File scoreList = new File(File);
             if(scoreList.createNewFile())
             {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("scores.txt", ctx.MODE_PRIVATE));
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("score.txt", ctx.MODE_PRIVATE));
                 outputStreamWriter.write("a 500\n");
                 outputStreamWriter.write("b 450\n");
                 outputStreamWriter.write("c 400\n");
@@ -55,7 +54,7 @@ public class Scores extends AppCompatActivity
 
           try
             {
-                FileInputStream is = ctx.openFileInput("scores.txt");
+                FileInputStream is = ctx.openFileInput("score.txt");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 if(is != null)
                 {
@@ -85,7 +84,7 @@ public class Scores extends AppCompatActivity
         boolean newHighScore = false;
         try
         {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("scores.txt", ctx.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(ctx.openFileOutput("score.txt", ctx.MODE_PRIVATE));
             for(int i = 0; i < 10; i++)
             {
                 if(score > scores[i].score)
