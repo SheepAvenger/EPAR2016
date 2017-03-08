@@ -76,7 +76,7 @@ public class GameOver extends AppCompatActivity {
     {
         Toast.makeText(this, "I SAID ENTER YOUR INITIALS NOT THE MAGNA CARTA", Toast.LENGTH_LONG).show();
         setInitials("");
-        initials.setText("Enter your Name");
+        initials.setText("Stu");
     }
 
     @Override
