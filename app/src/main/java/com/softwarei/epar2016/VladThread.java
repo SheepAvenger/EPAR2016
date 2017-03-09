@@ -58,14 +58,14 @@ public class VladThread extends SurfaceView implements Runnable {
     private int speechHeight;
     Bitmap speechMap;
 
-    private int guessedRightCols = 2;
+    private int guessedRightCols = 3;
     private int guessedRightFrame = 0;
     private int guessedRightWidth;
     private int guessedRightHeight;
     Bitmap userGuessedRightMap;
     Boolean guessedRight;
 
-    private int guessedWrongCols = 2;
+    private int guessedWrongCols = 3;
     private int guessedWrongFrame = 0;
     private int guessedWrongWidth;
     private int guessedWrongHeight;
@@ -347,6 +347,20 @@ public class VladThread extends SurfaceView implements Runnable {
                 } catch (InterruptedException e) {}
             }
 
+            if (speechSpriteFrame == 4) {
+                Rect new_spdst = new Rect(400, 50, 600, 200);
+                if (guessedRight) {
+                    int new_spsrcX = guessedRightFrame * guessedRightWidth;
+                    Rect new_spsrc = new Rect(new_spsrcX, 0, new_spsrcX + guessedRightWidth, guessedRightHeight);
+                    canvas.drawBitmap(userGuessedRightMap, new_spsrc, new_spdst, null);
+                }
+                else {
+                    int new_spsrcX = guessedWrongFrame * guessedWrongWidth;
+                    Rect new_spsrc = new Rect(new_spsrcX, 0, new_spsrcX + guessedWrongWidth, guessedWrongHeight);
+                    canvas.drawBitmap(userGuessedWrongMap, new_spsrc, new_spdst, null);
+                }
+            }
+
 
             if (spinMachine) {
                 int msrcX = machineSpriteFrame * machineWidth;
@@ -382,7 +396,6 @@ public class VladThread extends SurfaceView implements Runnable {
                     Log.e("error",""+e.getMessage());}
 
                 secondTestCount++;
-
                 //change secondTestCount to what ever number you think runs long enough for vlad screen;
                 if (secondTestCount == 75) {
                     int winnings = 100;//new Random().nextInt(101);
@@ -398,7 +411,7 @@ public class VladThread extends SurfaceView implements Runnable {
                         }
                         else if (winnings > 44 && winnings <= 72) {
                             //unlock character
-                            canvas.drawBitmap(unlockCharacterMap, ssrc, sdst, null);
+                            canvas.drawBitmap(unlockCharacterMap, new_ssrc, new_sdst, null);
                             int characterUnlock = new Random().nextInt(2);
                             File path = context.getApplicationContext().getFilesDir();
                             File unlockable = new File(path, "characters.txt");
@@ -430,7 +443,7 @@ public class VladThread extends SurfaceView implements Runnable {
                         }
                         else {
                             //go back to main game
-                            canvas.drawBitmap(goToMainGameMap, ssrc, sdst, null);
+                            canvas.drawBitmap(goToMainGameMap, new_ssrc, new_sdst, null);
                             //dealWithVlad.secondAttempt = true;
                             try {
                                 gameThread.sleep(5000);
@@ -460,7 +473,7 @@ public class VladThread extends SurfaceView implements Runnable {
                         }
                         else if (winnings > 60 && winnings <= 80) {
                             //unlock character
-                            canvas.drawBitmap(unlockCharacterMap, ssrc, sdst, null);
+                            canvas.drawBitmap(unlockCharacterMap, new_ssrc, new_sdst, null);
                             int characterUnlock = new Random().nextInt(9);
                              File path = context.getApplicationContext().getFilesDir();
                             File unlockable = new File(path, "character.txt");
@@ -493,7 +506,7 @@ public class VladThread extends SurfaceView implements Runnable {
                         }
                         else {
                             //go back to main game
-                            canvas.drawBitmap(goToMainGameMap, ssrc, sdst, null);
+                            canvas.drawBitmap(goToMainGameMap, new_ssrc, new_sdst, null);
                             //dealWithVlad.secondAttempt = true;
                             try {
                                 gameThread.sleep(5000);
