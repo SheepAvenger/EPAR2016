@@ -15,7 +15,8 @@
         android:id="@+id/title"
         android:textColor="@android:color/background_light"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:fontFamily="serif" />
 
     <ImageButton
         app:srcCompat="@drawable/_obama_stand"
