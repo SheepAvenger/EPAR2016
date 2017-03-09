@@ -15,8 +15,8 @@ import android.util.Log;
 public class MusicPlayer extends Service implements MediaPlayer.OnCompletionListener {
 
     private static MediaPlayer player;
-    int[] songs = {R.raw.music_main_menu,R.raw.deal_vlad, R.raw.careless_whisper, R.raw.never_gonna_give_you_up, R.raw.we_built_this_city,
-            R.raw.chop_suey, R.raw.before_i_forget, R.raw.guiles_theme, R.raw.what_is_love, R.raw.eye_of_the_tiger,R.raw.final_countdown};
+    int[] songs = {R.raw.music_main_menu,R.raw.deal_vlad, R.raw.titanic_theme, R.raw.final_countdown, R.raw.careless_whisper, R.raw.never_gonna_give_you_up, R.raw.we_built_this_city,
+            R.raw.chop_suey, R.raw.before_i_forget, R.raw.guiles_theme, R.raw.what_is_love, R.raw.eye_of_the_tiger};
     private int current_index;
 
     @Override
@@ -39,11 +39,16 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
 
     }
 
+    public int getCurrent_index()
+    {
+        return current_index;
+    }
+
     public void play()
     {
             if(current_index == 10) // change to 10 when other songs added
             {
-                current_index = 2;
+                current_index = 3;
             }
             AssetFileDescriptor afd = (this.getResources().openRawResourceFd(songs[current_index]));
             try
@@ -70,6 +75,10 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
         }
         else
         {
+           if (current_index == 1 || current_index == 2)
+           {
+               player.setLooping(true);
+           }
             player = MediaPlayer.create(getApplicationContext(),songs[current_index]);
             play();
             player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {

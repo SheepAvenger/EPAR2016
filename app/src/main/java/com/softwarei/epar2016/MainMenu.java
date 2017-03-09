@@ -12,11 +12,17 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        Intent intent = getIntent();
+        int index = intent.getIntExtra("index", 0);
 
         final Intent music = new Intent(getApplication(), MusicPlayer.class);
+        //here
+       if (index == 2)
+       {
+           stopService(music);
+       }
         music.putExtra("index", 0);
         startService(music);
-
 
         ImageButton button;
         button=(ImageButton)findViewById(R.id.HighScoresMenu);
@@ -26,6 +32,7 @@ public class MainMenu extends AppCompatActivity {
             {
                 Intent hs = new Intent(MainMenu.this, HighScores.class);
                 hs.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                hs.putExtras(music);
                 startActivity(hs);
                 finish();
             }
@@ -63,7 +70,7 @@ public class MainMenu extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        stopService(new Intent(MainMenu.this, MusicPlayer.class));
         finish();
     }
 }

@@ -154,6 +154,26 @@ public class Scandal extends AppCompatActivity{
                     startActivity(deal);
                     finish();
                 }
+                else if(tinyZebra == 2)
+                {
+                    stopService(new Intent(Scandal.this, MusicPlayer.class));
+                    Intent music = new Intent(getApplication(), MusicPlayer.class);
+                    music.putExtra("index", 3);
+                    startService(music);
+
+                    Intent Main = new Intent(Scandal.this, MainGame.class);
+                    Main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Main.putExtra("character",character_index);
+                    Main.putExtra("scandal",tinyZebra);
+                    Main.putExtra("level",level);
+                    Main.putExtra("score",score);
+                    Main.putExtra("speed",speed);
+                    Main.putExtra("recovery",recovery);
+                    Main.putExtra("position",position);
+                    Main.putExtra("delay",delay);
+                    startActivity(Main);
+                    finish();
+                }
                 else
                 {
                     Intent Main = new Intent(Scandal.this, MainGame.class);
@@ -223,6 +243,10 @@ public class Scandal extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
+        stopService(new Intent(getApplicationContext(), MusicPlayer.class));
+        Intent music = new Intent(getApplication(), MusicPlayer.class);
+        music.putExtra("index", 0);
+
         Intent MainMenu = new Intent(Scandal.this, MainMenu.class);
         MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(MainMenu);

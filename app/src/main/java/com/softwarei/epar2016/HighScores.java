@@ -16,6 +16,7 @@ import static android.R.attr.id;
 
 public class HighScores extends AppCompatActivity
 {
+    private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,9 @@ public class HighScores extends AppCompatActivity
         TextView textView8 = (TextView) this.findViewById(R.id.textView8);
         TextView textView9 = (TextView) this.findViewById(R.id.textView9);
         TextView[] texts = {textView0, textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8, textView9};
+        //here
+        Intent intent = getIntent();
+        index = intent.getIntExtra("index", 0);
         HighScores h = new HighScores( ctx, texts);
         Button mainMenu;
         mainMenu=(Button)findViewById(R.id.highscoreMainMenu);
@@ -42,6 +46,7 @@ public class HighScores extends AppCompatActivity
             {
                 Intent Menu = new Intent(HighScores.this, MainMenu.class);
                 Menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                Menu.putExtra("index", index);
                 startActivity(Menu);
                 finish();
             }
