@@ -220,7 +220,7 @@ public class VladThread extends SurfaceView implements Runnable {
             }
         }
         try {
-            gameThread.sleep(5000);
+            gameThread.sleep(3500);
         }
         catch (InterruptedException e) {}
         context.stopService(new Intent(context.getApplicationContext(), MusicPlayer.class));
@@ -239,13 +239,13 @@ public class VladThread extends SurfaceView implements Runnable {
             if (speech <= 3)
                 try {
                     //change to higher number
-                    gameThread.sleep(100);
+                    gameThread.sleep(3500);
                     speechSpriteFrame = ++speechSpriteFrame % speechCols;
                 }
                 catch (InterruptedException e) {}
             else if (guessedRight) {
                 try {
-                    gameThread.sleep(4000);
+                    gameThread.sleep(3500);
                     guessedRightFrame = ++guessedRightFrame % guessedRightCols;
                     speechSpriteFrame = 4;
                 }
@@ -254,7 +254,7 @@ public class VladThread extends SurfaceView implements Runnable {
             }
             else if (guessedWrong) {
                 try {
-                    gameThread.sleep(4000);
+                    gameThread.sleep(3500);
                     guessedWrongFrame = ++guessedWrongFrame % guessedWrongCols;
                     speechSpriteFrame = 4;
                 }
@@ -299,7 +299,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
             if (speechSpriteFrame == 3) {
                 try {
-                    gameThread.sleep(4500);
+                    gameThread.sleep(3500);
                     if (right == false && wrong == false && right != true && wrong != true) {
                         vladGuess = new Random().nextInt(10) + 1;
                         if (whatDidTheUserGuess == vladGuess) {
