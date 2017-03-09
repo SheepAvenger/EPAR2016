@@ -76,7 +76,7 @@ public class CharacterSelection extends AppCompatActivity
             Washington.setEnabled(false);
 
         Random rand = new Random();
-        int index = rand.nextInt(8) + 2;
+        int index = rand.nextInt(8) + 3;
 
        final Intent music = new Intent(getApplication(), MusicPlayer.class);
         music.putExtra("index", index);

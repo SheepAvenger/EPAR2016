@@ -63,7 +63,7 @@ public class MainMenu extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        stopService(new Intent(MainMenu.this, MusicPlayer.class));
         finish();
     }
 }

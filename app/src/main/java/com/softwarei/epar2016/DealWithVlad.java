@@ -44,9 +44,13 @@ public class DealWithVlad extends Activity {
     @Override
     public void onBackPressed() {
         vladThread.pause();
+        stopService(new Intent(getApplicationContext(), MusicPlayer.class));
+        Intent music = new Intent(getApplication(), MusicPlayer.class);
+        music.putExtra("index", 0);
         Intent MainMenu = new Intent(DealWithVlad.this, MainMenu.class);
         MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(MainMenu);
         finish();
     }
+
 }
