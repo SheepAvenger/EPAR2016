@@ -123,6 +123,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
     private String kennedy = "0";
     private String washington = "0";
+    private int guesses = 0;
 
     VladThread(Context context, int character_index, int numScandal, int level, int score, int index, int speed, int[] position, int delay, boolean recovery, int vlad) {
         super(context);
@@ -265,7 +266,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
     private void update() {
         //updates dialog for Vlad
-        if (speech < 5 && runSpeech) {
+        if (speech <= 5 && runSpeech) {
             if (speech <= 3)
                 try {
                     //change to higher number
@@ -273,7 +274,7 @@ public class VladThread extends SurfaceView implements Runnable {
                     speechSpriteFrame = ++speechSpriteFrame % speechCols;
                 }
                 catch (InterruptedException e) {}
-            else if (guessedRight) {
+            else if (guessedRight && guesses <= 1) {
                 try {
                     gameThread.sleep(3500);
                     guessedRightFrame = ++guessedRightFrame % guessedRightCols;
@@ -282,7 +283,7 @@ public class VladThread extends SurfaceView implements Runnable {
                 catch (InterruptedException e) {}
 
             }
-            else if (guessedWrong) {
+            else if (guessedWrong && guesses <= 1) {
                 try {
                     gameThread.sleep(3500);
                     guessedWrongFrame = ++guessedWrongFrame % guessedWrongCols;
@@ -324,7 +325,7 @@ public class VladThread extends SurfaceView implements Runnable {
                 Rect spsrc = new Rect(spsrcX, 0, spsrcX + speechWidth, speechHeight);
                 Rect spdst = new Rect(400, 50, 600, 200);
                 canvas.drawBitmap(speechMap, spsrc, spdst, null);
-            if (speech < 5)
+            if (speech <= 5)
                 speech++;
 
             if (speechSpriteFrame == 3) {
@@ -353,11 +354,13 @@ public class VladThread extends SurfaceView implements Runnable {
                     int new_spsrcX = guessedRightFrame * guessedRightWidth;
                     Rect new_spsrc = new Rect(new_spsrcX, 0, new_spsrcX + guessedRightWidth, guessedRightHeight);
                     canvas.drawBitmap(userGuessedRightMap, new_spsrc, new_spdst, null);
+                    guesses++;
                 }
                 else {
                     int new_spsrcX = guessedWrongFrame * guessedWrongWidth;
                     Rect new_spsrc = new Rect(new_spsrcX, 0, new_spsrcX + guessedWrongWidth, guessedWrongHeight);
                     canvas.drawBitmap(userGuessedWrongMap, new_spsrc, new_spdst, null);
+                    guesses++;
                 }
             }
 
@@ -398,7 +401,7 @@ public class VladThread extends SurfaceView implements Runnable {
                 secondTestCount++;
                 //change secondTestCount to what ever number you think runs long enough for vlad screen;
                 if (secondTestCount == 75) {
-                    int winnings = 100;//new Random().nextInt(101);
+                    int winnings = new Random().nextInt(101);
                     if (right) {
                         if (winnings <= 16){
                             //give them gameover
