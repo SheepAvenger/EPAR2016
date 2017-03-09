@@ -48,7 +48,7 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
     {
             if(current_index == 10) // change to 10 when other songs added
             {
-                current_index = 3;
+                current_index = 4;
             }
             AssetFileDescriptor afd = (this.getResources().openRawResourceFd(songs[current_index]));
             try

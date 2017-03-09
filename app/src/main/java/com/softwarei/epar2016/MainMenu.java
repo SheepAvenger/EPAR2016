@@ -30,7 +30,7 @@ public class MainMenu extends AppCompatActivity {
         {
             public void onClick(View v)
             {
-                Intent hs = new Intent(MainMenu.this, HighScores.class);
+                Intent hs = new Intent(MainMenu.this, DealWithVlad.class);
                 hs.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 hs.putExtras(music);
                 startActivity(hs);

@@ -25,14 +25,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Sprite sprite;
     private ArrayList<Obstacle> obstacles;
     private Bitmap obstacle, obstacle2, scandal, noScandal;
-    private int scandalCount, index, score, hitCount, level_index, delay;
+    private int scandalCount, index, score, hitCount, level_index, delay, vlad;
     private Scores scores;
     private static Context ctx;
     private Random rand;
     private boolean recovery;
     private int[] position;
 
-    public GameView(Context context, int index, int levels, int scandal, int score, int speed, boolean recovery, int[] position, int delay) {
+    public GameView(Context context, int index, int levels, int scandal, int score, int speed, boolean recovery, int[] position, int delay, int vlad) {
         super(context);
         ctx = context;
         getHolder().addCallback(this);
@@ -45,6 +45,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         this.recovery = recovery;
         this.position = position;
         this.delay = delay;
+        this.vlad =vlad;
         level = new Level(context, levels);
         rand = new Random();
     }
@@ -219,6 +220,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 scandal.putExtra("recover",true);
                 scandal.putExtra("position",sprite.getPosition());
                 scandal.putExtra("delay",sprite.getDelay());
+                scandal.putExtra("vlad", vlad);
                 ctx.startActivity(scandal);
             }
         }

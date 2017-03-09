@@ -39,7 +39,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
         quitButton.setOnTouchListener(this);
 
         mp = new MusicPlayer();
-        int index, level_index, score, scandal, speed, delay;
+        int index, level_index, score, scandal, speed, delay, vlad;
 
 
         FrameLayout frameLayout = (FrameLayout)findViewById(R.id.FrameLayout);
@@ -52,9 +52,10 @@ public class MainGame extends Activity implements View.OnTouchListener {
         speed = intent.getIntExtra("speed",-6);
         recovery = intent.getBooleanExtra("recovery",false);
         position = intent.getIntArrayExtra("position");
+        vlad = intent.getIntExtra("vlad",0);
         delay = intent.getIntExtra("delay",100);
 
-        gameView = new GameView(this, index, level_index, scandal, score, speed, recovery, position, delay);
+        gameView = new GameView(this, index, level_index, scandal, score, speed, recovery, position, delay, vlad);
         frameLayout.addView(gameView);
 
         running = (RelativeLayout)findViewById(R.id.gameRunning);

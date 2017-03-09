@@ -17,7 +17,7 @@ import android.os.Message;
  */
 
 public class Scandal extends AppCompatActivity{
-    private int numScandal, tinyZebra, index, character_index, score, level, speed, delay;
+    private int numScandal, tinyZebra, index, character_index, score, level, speed, delay, vlad;
     boolean recovery;
     int[] position;
     boolean bold = true;
@@ -98,6 +98,7 @@ public class Scandal extends AppCompatActivity{
         recovery = intent.getBooleanExtra("recovery",true);
         position = intent.getIntArrayExtra("position");
         delay = intent.getIntExtra("delay",100);
+        vlad = intent.getIntExtra("vald",0);
         scandal = (TextView) findViewById(R.id.scandalous);
         candidate= (TextView) findViewById(R.id.scan_candidate);
         scandalousScandal= (TextView) findViewById(R.id.scandalous_scandal);
@@ -136,23 +137,38 @@ public class Scandal extends AppCompatActivity{
             {
                 if(tinyZebra == 3)
                 {
-                    stopService(new Intent(Scandal.this, MusicPlayer.class));
-                    Intent music = new Intent(getApplication(), MusicPlayer.class);
-                    music.putExtra("index", 1);
-                    startService(music);
+                    if(vlad == 0)
+                    {
+                        stopService(new Intent(Scandal.this, MusicPlayer.class));
+                        Intent music = new Intent(getApplication(), MusicPlayer.class);
+                        music.putExtra("index", 1);
+                        startService(music);
 
-                    Intent deal = new Intent(Scandal.this, DealWithVlad.class);
-                    deal.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    deal.putExtra("character",character_index);
-                    deal.putExtra("scandal",tinyZebra);
-                    deal.putExtra("level",level);
-                    deal.putExtra("score",score);
-                    deal.putExtra("speed",speed);
-                    deal.putExtra("recovery",recovery);
-                    deal.putExtra("position",position);
-                    deal.putExtra("delay",delay);
-                    startActivity(deal);
-                    finish();
+                        Intent deal = new Intent(Scandal.this, DealWithVlad.class);
+                        deal.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        deal.putExtra("character",character_index);
+                        deal.putExtra("scandal",tinyZebra);
+                        deal.putExtra("level",level);
+                        deal.putExtra("score",score);
+                        deal.putExtra("speed",speed);
+                        deal.putExtra("recovery",recovery);
+                        deal.putExtra("position",position);
+                        deal.putExtra("delay",delay);
+                        startActivity(deal);
+                        finish();
+                    }
+                    else
+                    {
+                        stopService(new Intent(getApplicationContext(), MusicPlayer.class));
+                        Intent music = new Intent(getApplicationContext(), MusicPlayer.class);
+                        music.putExtra("index", 2);
+                        startService(music);
+
+                        Intent gameOver = new Intent(Scandal.this, GameOver.class);
+                        gameOver.putExtra("score",score);
+                        startActivity(gameOver);
+                    }
+
                 }
                 else if(tinyZebra == 2)
                 {
@@ -171,6 +187,7 @@ public class Scandal extends AppCompatActivity{
                     Main.putExtra("recovery",recovery);
                     Main.putExtra("position",position);
                     Main.putExtra("delay",delay);
+                    Main.putExtra("vlad", vlad);
                     startActivity(Main);
                     finish();
                 }

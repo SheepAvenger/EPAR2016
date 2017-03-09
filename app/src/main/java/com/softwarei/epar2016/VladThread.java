@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Random;
 
@@ -106,6 +107,7 @@ public class VladThread extends SurfaceView implements Runnable {
     private int delay;
     private int[] position;
     private boolean recovery;
+    private boolean newGame = false;
 
     int whatDidTheUserGuess;
     private boolean right;
@@ -118,8 +120,8 @@ public class VladThread extends SurfaceView implements Runnable {
     FileInputStream is;
     BufferedReader reader;
 
-    private int kennedy = 0;
-    private int washington = 0;
+    private String kennedy = "0";
+    private String washington = "0";
 
     VladThread(Context context, int character_index, int numScandal, int level, int score, int index, int speed, int[] position, int delay, boolean recovery) {
         super(context);
@@ -223,14 +225,39 @@ public class VladThread extends SurfaceView implements Runnable {
             gameThread.sleep(3500);
         }
         catch (InterruptedException e) {}
-        context.stopService(new Intent(context.getApplicationContext(), MusicPlayer.class));
-        Intent music = new Intent(context.getApplicationContext(), MusicPlayer.class);
-        music.putExtra("index", 2);
-        context.startService(music);
+        if(!newGame)
+        {
+            context.stopService(new Intent(context.getApplicationContext(), MusicPlayer.class));
+            Intent music = new Intent(context.getApplicationContext(), MusicPlayer.class);
+            music.putExtra("index", 2);
+            context.startService(music);
 
-        Intent gameOver = new Intent(context, GameOver.class);
-        gameOver.putExtra("score",score);
-        context.startActivity(gameOver);
+            Intent gameOver = new Intent(context, GameOver.class);
+            gameOver.putExtra("score",score);
+            context.startActivity(gameOver);
+        }
+        else
+        {
+            context.stopService(new Intent(context.getApplicationContext(), MusicPlayer.class));
+            Intent music = new Intent(context.getApplicationContext(), MusicPlayer.class);
+            music.putExtra("index", 3);
+            context.startService(music);
+
+
+            Intent Main = new Intent(context, MainGame.class);
+            Main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+            Main.putExtra("character",character_index);
+            Main.putExtra("scandal",numScandal--);
+            Main.putExtra("level",level);
+            Main.putExtra("score",score);
+            Main.putExtra("speed",speed);
+            Main.putExtra("recovery",recovery);
+            Main.putExtra("position",position);
+            Main.putExtra("delay",delay);
+            Main.putExtra("vlad", 1);
+            context.startActivity(Main);
+        }
+
     }
 
     private void update() {
@@ -302,6 +329,8 @@ public class VladThread extends SurfaceView implements Runnable {
                     gameThread.sleep(3500);
                     if (right == false && wrong == false && right != true && wrong != true) {
                         vladGuess = new Random().nextInt(10) + 1;
+                        System.out.println("Vlad " + vladGuess + "\n");
+                        System.out.println(whatDidTheUserGuess);
                         if (whatDidTheUserGuess == vladGuess) {
                             right = true;
                             spinMachine = true;
@@ -359,59 +388,55 @@ public class VladThread extends SurfaceView implements Runnable {
                             //give them gameover
                             canvas.drawBitmap(gameOverMap, new_ssrc, new_sdst, null);
                         }
-                        else if (winnings > 16 || winnings <= 44) {
+                        else if (winnings > 16 && winnings <= 44) {
                             //give them score multiplier
                             canvas.drawBitmap(scoreMultiplierMap, new_ssrc, new_sdst, null);
                             this.score = (int) Math.ceil((double) this.score * 1.3);
                         }
-                        /*else if (winnings > 44 && winnings <= 72) {
+                        else if (winnings > 44 && winnings <= 72) {
                             //unlock character
                             canvas.drawBitmap(unlockCharacterMap, ssrc, sdst, null);
                             int characterUnlock = new Random().nextInt(2);
+                            File path = context.getApplicationContext().getFilesDir();
+                            File unlockable = new File(path, "characters.txt");
                             if(is!= null) {
                                 try {
-                                    kennedy = reader.read();
-                                    washington = reader.read();
+                                FileInputStream is = new FileInputStream(unlockable);
+                                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                                    kennedy = reader.readLine();
+                                    washington = reader.readLine();
                                     is.close();
-                                } catch (IOException e) {}
+                                } catch (IOException e) {Log.e("error",""+e.getMessage());}
                             }
-                            if (characterUnlock == 0 && washington == 0 && kennedy != 1) {
+                            if (characterUnlock == 0 && washington == "0" && kennedy != "1") {
                                 try {
-                                    outputStreamWriter.write(0); //kennedy
-                                    outputStreamWriter.write(1); //washington
+                                    FileOutputStream outputStreamWriter = new FileOutputStream(unlockable);
+                                    outputStreamWriter.write("0".getBytes()); //kennedy
+                                    outputStreamWriter.write("1".getBytes()); //washington
                                     outputStreamWriter.close();
                                 } catch (IOException e) { }
                             }
-                            else if (characterUnlock == 0 && washington != 1 && kennedy == 0){
+                            else if (characterUnlock == 0 && washington != "1" && kennedy == "0"){
                                 try {
-                                    outputStreamWriter.write(1); //kennedy
-                                    outputStreamWriter.write(0); //washington
+                                    FileOutputStream outputStreamWriter = new FileOutputStream(unlockable);
+                                    outputStreamWriter.write("1".getBytes()); //kennedy
+                                    outputStreamWriter.write("0".getBytes()); //washington
                                     outputStreamWriter.close();
                                 } catch (IOException e) { }
                             }
-                        }*/
-                        /*else {
+                        }
+                        else {
                             //go back to main game
                             canvas.drawBitmap(goToMainGameMap, ssrc, sdst, null);
-                            dealWithVlad.secondAttempt = true;
+                            //dealWithVlad.secondAttempt = true;
                             try {
                                 gameThread.sleep(5000);
                             }
                             catch (InterruptedException e) {}
-                            Intent Main = new Intent(context, MainGame.class);
-                            Main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-                            Main.putExtra("character",character_index);
-                            Main.putExtra("scandal",numScandal);
-                            Main.putExtra("level",level);
-                            Main.putExtra("score",score);
-                            Main.putExtra("speed",speed);
-                            Main.putExtra("recovery",recovery);
-                            Main.putExtra("position",position);
-                            Main.putExtra("delay",delay);
-                            context.startActivity(Main);
                             running = false;
+                            newGame = true;
 
-                        }*/
+                        }
                         try {
                             gameThread.sleep(5000);
                         }
@@ -425,58 +450,55 @@ public class VladThread extends SurfaceView implements Runnable {
                             //give them gameover
                             canvas.drawBitmap(gameOverMap, new_ssrc, new_sdst, null);
                         }
-                        else if (winnings > 40 || winnings<=60) {
+                        else if (winnings > 40 && winnings<=60) {
                             //give them score multiplier
                             canvas.drawBitmap(scoreMultiplierMap, new_ssrc, new_sdst, null);
                             this.score = (int) Math.ceil((double) this.score * 1.3);
                         }
-                        /*else if (winnings > 60 && winnings <= 80) {
+                        else if (winnings > 60 && winnings <= 80) {
                             //unlock character
                             canvas.drawBitmap(unlockCharacterMap, ssrc, sdst, null);
-                            int characterUnlock = new Random().nextInt(2);
-                            if(is!= null) {
+                            int characterUnlock = new Random().nextInt(9);
+                             File path = context.getApplicationContext().getFilesDir();
+                            File unlockable = new File(path, "character.txt");
+                            long length = unlockable.length();
+                             if(is!= null) {
                                 try {
-                                    kennedy = reader.read();
-                                    washington = reader.read();
+                                FileInputStream is = new FileInputStream(unlockable);
+                                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                                    kennedy = reader.readLine();
+                                    washington = reader.readLine();
                                     is.close();
-                                } catch (IOException e) {}
+                                } catch (IOException e) {Log.e("error",""+e.getMessage());}
                             }
-                            if (characterUnlock == 0 && washington == 0 && kennedy != 1) {
+                            if (characterUnlock > 5 && washington.equals("0") && !kennedy.equals("1")) {
                                 try {
-                                    outputStreamWriter.write(0); //kennedy
-                                    outputStreamWriter.write(1); //washington
+                                    FileOutputStream outputStreamWriter = new FileOutputStream(unlockable);
+                                    outputStreamWriter.write("0".getBytes()); //kennedy
+                                    outputStreamWriter.write("1".getBytes()); //washington
                                     outputStreamWriter.close();
                                 } catch (IOException e) { }
                             }
-                            else if (characterUnlock == 0 && washington != 1 && kennedy == 0){
+                            else if (characterUnlock > 5 && !washington.equals("1") && kennedy.equals("0")){
                                 try {
-                                    outputStreamWriter.write(1); //kennedy
-                                    outputStreamWriter.write(0); //washington
+                                    FileOutputStream outputStreamWriter = new FileOutputStream(unlockable);
+                                    outputStreamWriter.write("1".getBytes()); //kennedy
+                                    outputStreamWriter.write("0".getBytes()); //washington
                                     outputStreamWriter.close();
                                 } catch (IOException e) { }
                             }
-                        }*/
-                        /*else {
+                        }
+                        else {
                             //go back to main game
                             canvas.drawBitmap(goToMainGameMap, ssrc, sdst, null);
-                            dealWithVlad.secondAttempt = true;
+                            //dealWithVlad.secondAttempt = true;
                             try {
                                 gameThread.sleep(5000);
                             }
                             catch (InterruptedException e) {}
-                            Intent Main = new Intent(context, MainGame.class);
-                            Main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-                            Main.putExtra("character",character_index);
-                            Main.putExtra("scandal",numScandal);
-                            Main.putExtra("level",level);
-                            Main.putExtra("score",score);
-                            Main.putExtra("speed",speed);
-                            Main.putExtra("recovery",recovery);
-                            Main.putExtra("position",position);
-                            Main.putExtra("delay",delay);
-                            context.startActivity(Main);
                             running = false;
-                        }*/
+                            newGame = true;
+                        }
                         scrollOptions = false;
                         secondTestCount = 0;
                         running = false;

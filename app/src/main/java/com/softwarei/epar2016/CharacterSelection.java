@@ -23,8 +23,8 @@ public class CharacterSelection extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int kennedy = 0;
-        int washington = 0;
+        String kennedy = "0";
+        String washington = "0";
         setContentView(R.layout.character_selection);
         ImageButton Abe = (ImageButton)findViewById(R.id.Abe);
         ImageButton Clinton = (ImageButton)findViewById(R.id.Clinton);
@@ -36,15 +36,15 @@ public class CharacterSelection extends AppCompatActivity
         ImageButton Kennedy = (ImageButton)findViewById(R.id.Kennedy);
 
         File path = getApplicationContext().getFilesDir();
-        File unlockable = new File(path, "characters.txt");
+        File unlockable = new File(path, "character.txt");
 
         try // creates the text file characters.txt if it does not exists
         {
             if(unlockable.createNewFile())
             {
                 FileOutputStream outputStreamWriter = new FileOutputStream(unlockable);
-                outputStreamWriter.write(0);
-                outputStreamWriter.write(0);
+                outputStreamWriter.write("0\n".getBytes());
+                outputStreamWriter.write("0\n".getBytes());
                 outputStreamWriter.close();
 
             }
@@ -57,8 +57,8 @@ public class CharacterSelection extends AppCompatActivity
             FileInputStream is = new FileInputStream(unlockable);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             if(is!= null) {
-                kennedy = reader.read();
-                washington = reader.read();
+                kennedy = reader.readLine();
+                washington = reader.readLine();
                 is.close();
             }
         }
@@ -66,17 +66,17 @@ public class CharacterSelection extends AppCompatActivity
         {
             Log.e("error",""+e.getMessage());
         }
-        if(kennedy == 1)
+        if(kennedy == "1")
            Kennedy.setEnabled(true);
         else
             Kennedy.setEnabled(false);
-        if(washington == 1)
+        if(washington == "1")
             Washington.setEnabled(true);
         else
             Washington.setEnabled(false);
 
         Random rand = new Random();
-        int index = rand.nextInt(8) + 3;
+        int index = rand.nextInt(6) + 4;
 
        final Intent music = new Intent(getApplication(), MusicPlayer.class);
         music.putExtra("index", index);
