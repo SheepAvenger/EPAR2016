@@ -39,6 +39,11 @@ public class MusicPlayer extends Service implements MediaPlayer.OnCompletionList
 
     }
 
+    public int getCurrent_index()
+    {
+        return current_index;
+    }
+
     public void play()
     {
             if(current_index == 10) // change to 10 when other songs added

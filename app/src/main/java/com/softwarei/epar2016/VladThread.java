@@ -149,6 +149,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
         Intent gameOver = new Intent(context, GameOver.class);
         gameOver.putExtra("score",score);
+        gameOver.putExtras(music);
         context.startActivity(gameOver);
     }
 
