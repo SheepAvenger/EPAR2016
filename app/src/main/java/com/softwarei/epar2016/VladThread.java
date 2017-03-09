@@ -15,7 +15,14 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 public class VladThread extends SurfaceView implements Runnable {
@@ -23,7 +30,9 @@ public class VladThread extends SurfaceView implements Runnable {
     private volatile boolean running;
     private Thread gameThread = null;
     private Canvas canvas;
+    private RelativeLayout layout = (RelativeLayout) findViewById(R.id.deal_with_vlad);
     private SurfaceHolder ourHolder;
+    private DealWithVlad dealWithVlad;
 
     Context context;
 
@@ -43,7 +52,7 @@ public class VladThread extends SurfaceView implements Runnable {
     Bitmap vladMap;
 
     private int speechCols = 4;
-    private int speechSpriteFrame = 0;
+    protected int speechSpriteFrame = 0;
     private int speechWidth;
     private int speechHeight;
     Bitmap speechMap;
@@ -85,22 +94,48 @@ public class VladThread extends SurfaceView implements Runnable {
     private int vladGuess;
     private int speech;
     Boolean goToGameOver;
-    private int score;
-    private int character_index;
-    private int numScandal;
-    private int level;
-    private int whatDidTheUserGuess;
-    private Boolean right;
-    private Boolean wrong;
+    boolean runSpeech;
+    EditText getUserGuess;
 
-    VladThread(Context context, int character_index, int numScandal, int level, int score) {
+    private int numScandal;
+    private int character_index;
+    public int score;
+    private int level;
+    private int index;
+    private int speed;
+    private int delay;
+    private int[] position;
+    private boolean recovery;
+
+    int whatDidTheUserGuess;
+    private boolean right;
+    private boolean wrong;
+
+    File path;
+    File unlockable;
+    FileOutputStream outputStreamWriter;
+
+    FileInputStream is;
+    BufferedReader reader;
+
+    private int kennedy = 0;
+    private int washington = 0;
+
+    VladThread(Context context, int character_index, int numScandal, int level, int score, int index, int speed, int[] position, int delay, boolean recovery) {
         super(context);
         this.context = context;
         ourHolder = getHolder();
-        this.score = score;
+
         this.character_index = character_index;
         this.numScandal = numScandal;
         this.level = level;
+        this.score = score;
+        this.index = index;
+        this.speed = speed;
+        this.position = position;
+        this.delay = delay;
+        this.recovery = recovery;
+
         //create thread to slow down slot machine and options animation
         gameThread = new Thread(this);
 
@@ -158,6 +193,18 @@ public class VladThread extends SurfaceView implements Runnable {
         goToGameOver = false;
         right = false;
         wrong = false;
+        runSpeech = false;
+
+        try {
+            path = this.context.getFilesDir();
+            unlockable = new File(path, "characters.txt");
+            outputStreamWriter = new FileOutputStream(unlockable);
+            is = new FileInputStream(unlockable);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        } catch (FileNotFoundException e) {}
+
+        getUserGuess = (EditText) findViewById(R.id.userGuess);
+
     }
 
     @Override
@@ -172,7 +219,10 @@ public class VladThread extends SurfaceView implements Runnable {
                 fps = 1000 / timeThisFrame;
             }
         }
-
+        try {
+            gameThread.sleep(5000);
+        }
+        catch (InterruptedException e) {}
         context.stopService(new Intent(context.getApplicationContext(), MusicPlayer.class));
         Intent music = new Intent(context.getApplicationContext(), MusicPlayer.class);
         music.putExtra("index", 2);
@@ -185,25 +235,28 @@ public class VladThread extends SurfaceView implements Runnable {
 
     private void update() {
         //updates dialog for Vlad
-        if (speech < 5) {
-            if (speech < 3)
+        if (speech < 5 && runSpeech) {
+            if (speech <= 3)
                 try {
-                    gameThread.sleep(500);
+                    //change to higher number
+                    gameThread.sleep(100);
                     speechSpriteFrame = ++speechSpriteFrame % speechCols;
                 }
                 catch (InterruptedException e) {}
             else if (guessedRight) {
                 try {
-                    gameThread.sleep(500);
+                    gameThread.sleep(4000);
                     guessedRightFrame = ++guessedRightFrame % guessedRightCols;
+                    speechSpriteFrame = 4;
                 }
                 catch (InterruptedException e) {}
 
             }
             else if (guessedWrong) {
                 try {
-                    gameThread.sleep(500);
+                    gameThread.sleep(4000);
                     guessedWrongFrame = ++guessedWrongFrame % guessedWrongCols;
+                    speechSpriteFrame = 4;
                 }
                 catch (InterruptedException e) {}
             }
@@ -235,32 +288,35 @@ public class VladThread extends SurfaceView implements Runnable {
             Rect vdst = new Rect(500, 0, 910, (int) (GameView.HEIGHT / 1.1));
             canvas.drawBitmap(vladMap, vsrc, vdst, null);
 
-            Rect msrc = new Rect(0, 0, machineWidth, machineHeight);
-            Rect mdst = new Rect(0, 210, 250, 440);
-            canvas.drawBitmap(machineStill, msrc, mdst, null);
-            testCount++;
             //test how long still image stays on screen
-            if (right || wrong)
-                spinMachine = true;
 
-
-            //only draw the speech before any animation
-            else if (spinMachine == false && scrollOptions == false) {
                 int spsrcX = speechSpriteFrame * speechWidth;
                 Rect spsrc = new Rect(spsrcX, 0, spsrcX + speechWidth, speechHeight);
                 Rect spdst = new Rect(400, 50, 600, 200);
                 canvas.drawBitmap(speechMap, spsrc, spdst, null);
-                if (speechSpriteFrame == 3) {
-                    if (right == false && wrong == false)
+            if (speech < 5)
+                speech++;
+
+            if (speechSpriteFrame == 3) {
+                try {
+                    gameThread.sleep(4500);
+                    if (right == false && wrong == false && right != true && wrong != true) {
                         vladGuess = new Random().nextInt(10) + 1;
-                    if (whatDidTheUserGuess == vladGuess)
-                        right = true;
-                    else
-                        wrong = true;
-                }
+                        if (whatDidTheUserGuess == vladGuess) {
+                            right = true;
+                            spinMachine = true;
+                            guessedRight = true;
+                        } else {
+                            wrong = true;
+                            spinMachine = true;
+                            guessedWrong = true;
+                        }
+                    }
+                } catch (InterruptedException e) {}
             }
 
-            else if (spinMachine) {
+
+            if (spinMachine) {
                 int msrcX = machineSpriteFrame * machineWidth;
                 Rect mNewSrc = new Rect(msrcX, 0, msrcX + machineWidth, machineHeight);
                 Rect mNewDst = new Rect(0, 210, 250, 440);
@@ -276,12 +332,17 @@ public class VladThread extends SurfaceView implements Runnable {
             }
 
             else if (scrollOptions) {
+                Rect msrc = new Rect(0, 0, machineWidth, machineHeight);
+                Rect mdst = new Rect(0, 210, 250, 440);
                 canvas.drawBitmap(machineStill, msrc, mdst, null);
 
                 //cut the scroll sprite again
                 int ssrcX = scrollSpriteFrame * scrollWidth;
                 Rect ssrc = new Rect(ssrcX, 0, ssrcX + scrollWidth, scrollHeight);
-                Rect sdst = new Rect(60, 295, 145, 367);
+                Rect sdst = new Rect(65, 290, 150, 365);
+
+                Rect new_ssrc = new Rect(0, 0, scrollWidth, scrollHeight);
+                Rect new_sdst = new Rect(65, 290, 150, 365);
                 canvas.drawBitmap(scrollMap, ssrc, sdst, null);
                 try {
                     gameThread.sleep(50);
@@ -291,26 +352,70 @@ public class VladThread extends SurfaceView implements Runnable {
                 secondTestCount++;
 
                 //change secondTestCount to what ever number you think runs long enough for vlad screen;
-                if (secondTestCount == 150) {
+                if (secondTestCount == 75) {
                     int winnings = new Random().nextInt(101);
                     if (right) {
                         if (winnings <= 16){
                             //give them gameover
-                            canvas.drawBitmap(gameOverMap, ssrc, sdst, null);
+                            canvas.drawBitmap(gameOverMap, new_ssrc, new_sdst, null);
                         }
-                        else if (winnings > 16 && winnings <= 44) {
+                        else if (winnings > 16 || winnings <= 44) {
                             //give them score multiplier
-                            canvas.drawBitmap(scoreMultiplierMap, ssrc, sdst, null);
+                            canvas.drawBitmap(scoreMultiplierMap, new_ssrc, new_sdst, null);
                             this.score = (int) Math.ceil((double) this.score * 1.3);
                         }
-                        else if (winnings > 44 && winnings <= 72) {
+                        /*else if (winnings > 44 && winnings <= 72) {
                             //unlock character
                             canvas.drawBitmap(unlockCharacterMap, ssrc, sdst, null);
-                        }
-                        else {
+                            int characterUnlock = new Random().nextInt(2);
+                            if(is!= null) {
+                                try {
+                                    kennedy = reader.read();
+                                    washington = reader.read();
+                                    is.close();
+                                } catch (IOException e) {}
+                            }
+                            if (characterUnlock == 0 && washington == 0 && kennedy != 1) {
+                                try {
+                                    outputStreamWriter.write(0); //kennedy
+                                    outputStreamWriter.write(1); //washington
+                                    outputStreamWriter.close();
+                                } catch (IOException e) { }
+                            }
+                            else if (characterUnlock == 0 && washington != 1 && kennedy == 0){
+                                try {
+                                    outputStreamWriter.write(1); //kennedy
+                                    outputStreamWriter.write(0); //washington
+                                    outputStreamWriter.close();
+                                } catch (IOException e) { }
+                            }
+                        }*/
+                        /*else {
                             //go back to main game
                             canvas.drawBitmap(goToMainGameMap, ssrc, sdst, null);
+                            dealWithVlad.secondAttempt = true;
+                            try {
+                                gameThread.sleep(5000);
+                            }
+                            catch (InterruptedException e) {}
+                            Intent Main = new Intent(context, MainGame.class);
+                            Main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            Main.putExtra("character",character_index);
+                            Main.putExtra("scandal",numScandal);
+                            Main.putExtra("level",level);
+                            Main.putExtra("score",score);
+                            Main.putExtra("speed",speed);
+                            Main.putExtra("recovery",recovery);
+                            Main.putExtra("position",position);
+                            Main.putExtra("delay",delay);
+                            context.startActivity(Main);
+                            running = false;
+
+                        }*/
+                        try {
+                            gameThread.sleep(5000);
                         }
+                        catch (InterruptedException e) {}
                         scrollOptions = false;
                         secondTestCount = 0;
                         running = false;
@@ -318,46 +423,76 @@ public class VladThread extends SurfaceView implements Runnable {
                     else if (wrong) {
                         if (winnings <= 40){
                             //give them gameover
-                            canvas.drawBitmap(gameOverMap, ssrc, sdst, null);
+                            canvas.drawBitmap(gameOverMap, new_ssrc, new_sdst, null);
                         }
-                        else if (winnings > 40 && winnings<=60) {
+                        else if (winnings > 40 || winnings<=60) {
                             //give them score multiplier
-                            canvas.drawBitmap(scoreMultiplierMap, ssrc, sdst, null);
+                            canvas.drawBitmap(scoreMultiplierMap, new_ssrc, new_sdst, null);
                             this.score = (int) Math.ceil((double) this.score * 1.3);
                         }
-                        else if (winnings > 60 && winnings <= 80) {
+                        /*else if (winnings > 60 && winnings <= 80) {
                             //unlock character
                             canvas.drawBitmap(unlockCharacterMap, ssrc, sdst, null);
-                        }
-                        else {
+                            int characterUnlock = new Random().nextInt(2);
+                            if(is!= null) {
+                                try {
+                                    kennedy = reader.read();
+                                    washington = reader.read();
+                                    is.close();
+                                } catch (IOException e) {}
+                            }
+                            if (characterUnlock == 0 && washington == 0 && kennedy != 1) {
+                                try {
+                                    outputStreamWriter.write(0); //kennedy
+                                    outputStreamWriter.write(1); //washington
+                                    outputStreamWriter.close();
+                                } catch (IOException e) { }
+                            }
+                            else if (characterUnlock == 0 && washington != 1 && kennedy == 0){
+                                try {
+                                    outputStreamWriter.write(1); //kennedy
+                                    outputStreamWriter.write(0); //washington
+                                    outputStreamWriter.close();
+                                } catch (IOException e) { }
+                            }
+                        }*/
+                        /*else {
                             //go back to main game
                             canvas.drawBitmap(goToMainGameMap, ssrc, sdst, null);
-                        }
-                        try {
-                            gameThread.sleep(200);
-                        }
-                        catch (InterruptedException e) {}
+                            dealWithVlad.secondAttempt = true;
+                            try {
+                                gameThread.sleep(5000);
+                            }
+                            catch (InterruptedException e) {}
+                            Intent Main = new Intent(context, MainGame.class);
+                            Main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            Main.putExtra("character",character_index);
+                            Main.putExtra("scandal",numScandal);
+                            Main.putExtra("level",level);
+                            Main.putExtra("score",score);
+                            Main.putExtra("speed",speed);
+                            Main.putExtra("recovery",recovery);
+                            Main.putExtra("position",position);
+                            Main.putExtra("delay",delay);
+                            context.startActivity(Main);
+                            running = false;
+                        }*/
                         scrollOptions = false;
                         secondTestCount = 0;
                         running = false;
                     }
                 }
             }
-            /*else {
+            else {
                 Rect msrc = new Rect(0, 0, machineWidth, machineHeight);
                 Rect mdst = new Rect(0, 210, 250, 440);
                 canvas.drawBitmap(machineStill, msrc, mdst, null);
                 testCount++;
-                //test how long still image stays on screen
-                if (testCount == 100){
-                    spinMachine = true;
-                    testCount = 0;
-                }
-            }*/
+            }
 
 
             ourHolder.unlockCanvasAndPost(canvas);
-            speech++;
+            runSpeech = true;
 
         }
 
