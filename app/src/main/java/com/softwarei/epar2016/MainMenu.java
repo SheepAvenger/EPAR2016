@@ -53,19 +53,6 @@ public class MainMenu extends AppCompatActivity {
 
         });
 
-        Button vlad;
-        vlad=(Button)findViewById(R.id.vlad);
-        vlad.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                Intent dealWithVlad = new Intent(MainMenu.this, DealWithVlad.class);
-                dealWithVlad.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(dealWithVlad);
-                finish();
-            }
-        });
-
     }
 
     @Override
