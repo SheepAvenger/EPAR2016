@@ -1,7 +1,6 @@
 package com.softwarei.epar2016;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 //here
@@ -23,7 +22,7 @@ public class DealWithVlad extends Activity {
         numScandal = intent.getIntExtra("scandal", 0);
         level = intent.getIntExtra("level", 0);
         score = intent.getIntExtra("score", 0);
-        vladThread = new VladThread(this,score);
+        vladThread = new VladThread(this,character_index, numScandal, level, score);
         setContentView(vladThread);
 
     }
