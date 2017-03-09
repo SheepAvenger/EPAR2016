@@ -107,7 +107,8 @@ public class VladThread extends SurfaceView implements Runnable {
     private int delay;
     private int[] position;
     private boolean recovery;
-    private boolean newGame = false;
+    private boolean extraLife = false;
+    private int vlad;
 
     int whatDidTheUserGuess;
     private boolean right;
@@ -123,11 +124,13 @@ public class VladThread extends SurfaceView implements Runnable {
     private String kennedy = "0";
     private String washington = "0";
 
-    VladThread(Context context, int character_index, int numScandal, int level, int score, int index, int speed, int[] position, int delay, boolean recovery) {
+    VladThread(Context context, int character_index, int numScandal, int level, int score, int index, int speed, int[] position, int delay, boolean recovery, int vlad) {
         super(context);
         this.context = context;
         ourHolder = getHolder();
 
+        this.vlad = vlad;
+        extraLife = (this.vlad == 1)? true : false;
         this.character_index = character_index;
         this.numScandal = numScandal;
         this.level = level;
@@ -225,7 +228,7 @@ public class VladThread extends SurfaceView implements Runnable {
             gameThread.sleep(3500);
         }
         catch (InterruptedException e) {}
-        if(!newGame)
+        if(numScandal == 3)
         {
             context.stopService(new Intent(context.getApplicationContext(), MusicPlayer.class));
             Intent music = new Intent(context.getApplicationContext(), MusicPlayer.class);
@@ -242,19 +245,19 @@ public class VladThread extends SurfaceView implements Runnable {
             Intent music = new Intent(context.getApplicationContext(), MusicPlayer.class);
             music.putExtra("index", 3);
             context.startService(music);
-
+            vlad = 1;
 
             Intent Main = new Intent(context, MainGame.class);
             Main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
             Main.putExtra("character",character_index);
-            Main.putExtra("scandal",numScandal--);
+            Main.putExtra("scandal",numScandal);
             Main.putExtra("level",level);
             Main.putExtra("score",score);
             Main.putExtra("speed",speed);
             Main.putExtra("recovery",recovery);
             Main.putExtra("position",position);
             Main.putExtra("delay",delay);
-            Main.putExtra("vlad", 1);
+            Main.putExtra("vlad", vlad);
             context.startActivity(Main);
         }
 
@@ -382,7 +385,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
                 //change secondTestCount to what ever number you think runs long enough for vlad screen;
                 if (secondTestCount == 75) {
-                    int winnings = new Random().nextInt(101);
+                    int winnings = 100;//new Random().nextInt(101);
                     if (right) {
                         if (winnings <= 16){
                             //give them gameover
@@ -433,8 +436,8 @@ public class VladThread extends SurfaceView implements Runnable {
                                 gameThread.sleep(5000);
                             }
                             catch (InterruptedException e) {}
+                            numScandal--;
                             running = false;
-                            newGame = true;
 
                         }
                         try {
@@ -496,8 +499,8 @@ public class VladThread extends SurfaceView implements Runnable {
                                 gameThread.sleep(5000);
                             }
                             catch (InterruptedException e) {}
+                            numScandal--;
                             running = false;
-                            newGame = true;
                         }
                         scrollOptions = false;
                         secondTestCount = 0;

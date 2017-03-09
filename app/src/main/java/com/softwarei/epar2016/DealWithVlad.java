@@ -27,17 +27,12 @@ public class DealWithVlad extends Activity {
     private int[] position;
     private boolean recovery;
     protected boolean secondAttempt;
+    private int vlad;
     RelativeLayout tryingView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (secondAttempt) {
-            Intent gameOver = new Intent(DealWithVlad.this, GameOver.class);
-            gameOver.putExtra("score",score);
-            this.startActivity(gameOver);
-            finish();
-        }
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         character_index = intent.getIntExtra("character", 0);
@@ -48,11 +43,19 @@ public class DealWithVlad extends Activity {
         speed = intent.getIntExtra("speed",-6);
         position = intent.getIntArrayExtra("position");
         delay = intent.getIntExtra("delay",100);
+        vlad = intent.getIntExtra("vlad", 0);
+        secondAttempt = (vlad == 1)? true : false;
         recovery = intent.getBooleanExtra("recovery",true);
+        if (secondAttempt) {
+            Intent gameOver = new Intent(DealWithVlad.this, GameOver.class);
+            gameOver.putExtra("score",score);
+            this.startActivity(gameOver);
+            finish();
+        }
 
         setContentView(R.layout.deal_with_vlad);
         FrameLayout frameLayout = (FrameLayout)findViewById(R.id.VladFrameLayout);
-        vladThread = new VladThread(this,character_index, --numScandal, level, score, index, speed, position, delay, recovery);
+        vladThread = new VladThread(this,character_index, numScandal, level, score, index, speed, position, delay, recovery, vlad);
         frameLayout.addView(vladThread);
 
         mEdit = (EditText) findViewById(R.id.userGuess);

@@ -98,7 +98,7 @@ public class Scandal extends AppCompatActivity{
         recovery = intent.getBooleanExtra("recovery",true);
         position = intent.getIntArrayExtra("position");
         delay = intent.getIntExtra("delay",100);
-        vlad = intent.getIntExtra("vald",0);
+        vlad = intent.getIntExtra("vlad",0);
         scandal = (TextView) findViewById(R.id.scandalous);
         candidate= (TextView) findViewById(R.id.scan_candidate);
         scandalousScandal= (TextView) findViewById(R.id.scandalous_scandal);
@@ -154,6 +154,7 @@ public class Scandal extends AppCompatActivity{
                         deal.putExtra("recovery",recovery);
                         deal.putExtra("position",position);
                         deal.putExtra("delay",delay);
+                        deal.putExtra("vlad", vlad);
                         startActivity(deal);
                         finish();
                     }
