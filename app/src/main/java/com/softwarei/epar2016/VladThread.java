@@ -246,7 +246,7 @@ public class VladThread extends SurfaceView implements Runnable {
             music.putExtra("index", 3);
             context.startService(music);
             vlad = 1;
-
+            //fixed
             Intent Main = new Intent(context, MainGame.class);
             Main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
             Main.putExtra("character",character_index);

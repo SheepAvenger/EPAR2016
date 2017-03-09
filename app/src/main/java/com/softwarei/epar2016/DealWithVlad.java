@@ -46,6 +46,7 @@ public class DealWithVlad extends Activity {
         vlad = intent.getIntExtra("vlad", 0);
         secondAttempt = (vlad == 1)? true : false;
         recovery = intent.getBooleanExtra("recovery",true);
+        //redundency
         if (secondAttempt) {
             Intent gameOver = new Intent(DealWithVlad.this, GameOver.class);
             gameOver.putExtra("score",score);

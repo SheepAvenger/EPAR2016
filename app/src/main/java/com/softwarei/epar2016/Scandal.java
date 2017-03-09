@@ -155,6 +155,7 @@ public class Scandal extends AppCompatActivity{
                         deal.putExtra("position",position);
                         deal.putExtra("delay",delay);
                         deal.putExtra("vlad", vlad);
+                        //fixed typo
                         startActivity(deal);
                         finish();
                     }
