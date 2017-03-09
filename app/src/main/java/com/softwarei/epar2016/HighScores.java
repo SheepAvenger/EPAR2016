@@ -34,6 +34,7 @@ public class HighScores extends AppCompatActivity
         TextView textView8 = (TextView) this.findViewById(R.id.textView8);
         TextView textView9 = (TextView) this.findViewById(R.id.textView9);
         TextView[] texts = {textView0, textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8, textView9};
+        //here
         Intent intent = getIntent();
         index = intent.getIntExtra("index", 0);
         HighScores h = new HighScores( ctx, texts);

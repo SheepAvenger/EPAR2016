@@ -16,6 +16,7 @@ public class MainMenu extends AppCompatActivity {
         int index = intent.getIntExtra("index", 0);
 
         final Intent music = new Intent(getApplication(), MusicPlayer.class);
+        //here
        if (index == 2)
        {
            stopService(music);

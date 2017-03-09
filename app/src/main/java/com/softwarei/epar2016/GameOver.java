@@ -39,11 +39,6 @@ public class GameOver extends AppCompatActivity {
                 if(playerInit.length() >0 && playerInit.length() <= 8) {
                     s.addScore(score,playerInit, getApplicationContext());
 
-                    /*stopService(new Intent(getApplicationContext(), MusicPlayer.class));
-                    Intent music = new Intent(getApplication(), MusicPlayer.class);
-                    music.putExtra("index", 0);
-                    startService(music);*/
-
                     Intent viewHScores = new Intent(getApplicationContext(), HighScores.class);
                     viewHScores.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                     viewHScores.putExtra("index", 2);
