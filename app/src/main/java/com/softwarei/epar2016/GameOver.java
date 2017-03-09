@@ -1,7 +1,5 @@
 package com.softwarei.epar2016;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +30,6 @@ public class GameOver extends AppCompatActivity {
 
         initials = (EditText) findViewById(R.id.getInitials);
         final Scores s = new  Scores(getApplicationContext());
-        final Context ctx = this;
         Button button1;
         button1 = (Button) findViewById(R.id.hScores);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -40,11 +37,17 @@ public class GameOver extends AppCompatActivity {
             public void onClick(View v) {
                 GameOver.this.setInitials(initials.getText().toString());
                 if(playerInit.length() >0 && playerInit.length() <= 8) {
-                    s.addScore(score,playerInit, ctx);
-                    final Intent music = new Intent(getApplication(), MusicPlayer.class);
+                    s.addScore(score,playerInit, getApplicationContext());
+
+                    stopService(new Intent(getApplicationContext(), MusicPlayer.class));
+                    Intent music = new Intent(getApplication(), MusicPlayer.class);
                     music.putExtra("index", 0);
-                    Intent viewHScores = new Intent(GameOver.this, HighScores.class);
-                    startActivity(viewHScores);
+                    startService(music);
+
+                    Intent viewHScores = new Intent(getApplicationContext(), HighScores.class);
+                    viewHScores.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(viewHScores);//error here
+                    finish();
                 }
                 else
                 {
@@ -70,6 +73,14 @@ public class GameOver extends AppCompatActivity {
     {
         Toast.makeText(this, "I SAID ENTER YOUR INITIALS NOT THE MAGNA CARTA", Toast.LENGTH_LONG).show();
         setInitials("");
-        initials.setText("Enter your Name");
+        initials.setText("Stu");
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent MainMenu = new Intent(GameOver.this, MainMenu.class);
+        MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(MainMenu);
+        finish();
     }
 }

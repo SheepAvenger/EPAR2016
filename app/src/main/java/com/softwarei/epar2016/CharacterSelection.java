@@ -3,14 +3,15 @@ package com.softwarei.epar2016;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.Random;
 
 /**
@@ -33,14 +34,15 @@ public class CharacterSelection extends AppCompatActivity
         ImageButton Sanders = (ImageButton)findViewById(R.id.Sanders);
         ImageButton Washington = (ImageButton)findViewById(R.id.Washington);
         ImageButton Kennedy = (ImageButton)findViewById(R.id.Kennedy);
-        String FILE = "data/data/com.softwarei.epar2016/characters.txt";
+
+        File path = getApplicationContext().getFilesDir();
+        File unlockable = new File(path, "characters.txt");
 
         try // creates the text file characters.txt if it does not exists
         {
-            File unlockable = new File(FILE);
-            if(!unlockable.createNewFile())
+            if(unlockable.createNewFile())
             {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput("characters.txt", this.MODE_PRIVATE));
+                FileOutputStream outputStreamWriter = new FileOutputStream(unlockable);
                 outputStreamWriter.write(0);
                 outputStreamWriter.write(0);
                 outputStreamWriter.close();
@@ -48,21 +50,21 @@ public class CharacterSelection extends AppCompatActivity
             }
 
         }
-        catch(IOException e){};
+        catch(IOException e){Log.e("error",""+e.getMessage());}
 
         try
         {
-           FileInputStream is = this.openFileInput("characters.txt");
+            FileInputStream is = new FileInputStream(unlockable);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             if(is!= null) {
-                kennedy = (int)reader.read();
-                System.out.println(kennedy);
-                washington = (int)reader.read();
+                kennedy = reader.read();
+                washington = reader.read();
+                is.close();
             }
         }
         catch(IOException e)
         {
-
+            Log.e("error",""+e.getMessage());
         }
         if(kennedy == 1)
            Kennedy.setEnabled(true);
@@ -74,12 +76,12 @@ public class CharacterSelection extends AppCompatActivity
             Washington.setEnabled(false);
 
         Random rand = new Random();
-        int index = rand.nextInt(9) + 2;
+        int index = rand.nextInt(8) + 2;
 
        final Intent music = new Intent(getApplication(), MusicPlayer.class);
         music.putExtra("index", index);
 
-       final Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
+       final Intent Main_Game = new Intent(CharacterSelection.this, MainGame.class);
 
         Abe.setOnClickListener(new View.OnClickListener()
         {
@@ -88,9 +90,9 @@ public class CharacterSelection extends AppCompatActivity
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
                 startService(music);
 
-                Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("character",12);
-                startActivity(Menu);
+                Main_Game.putExtra("character",12);
+                startActivity(Main_Game);
+                finish();
             }
         });
 
@@ -101,9 +103,9 @@ public class CharacterSelection extends AppCompatActivity
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
                 startService(music);
 
-                Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("character",2);
-                startActivity(Menu);
+                Main_Game.putExtra("character",2);
+                startActivity(Main_Game);
+                finish();
             }
         });
 
@@ -114,8 +116,9 @@ public class CharacterSelection extends AppCompatActivity
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
                 startService(music);
 
-                Menu.putExtra("character",8);
-                startActivity(Menu);
+                Main_Game.putExtra("character",8);
+                startActivity(Main_Game);
+                finish();
             }
         });
 
@@ -126,9 +129,9 @@ public class CharacterSelection extends AppCompatActivity
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
                 startService(music);
 
-                Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("character",4);
-                startActivity(Menu);
+                Main_Game.putExtra("character",4);
+                startActivity(Main_Game);
+                finish();
             }
         });
 
@@ -139,9 +142,9 @@ public class CharacterSelection extends AppCompatActivity
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
                 startService(music);
 
-                Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("character",2);
-                startActivity(Menu);
+                Main_Game.putExtra("character",2);
+                startActivity(Main_Game);
+                finish();
             }
         });
         Sanders.setOnClickListener(new View.OnClickListener()
@@ -151,9 +154,9 @@ public class CharacterSelection extends AppCompatActivity
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
                 startService(music);
 
-                Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("character",10);
-                startActivity(Menu);
+                Main_Game.putExtra("character",10);
+                startActivity(Main_Game);
+                finish();
             }
         });
         Washington.setOnClickListener(new View.OnClickListener()
@@ -163,9 +166,9 @@ public class CharacterSelection extends AppCompatActivity
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
                 startService(music);
 
-                Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("character",0);
-                startActivity(Menu);
+                Main_Game.putExtra("character",0);
+                startActivity(Main_Game);
+                finish();
             }
         });
         Kennedy.setOnClickListener(new View.OnClickListener()
@@ -175,9 +178,9 @@ public class CharacterSelection extends AppCompatActivity
                 stopService(new Intent(CharacterSelection.this, MusicPlayer.class));
                 startService(music);
 
-                Intent Menu = new Intent(CharacterSelection.this, MainGame.class);
-                Menu.putExtra("character",6);
-                startActivity(Menu);
+                Main_Game.putExtra("character",6);
+                startActivity(Main_Game);
+                finish();
             }
         });
     }
@@ -185,6 +188,14 @@ public class CharacterSelection extends AppCompatActivity
     public CharacterSelection()
     {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent MainMenu = new Intent(CharacterSelection.this, MainMenu.class);
+        MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(MainMenu);
+        finish();
     }
 
 }

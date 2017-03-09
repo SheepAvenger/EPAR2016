@@ -40,4 +40,13 @@ public class DealWithVlad extends Activity {
         super.onResume();
         vladThread.resume();
     }
+
+    @Override
+    public void onBackPressed() {
+        vladThread.pause();
+        Intent MainMenu = new Intent(DealWithVlad.this, MainMenu.class);
+        MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(MainMenu);
+        finish();
+    }
 }

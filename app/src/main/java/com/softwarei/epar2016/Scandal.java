@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -115,6 +116,7 @@ public class Scandal extends AppCompatActivity{
                             try {
                                 wait(future - System.currentTimeMillis());
                             } catch (Exception e) {
+                                Log.e("error",""+e.getMessage());
                             }
                         }
                     }
@@ -140,6 +142,7 @@ public class Scandal extends AppCompatActivity{
                     startService(music);
 
                     Intent deal = new Intent(Scandal.this, DealWithVlad.class);
+                    deal.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                     deal.putExtra("character",character_index);
                     deal.putExtra("scandal",tinyZebra);
                     deal.putExtra("level",level);
@@ -149,10 +152,12 @@ public class Scandal extends AppCompatActivity{
                     deal.putExtra("position",position);
                     deal.putExtra("delay",delay);
                     startActivity(deal);
+                    finish();
                 }
                 else
                 {
                     Intent Main = new Intent(Scandal.this, MainGame.class);
+                    Main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                     Main.putExtra("character",character_index);
                     Main.putExtra("scandal",tinyZebra);
                     Main.putExtra("level",level);
@@ -162,8 +167,7 @@ public class Scandal extends AppCompatActivity{
                     Main.putExtra("position",position);
                     Main.putExtra("delay",delay);
                     startActivity(Main);
-                    //return to main game.
-                    //need current level, score, scandal count, and character
+                    finish();
                 }
             }
 
@@ -217,4 +221,11 @@ public class Scandal extends AppCompatActivity{
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent MainMenu = new Intent(Scandal.this, MainMenu.class);
+        MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(MainMenu);
+        finish();
+    }
 }

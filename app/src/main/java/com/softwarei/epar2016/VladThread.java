@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.EditText;
@@ -187,7 +188,7 @@ public class VladThread extends SurfaceView implements Runnable {
                 canvas.drawBitmap(speechMap, spsrc, spdst, null);
                 try {
                     gameThread.sleep(100);
-                } catch (InterruptedException e) {}
+                } catch (InterruptedException e) {Log.e("error",""+e.getMessage());}
                 speech = true;
             }
 
@@ -198,7 +199,7 @@ public class VladThread extends SurfaceView implements Runnable {
                 canvas.drawBitmap(machMap, msrc, mdst, null);
                 try {
                     gameThread.sleep(100);
-                } catch (InterruptedException e) {}
+                } catch (InterruptedException e) {Log.e("error",""+e.getMessage());}
 
                 if (machineSpriteFrame == 9) {
                     scrollOptions = true;
@@ -217,7 +218,8 @@ public class VladThread extends SurfaceView implements Runnable {
                 canvas.drawBitmap(scrollMap, ssrc, sdst, null);
                 try {
                     gameThread.sleep(50);
-                } catch (InterruptedException e) {}
+                } catch (InterruptedException e) {
+                    Log.e("error",""+e.getMessage());}
 
                 secondTestCount++;
 

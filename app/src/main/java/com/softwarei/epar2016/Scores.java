@@ -1,16 +1,15 @@
 package com.softwarei.epar2016;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.lang.String;
 
 /**
@@ -36,39 +35,35 @@ public class Scores extends AppCompatActivity
         try
         {
 
-            if(scoreList.createNewFile() || scoreList.length() == 0)
+            if(scoreList.createNewFile())
             {
                 FileOutputStream outputStreamWriter = new FileOutputStream(scoreList);
-                outputStreamWriter.write("a 0\n".getBytes());
-                outputStreamWriter.write("b 0\n".getBytes());
-                outputStreamWriter.write("c 0\n".getBytes());
-                outputStreamWriter.write("d 0\n".getBytes());
-                outputStreamWriter.write("e 0\n".getBytes());
-                outputStreamWriter.write("f 0\n".getBytes());
-                outputStreamWriter.write("g 0\n".getBytes());
-                outputStreamWriter.write("h 0\n".getBytes());
-                outputStreamWriter.write("i 0\n".getBytes());
-                outputStreamWriter.write("j 0\n".getBytes());
+                outputStreamWriter.write("a 10\n".getBytes());
+                outputStreamWriter.write("b 10\n".getBytes());
+                outputStreamWriter.write("c 10\n".getBytes());
+                outputStreamWriter.write("d 10\n".getBytes());
+                outputStreamWriter.write("e 10\n".getBytes());
+                outputStreamWriter.write("f 10\n".getBytes());
+                outputStreamWriter.write("g 10\n".getBytes());
+                outputStreamWriter.write("h 10\n".getBytes());
+                outputStreamWriter.write("i 10\n".getBytes());
+                outputStreamWriter.write("j 10\n".getBytes());
                 outputStreamWriter.close();
 
             }
 
         }
-        catch(IOException e){};
+        catch(IOException e){
+            Log.e("error",""+e.getMessage());}
 
           try
             {
                 FileInputStream is = new FileInputStream(scoreList);
-                int length = (int) scoreList.length();
-
-                //byte[] bytes = new byte[length];
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 if(is != null)
                 {
                     while (i != 10)
                     {
-                        //is.read(bytes);
-                        //scoreString[i] = new String(bytes);
                         scoreString[i] = reader.readLine();
                         HighScore s = new HighScore();
                         String parse[] = scoreString[i].split(" ");
@@ -77,25 +72,26 @@ public class Scores extends AppCompatActivity
                         scores[i] = s;
                         i++;
                     }
+
+                    is.close();
                 }
 
             }
             catch(IOException e)
             {
-
+                Log.e("error",""+e.getMessage());
             }
 
     }
 
     public void addScore(int score, String name, Context ctx)
     {
-        String newString = "";
+        String newString;
         boolean newHighScore = false;
         File path = ctx.getFilesDir();
         File scoreList = new File(path, "score.txt");
         try
         {
-            FileOutputStream outputStreamWriter = new FileOutputStream(scoreList);
             for(int i = 0; i < 10; i++)
             {
                 if(score > scores[i].score)
@@ -113,17 +109,19 @@ public class Scores extends AppCompatActivity
             }
             if(newHighScore)
             {
+                FileOutputStream outputStreamWriter = new FileOutputStream(scoreList);
                 for(int i = 0; i < 10; i++)
                 {
                     newString = scores[i].name + " " + scores[i].score + "\n";
                     scoreString[i] = newString;
                     outputStreamWriter.write(scoreString[i].getBytes());
                 }
+                outputStreamWriter.close();
             }
-            outputStreamWriter.close();
+
         }
         catch(IOException e) {
-
+            Log.e("error",""+e.getMessage());
         }
     }
 
