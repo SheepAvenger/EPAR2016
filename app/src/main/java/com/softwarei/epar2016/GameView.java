@@ -26,8 +26,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private ArrayList<Obstacle> obstacles;
     private Bitmap obstacle, obstacle2, scandal, noScandal;
     private int scandalCount, index, score, hitCount, level_index, delay, vlad;
-    private Scores scores;
-    private static Context ctx;
+    private Context ctx;
     private Random rand;
     private boolean recovery;
     private int[] position;
@@ -211,7 +210,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             if(hitCount >= 3 && !sprite.getCollision() && !sprite.getJumping()) {
                 gameLoop.setRunning(false);
                 scandalCount++;
-                Intent scandal = new Intent(GameView.ctx, Scandal.class);
+                Intent scandal = new Intent(ctx, Scandal.class);
                 scandal.putExtra("character",index);
                 scandal.putExtra("scandal",scandalCount);
                 scandal.putExtra("level",level_index);

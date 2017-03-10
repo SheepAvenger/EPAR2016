@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import static android.R.attr.id;
-
 /**
  * Created by Rob on 2/24/2017.
  */
