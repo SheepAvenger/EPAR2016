@@ -24,7 +24,7 @@ public class MainMenu extends AppCompatActivity {
         music.putExtra("index", 0);
         startService(music);
 
-        ImageButton button;
+        ImageButton button,settingsB;
         button=(ImageButton)findViewById(R.id.HighScoresMenu);
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -34,6 +34,21 @@ public class MainMenu extends AppCompatActivity {
                 hs.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 hs.putExtras(music);
                 startActivity(hs);
+                finish();
+            }
+
+        });
+
+
+        settingsB=(ImageButton)findViewById(R.id.go_settings);
+        settingsB.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent settings = new Intent(MainMenu.this, Settings.class);
+                settings.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                settings.putExtras(music);
+                startActivity(settings);
                 finish();
             }
 

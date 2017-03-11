@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/settings_menu"
+    android:background="@drawable/b_flag">
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="125dp"
+        android:id="@+id/seekBar"
+        android:layout_below="@+id/settings_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:progressDrawable="@drawable/seekbar_drawable"/>
+
+    <Button
+        android:text="Main Menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/settingsMainMenu"
+        android:textSize="14sp"
+        android:textColor="#FFFF"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/transparent"/>
+
+    <TextView
+        android:text="SET ThINGS MENU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="36sp"
+        android:textColor="#FFFFFFFF"
+        android:id="@+id/settings_title"
+        android:layout_alignBottom="@+id/settingsMainMenu"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
