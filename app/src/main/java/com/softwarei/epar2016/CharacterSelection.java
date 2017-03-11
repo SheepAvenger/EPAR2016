@@ -66,11 +66,11 @@ public class CharacterSelection extends AppCompatActivity
         {
             Log.e("error",""+e.getMessage());
         }
-        if(kennedy == "1")
+        if(kennedy.equals("1"))
            Kennedy.setEnabled(true);
         else
             Kennedy.setEnabled(false);
-        if(washington == "1")
+        if(washington.equals("1"))
             Washington.setEnabled(true);
         else
             Washington.setEnabled(false);
