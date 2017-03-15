@@ -20,9 +20,11 @@ import java.util.Random;
 
 public class CharacterSelection extends AppCompatActivity
 {
+    MusicPlayer mp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mp = new MusicPlayer();
         String kennedy = "0";
         String washington = "0";
         setContentView(R.layout.character_selection);
@@ -196,6 +198,18 @@ public class CharacterSelection extends AppCompatActivity
         MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(MainMenu);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mp.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(CharacterSelection.this, MusicPlayer.class));
     }
 
 }

@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 public class Settings extends Activity{
 
-
-
+    MusicPlayer mp;
+    boolean click = false;
     boolean bold = true;
     TextView title;
 
@@ -52,6 +52,7 @@ public class Settings extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
+        mp = new MusicPlayer();
         final AudioManager audioManager;
         title = (TextView) findViewById(R.id.settings_title);
 
@@ -81,6 +82,7 @@ public class Settings extends Activity{
         {
             public void onClick(View v)
             {
+                click = true;
                 Intent back = new Intent(Settings.this, MainMenu.class);
                 back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(back);
@@ -124,5 +126,18 @@ public class Settings extends Activity{
         MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(MainMenu);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!click)
+            mp.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(Settings.this, MusicPlayer.class));
     }
 }

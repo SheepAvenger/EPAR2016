@@ -17,6 +17,8 @@ public class GameOver extends AppCompatActivity {
     private EditText initials;
     private String playerInit;
     private int score;
+    private MusicPlayer mp;
+    private boolean click = false;
 
 
 
@@ -28,6 +30,7 @@ public class GameOver extends AppCompatActivity {
         score = intent.getIntExtra("score", 0);
         this.playerInit="";
 
+        mp = new MusicPlayer();
         initials = (EditText) findViewById(R.id.getInitials);
         final Scores s = new  Scores(getApplicationContext());
         Button button1;
@@ -35,6 +38,7 @@ public class GameOver extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                click = true;
                 GameOver.this.setInitials(initials.getText().toString());
                 if(playerInit.length() >0 && playerInit.length() <= 8) {
                     s.addScore(score,playerInit, getApplicationContext());
@@ -82,5 +86,18 @@ public class GameOver extends AppCompatActivity {
         MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(MainMenu);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!click)
+            mp.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(GameOver.this, MusicPlayer.class));
     }
 }

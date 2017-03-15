@@ -16,7 +16,7 @@ public class DealWithVlad extends Activity {
 
     Button   mButton;
     EditText mEdit;
-
+    boolean click = false;
     private int numScandal;
     private int character_index;
     public int score;
@@ -28,6 +28,7 @@ public class DealWithVlad extends Activity {
     private boolean recovery;
     protected boolean secondAttempt;
     private int vlad;
+    MusicPlayer mp;
     RelativeLayout tryingView;
 
 
@@ -35,6 +36,7 @@ public class DealWithVlad extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        mp = new MusicPlayer();
         character_index = intent.getIntExtra("character", 0);
         numScandal = intent.getIntExtra("scandal", 0);
         level = intent.getIntExtra("level", 0);
@@ -65,6 +67,7 @@ public class DealWithVlad extends Activity {
         {
             public void onClick(View v)
             {
+                click = true;
                 String value = mEdit.getText().toString();
                 vladThread.whatDidTheUserGuess = Integer.parseInt(value);
             }
@@ -78,6 +81,8 @@ public class DealWithVlad extends Activity {
     protected void onPause() {
         super.onPause();
         vladThread.pause();
+        if(!click)
+            mp.onPause();
     }
 
 
@@ -85,6 +90,7 @@ public class DealWithVlad extends Activity {
     protected void onResume() {
         super.onResume();
         vladThread.resume();
+        startService(new Intent(DealWithVlad.this, MusicPlayer.class));
     }
 
     @Override

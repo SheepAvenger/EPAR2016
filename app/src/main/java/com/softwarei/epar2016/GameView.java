@@ -25,7 +25,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Sprite sprite;
     private ArrayList<Obstacle> obstacles;
     private Bitmap obstacle, obstacle2, scandal, noScandal;
-    private int scandalCount, index, score, hitCount, level_index, delay, vlad;
+    private int index, score, scandalCount, level_index, delay, vlad;
+    public int hitCount;
     private Context ctx;
     private Random rand;
     private boolean recovery;

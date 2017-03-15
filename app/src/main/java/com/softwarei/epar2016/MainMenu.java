@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainMenu extends AppCompatActivity {
+    MusicPlayer mp;
+    boolean click = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,8 +17,8 @@ public class MainMenu extends AppCompatActivity {
         Intent intent = getIntent();
         int index = intent.getIntExtra("index", 0);
 
+        mp = new MusicPlayer();
         final Intent music = new Intent(getApplication(), MusicPlayer.class);
-        //here
        if (index == 2)
        {
            stopService(music);
@@ -30,6 +32,7 @@ public class MainMenu extends AppCompatActivity {
         {
             public void onClick(View v)
             {
+                click = true;
                 Intent hs = new Intent(MainMenu.this, HighScores.class);
                 hs.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 hs.putExtras(music);
@@ -45,6 +48,7 @@ public class MainMenu extends AppCompatActivity {
         {
             public void onClick(View v)
             {
+                click = true;
                 Intent settings = new Intent(MainMenu.this, Settings.class);
                 settings.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 settings.putExtras(music);
@@ -60,6 +64,7 @@ public class MainMenu extends AppCompatActivity {
         {
             public void onClick(View v)
             {
+                click = true;
                 Intent characterSelection = new Intent(MainMenu.this, CharacterSelection.class);
                 characterSelection.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(characterSelection);
@@ -74,5 +79,18 @@ public class MainMenu extends AppCompatActivity {
     public void onBackPressed() {
         stopService(new Intent(MainMenu.this, MusicPlayer.class));
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!click)
+            mp.onPause();;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(MainMenu.this, MusicPlayer.class));
     }
 }

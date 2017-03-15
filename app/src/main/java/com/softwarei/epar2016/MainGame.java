@@ -128,5 +128,24 @@ public class MainGame extends Activity implements View.OnTouchListener {
         startActivity(MainMenu);
         finish();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(gameView.hitCount != 3)
+        {
+            mp.onPause();
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(gameView.hitCount != 3)
+        {
+            startService(new Intent(MainGame.this, MusicPlayer.class));
+        }
+    }
 }
 

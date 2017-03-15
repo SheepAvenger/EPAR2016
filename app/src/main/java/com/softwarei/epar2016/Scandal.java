@@ -20,6 +20,8 @@ public class Scandal extends AppCompatActivity{
     private int numScandal, tinyZebra, index, character_index, score, level, speed, delay, vlad;
     boolean recovery;
     int[] position;
+    private MusicPlayer mp;
+    private boolean click = false;
     boolean bold = true;
     private String[] candidates={"Dishonest Abe!","Clinton!","FDR!","Obama!",
                                 "Trump", "Washington", "Kennedy" };
@@ -87,6 +89,7 @@ public class Scandal extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scandal);
 
+        mp = new MusicPlayer();
         Intent intent = getIntent();
         character_index = intent.getIntExtra("character", 0);
         numScandal = intent.getIntExtra("scandal", 0);
@@ -135,6 +138,7 @@ public class Scandal extends AppCompatActivity{
             @Override
             public void onClick(View v)
             {
+                click = true;
                 if(tinyZebra == 3)
                 {
                     if(vlad == 0)
@@ -270,5 +274,18 @@ public class Scandal extends AppCompatActivity{
         MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(MainMenu);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!click)
+            mp.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(Scandal.this, MusicPlayer.class));
     }
 }

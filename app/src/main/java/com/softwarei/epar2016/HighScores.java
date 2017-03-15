@@ -15,11 +15,14 @@ import android.widget.TextView;
 public class HighScores extends AppCompatActivity
 {
     private int index;
+    private MusicPlayer mp;
+    private boolean click = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.high_scores);
         Context ctx;
+        mp = new MusicPlayer();
         ctx = getApplicationContext();
         TextView textView0 = (TextView) this.findViewById(R.id.textView0);
         TextView textView1 = (TextView) this.findViewById(R.id.textView1);
@@ -42,6 +45,7 @@ public class HighScores extends AppCompatActivity
         {
             public void onClick(View v)
             {
+                click = true;
                 Intent Menu = new Intent(HighScores.this, MainMenu.class);
                 Menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                 Menu.putExtra("index", index);
@@ -70,5 +74,18 @@ public class HighScores extends AppCompatActivity
         MainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(MainMenu);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!click)
+            mp.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(HighScores.this, MusicPlayer.class));
     }
 }
