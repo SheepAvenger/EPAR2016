@@ -32,7 +32,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private boolean recovery;
     private int[] position;
 
-    public GameView(Context context, int index, int levels, int scandal, int score, int speed, boolean recovery, int[] position, int delay, int vlad) {
+    public GameView(Context context, int index, int levels, int scandal, int score, int speed, boolean recovery, int[] position, int delay, int vlad, long pauseTime) {
         super(context);
         ctx = context;
         getHolder().addCallback(this);
@@ -46,6 +46,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         this.position = position;
         this.delay = delay;
         this.vlad =vlad;
+        levelTime += System.nanoTime() - pauseTime;
         level = new Level(context, levels);
         rand = new Random();
     }
@@ -53,7 +54,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
         obstacleTime = System.nanoTime();
-        levelTime = System.nanoTime();
+        //levelTime = System.nanoTime();
         //System.out.println("surfaceChanged");
     }
 
@@ -90,7 +91,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop.setRunning(true);
         gameLoop.start();
         sprite.setPlaying(true);
-        levelTime = System.nanoTime();
+        //levelTime = System.nanoTime();
         //System.out.println("surfaceCreated");
     }
 
@@ -221,6 +222,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 scandal.putExtra("position",sprite.getPosition());
                 scandal.putExtra("delay",sprite.getDelay());
                 scandal.putExtra("vlad", vlad);
+                scandal.putExtra("pauseTime", pauseTime);
                 ctx.startActivity(scandal);
             }
         }
