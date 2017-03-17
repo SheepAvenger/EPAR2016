@@ -109,6 +109,7 @@ public class VladThread extends SurfaceView implements Runnable {
     private boolean recovery;
     private boolean extraLife = false;
     private int vlad;
+    private long pauseTime;
 
     int whatDidTheUserGuess;
     private boolean right;
@@ -125,7 +126,7 @@ public class VladThread extends SurfaceView implements Runnable {
     private String washington = "0";
     private int guesses = 0;
 
-    VladThread(Context context, int character_index, int numScandal, int level, int score, int index, int speed, int[] position, int delay, boolean recovery, int vlad) {
+    VladThread(Context context, int character_index, int numScandal, int level, int score, int index, int speed, int[] position, int delay, boolean recovery, int vlad, long pauseTime) {
         super(context);
         this.context = context;
         ourHolder = getHolder();
@@ -141,6 +142,7 @@ public class VladThread extends SurfaceView implements Runnable {
         this.position = position;
         this.delay = delay;
         this.recovery = recovery;
+        this.pauseTime = pauseTime;
 
         //create thread to slow down slot machine and options animation
         gameThread = new Thread(this);
@@ -238,6 +240,7 @@ public class VladThread extends SurfaceView implements Runnable {
 
             Intent gameOver = new Intent(context, GameOver.class);
             gameOver.putExtra("score",score);
+            gameOver.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(gameOver);
         }
         else
@@ -259,6 +262,7 @@ public class VladThread extends SurfaceView implements Runnable {
             Main.putExtra("position",position);
             Main.putExtra("delay",delay);
             Main.putExtra("vlad", vlad);
+            Main.putExtra("pauseTime", pauseTime);
             context.startActivity(Main);
         }
 

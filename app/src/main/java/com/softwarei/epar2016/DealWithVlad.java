@@ -30,7 +30,7 @@ public class DealWithVlad extends Activity {
     private int vlad;
     MusicPlayer mp;
     RelativeLayout tryingView;
-
+    long pauseTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +46,21 @@ public class DealWithVlad extends Activity {
         position = intent.getIntArrayExtra("position");
         delay = intent.getIntExtra("delay",100);
         vlad = intent.getIntExtra("vlad", 0);
+        pauseTime = intent.getLongExtra("pauseTime", System.nanoTime());
         secondAttempt = (vlad == 1)? true : false;
         recovery = intent.getBooleanExtra("recovery",true);
         //redundency
         if (secondAttempt) {
             Intent gameOver = new Intent(DealWithVlad.this, GameOver.class);
             gameOver.putExtra("score",score);
+            gameOver.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
             this.startActivity(gameOver);
             finish();
         }
 
         setContentView(R.layout.deal_with_vlad);
         FrameLayout frameLayout = (FrameLayout)findViewById(R.id.VladFrameLayout);
-        vladThread = new VladThread(this,character_index, numScandal, level, score, index, speed, position, delay, recovery, vlad);
+        vladThread = new VladThread(this,character_index, numScandal, level, score, index, speed, position, delay, recovery, vlad, pauseTime);
         frameLayout.addView(vladThread);
 
         mEdit = (EditText) findViewById(R.id.userGuess);
