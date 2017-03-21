@@ -32,7 +32,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private boolean recovery;
     private int[] position;
 
-    public GameView(Context context, int index, int levels, int scandal, int score, int speed, boolean recovery, int[] position, int delay, int vlad, long pauseTime) {
+    public GameView(Context context, int index, int levels, int scandal, int score, int speed, boolean recovery, int[] position, int delay, int vlad, long pauseTime, long levelTime) {
         super(context);
         ctx = context;
         getHolder().addCallback(this);
@@ -45,8 +45,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         this.recovery = recovery;
         this.position = position;
         this.delay = delay;
-        this.vlad =vlad;
-        levelTime += System.nanoTime() - pauseTime;
+        this.vlad = vlad;
+        this.levelTime = System.nanoTime() - pauseTime + levelTime;
         level = new Level(context, levels);
         rand = new Random();
     }
@@ -144,7 +144,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setTextSize(30);
-        //canvas.drawText("Scandal: " + scandalCount, 10, 30, paint);
+        canvas.drawText("Time: " + (int)((System.nanoTime() - levelTime) / 1000000000), 10, 478, paint);
         canvas.drawText("Score: " + sprite.getScore(), 350, 30, paint);
         canvas.drawText("Level: " + level.getLevel(), 350, 478, paint);
 //        if(!sprite.getPlaying()) {
@@ -222,7 +222,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 scandal.putExtra("position",sprite.getPosition());
                 scandal.putExtra("delay",sprite.getDelay());
                 scandal.putExtra("vlad", vlad);
-                scandal.putExtra("pauseTime", pauseTime);
+                scandal.putExtra("pauseTime", System.nanoTime());
+                scandal.putExtra("levelTime", levelTime);
                 ctx.startActivity(scandal);
             }
         }

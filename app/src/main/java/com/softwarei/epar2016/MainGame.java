@@ -18,7 +18,7 @@ public class MainGame extends Activity implements View.OnTouchListener {
     boolean recovery;
     int[] position;
     RelativeLayout running, paused;
-    long pauseTime;
+    long pauseTime, levelTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +56,8 @@ public class MainGame extends Activity implements View.OnTouchListener {
         vlad = intent.getIntExtra("vlad",0);
         delay = intent.getIntExtra("delay",100);
         pauseTime = intent.getLongExtra("pauseTime", 0);
-
-        gameView = new GameView(this, index, level_index, scandal, score, speed, recovery, position, delay, vlad, pauseTime);
+        levelTime = intent.getLongExtra("levelTime", 0);
+        gameView = new GameView(this, index, level_index, scandal, score, speed, recovery, position, delay, vlad, pauseTime, levelTime);
         frameLayout.addView(gameView);
 
         running = (RelativeLayout)findViewById(R.id.gameRunning);

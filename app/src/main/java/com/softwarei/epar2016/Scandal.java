@@ -23,7 +23,7 @@ public class Scandal extends AppCompatActivity{
     private MusicPlayer mp;
     private boolean click = false;
     boolean bold = true;
-    long pauseTime;
+    long pauseTime, levelTime;
     private String[] candidates={"Dishonest Abe!","Clinton!","FDR!","Obama!",
                                 "Trump", "Washington", "Kennedy" };
     private String scandalousCand= "";
@@ -104,6 +104,7 @@ public class Scandal extends AppCompatActivity{
         delay = intent.getIntExtra("delay",100);
         vlad = intent.getIntExtra("vlad",0);
         pauseTime = intent.getLongExtra("pauseTime", System.nanoTime());
+        levelTime = intent.getLongExtra("levelTime", System.nanoTime());
         scandal = (TextView) findViewById(R.id.scandalous);
         candidate= (TextView) findViewById(R.id.scan_candidate);
         scandalousScandal= (TextView) findViewById(R.id.scandalous_scandal);
@@ -163,6 +164,7 @@ public class Scandal extends AppCompatActivity{
                         deal.putExtra("vlad", vlad);
                         //fixed typo
                         deal.putExtra("pauseTime", pauseTime);
+                        deal.putExtra("levelTime", levelTime);
                         startActivity(deal);
                         finish();
                     }
@@ -198,6 +200,7 @@ public class Scandal extends AppCompatActivity{
                     Main.putExtra("delay",delay);
                     Main.putExtra("vlad", vlad);
                     Main.putExtra("pauseTime", pauseTime);
+                    Main.putExtra("levelTime", levelTime);
                     startActivity(Main);
                     finish();
                 }
@@ -214,6 +217,7 @@ public class Scandal extends AppCompatActivity{
                     Main.putExtra("position",position);
                     Main.putExtra("delay",delay);
                     Main.putExtra("pauseTime", pauseTime);
+                    Main.putExtra("levelTime", levelTime);
                     startActivity(Main);
                     finish();
                 }
